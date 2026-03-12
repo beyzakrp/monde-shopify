@@ -9,6 +9,40 @@
  */
 {
   "sections": {
+    "home_banner_mLHnFg": {
+      "type": "home-banner",
+      "name": "Home Banner",
+      "settings": {
+        "desktop_image": "shopify://shop_images/0_0_34.png",
+        "image_position": "center right",
+        "min_height_mobile": 510,
+        "heading": "Love, Set in Stone.",
+        "heading_tag": "h1",
+        "heading_font": "Avenir LT Pro",
+        "heading_size": 60,
+        "heading_size_mobile": 28,
+        "heading_color": "#000000",
+        "heading_color_mobile": "#ffffff",
+        "subtext": "Discover our ethical and sustainable skin care that will warm your heart.",
+        "subtext_size": 16,
+        "subtext_color": "#000000",
+        "subtext_color_mobile": "#ffffff",
+        "desktop_content_side": "right",
+        "desktop_content_width": 45,
+        "desktop_content_offset": 20,
+        "btn1_label": "Shop Sheet Face Mask",
+        "btn1_link": "",
+        "btn1_bg": "#46021D",
+        "btn1_text": "#ffffff",
+        "btn2_label": "Shop Face Cream",
+        "btn2_link": "",
+        "btn2_bg": "#ffffff",
+        "btn2_text": "#000000",
+        "btn2_border": "#000000",
+        "button_gap": 50,
+        "mobile_gradient": true
+      }
+    },
     "slideshow_cmJy7T": {
       "type": "slideshow",
       "blocks": {
@@ -133,6 +167,7 @@
     }
   },
   "order": [
+    "home_banner_mLHnFg",
     "slideshow_cmJy7T",
     "image-with-text",
     "featured-collection"
