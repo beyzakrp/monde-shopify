@@ -2092,6 +2092,20 @@ input[type='checkbox'] {
 /* utility-bar */
 .utility-bar {
   height: 100%;
+  position: relative;
+  z-index: 5;
+}
+
+/* Sticky announcement bar */
+.announcement-bar--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+/* Non-sticky announcement bar - normal document flow */
+.utility-bar:not(.announcement-bar--sticky) {
+  position: relative;
 }
 
 .utility-bar--bottom-border {
@@ -2316,6 +2330,16 @@ input[type='checkbox'] {
 
 .shopify-section-header-sticky {
   position: sticky;
+  top: 0;
+}
+
+/* Header'ın sticky announcement bar altında olması için */
+body:has(.announcement-bar--sticky) .shopify-section-header-sticky {
+  top: var(--announcement-bar-height, 0px);
+}
+
+/* Non-sticky announcement bar olduğunda header normal sticky */
+body:not(:has(.announcement-bar--sticky)) .shopify-section-header-sticky {
   top: 0;
 }
 
