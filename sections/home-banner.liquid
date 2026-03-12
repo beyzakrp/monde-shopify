@@ -1,0 +1,543 @@
+{%- style -%}
+  #home-banner-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+    min-height: {{ section.settings.min_height_mobile }}px;
+  }
+
+  #home-banner-{{ section.id }} .banner__image--desktop {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: {{ section.settings.image_position }};
+  }
+
+  #home-banner-{{ section.id }} .banner__image--mobile {
+    width: 100%;
+    display: none;
+    object-fit: cover;
+  }
+
+  /* Desktop content */
+  #home-banner-{{ section.id }} .banner__content--desktop {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX({{ section.settings.desktop_content_offset }}%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: {{ section.settings.desktop_content_width }}%;
+    z-index: 2;
+    {% if section.settings.desktop_content_side == 'right' %}
+      right: 0;
+    {% else %}
+      left: 0;
+    {% endif %}
+  }
+
+  #home-banner-{{ section.id }} .banner__heading {
+    font-size: {{ section.settings.heading_size }}px;
+    color: {{ section.settings.heading_color }};
+    font-family: '{{ section.settings.heading_font }}', serif;
+    line-height: 1.2;
+    text-align: center;
+    margin: 0 0 16px;
+  }
+
+  #home-banner-{{ section.id }} .banner__subtext {
+    font-size: {{ section.settings.subtext_size }}px;
+    color: {{ section.settings.subtext_color }};
+    line-height: 1.5;
+    text-align: center;
+    max-width: 450px;
+    margin: 0 0 30px;
+    padding: 0 5px;
+  }
+
+  #home-banner-{{ section.id }} .banner__buttons {
+    display: flex;
+    gap: {{ section.settings.button_gap }}px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #home-banner-{{ section.id }} .banner__btn--primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 202px;
+    height: 44px;
+    font-size: 14px;
+    font-family: 'Avenir LT Pro', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border 0.2s;
+    background-color: {{ section.settings.btn1_bg }};
+    color: {{ section.settings.btn1_text }};
+    border: 1px solid {{ section.settings.btn1_bg }};
+  }
+
+  #home-banner-{{ section.id }} .banner__btn--primary:hover {
+    background-color: transparent;
+    color: white;
+    border-color: white;
+  }
+
+  #home-banner-{{ section.id }} .banner__btn--secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 202px;
+    height: 44px;
+    font-size: 14px;
+    font-family: 'Avenir LT Pro', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border 0.2s;
+    background-color: {{ section.settings.btn2_bg }};
+    color: {{ section.settings.btn2_text }};
+    border: 1px solid {{ section.settings.btn2_border }};
+  }
+
+  #home-banner-{{ section.id }} .banner__btn--secondary:hover {
+    background-color: transparent;
+    color: white;
+    border-color: white;
+  }
+
+  /* Mobile content */
+  #home-banner-{{ section.id }} .banner__content--mobile {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    padding: 0 16px;
+  }
+
+  #home-banner-{{ section.id }} .banner__heading--mobile {
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    color: {{ section.settings.heading_color_mobile }};
+    font-family: '{{ section.settings.heading_font }}', serif;
+    line-height: 1.2;
+    text-align: center;
+    margin: 0 0 10px;
+  }
+
+  #home-banner-{{ section.id }} .banner__subtext--mobile {
+    font-size: 15px;
+    color: {{ section.settings.subtext_color_mobile }};
+    line-height: 1.5;
+    text-align: center;
+    margin: 0 0 16px;
+  }
+
+  #home-banner-{{ section.id }} .banner__btn--mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 44px;
+    font-size: 14px;
+    font-family: 'Avenir LT Pro', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    margin-bottom: 10px;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  #home-banner-{{ section.id }} .banner__btn--mobile:hover {
+    background-color: rgba(255,255,255,0.15);
+  }
+
+  /* Mobile dark gradient overlay */
+  {% if section.settings.mobile_gradient %}
+  #home-banner-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  {% endif %}
+
+  @media screen and (max-width: 1008px) {
+    #home-banner-{{ section.id }} .banner__image--desktop { display: none; }
+    #home-banner-{{ section.id }} .banner__image--mobile { display: block; }
+    #home-banner-{{ section.id }} .banner__content--desktop { display: none !important; }
+    #home-banner-{{ section.id }} .banner__content--mobile { display: flex; }
+  }
+
+  @media screen and (max-width: 1250px) {
+    #home-banner-{{ section.id }} .banner__buttons {
+      max-width: 300px;
+      gap: 8px;
+    }
+    #home-banner-{{ section.id }} .banner__heading {
+      font-size: {{ section.settings.heading_size | times: 0.75 | round }}px;
+    }
+  }
+
+  @media screen and (max-width: 1335px) {
+    #home-banner-{{ section.id }} .banner__buttons {
+      gap: 10px;
+    }
+  }
+{%- endstyle -%}
+
+<section id="home-banner-{{ section.id }}">
+  <div style="position: relative;">
+    <picture>
+      {%- if section.settings.desktop_image != blank -%}
+        {{ section.settings.desktop_image | image_url: width: 1920 | image_tag:
+          class: 'banner__image--desktop',
+          widths: '768, 1024, 1440, 1920',
+          sizes: '100vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: section.settings.desktop_image.alt | default: shop.name
+        }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'banner__image--desktop placeholder' }}
+      {%- endif -%}
+
+      {%- if section.settings.mobile_image != blank -%}
+        {{ section.settings.mobile_image | image_url: width: 800 | image_tag:
+          class: 'banner__image--mobile',
+          widths: '390, 480, 768',
+          sizes: '100vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: section.settings.mobile_image.alt | default: shop.name
+        }}
+      {%- elsif section.settings.desktop_image != blank -%}
+        {{ section.settings.desktop_image | image_url: width: 800 | image_tag:
+          class: 'banner__image--mobile',
+          widths: '390, 480, 768',
+          sizes: '100vw',
+          loading: 'eager',
+          alt: section.settings.desktop_image.alt | default: shop.name
+        }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'banner__image--mobile placeholder' }}
+      {%- endif -%}
+    </picture>
+
+    <!-- Desktop Content -->
+    <div class="banner__content--desktop">
+      {%- if section.settings.heading != blank -%}
+        <{{ section.settings.heading_tag }} class="banner__heading">
+          {{ section.settings.heading }}
+        </{{ section.settings.heading_tag }}>
+      {%- endif -%}
+
+      {%- if section.settings.subtext != blank -%}
+        <p class="banner__subtext">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+
+      <div class="banner__buttons">
+        {%- if section.settings.btn1_label != blank -%}
+          <a href="{{ section.settings.btn1_link }}" class="banner__btn--primary">
+            {{ section.settings.btn1_label }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.btn2_label != blank -%}
+          <a href="{{ section.settings.btn2_link }}" class="banner__btn--secondary">
+            {{ section.settings.btn2_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Mobile Content -->
+    <div class="banner__content--mobile">
+      {%- if section.settings.heading != blank -%}
+        <{{ section.settings.heading_tag }} class="banner__heading--mobile">
+          {{ section.settings.heading }}
+        </{{ section.settings.heading_tag }}>
+      {%- endif -%}
+
+      {%- if section.settings.subtext != blank -%}
+        <p class="banner__subtext--mobile">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.btn1_label != blank -%}
+        <a href="{{ section.settings.btn1_link }}" class="banner__btn--mobile">
+          {{ section.settings.btn1_label }}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.btn2_label != blank -%}
+        <a href="{{ section.settings.btn2_link }}" class="banner__btn--mobile">
+          {{ section.settings.btn2_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home Banner",
+  "tag": "section",
+  "class": "home-banner-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Görseller"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Görsel"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobil Görsel (opsiyonel, boş bırakılırsa desktop kullanılır)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Görsel Pozisyonu",
+      "options": [
+        { "value": "center center", "label": "Orta" },
+        { "value": "top center", "label": "Üst" },
+        { "value": "bottom center", "label": "Alt" },
+        { "value": "center left", "label": "Sol" },
+        { "value": "center right", "label": "Sağ" }
+      ],
+      "default": "bottom center"
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Mobil Minimum Yükseklik",
+      "min": 300,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "header",
+      "content": "İçerik"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Başlık",
+      "default": "Love, Set in Stone."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Başlık HTML Etiketi",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "p", "label": "Paragraf" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "text",
+      "id": "heading_font",
+      "label": "Başlık Font Adı",
+      "default": "Avenir LT Pro",
+      "info": "Sistemde yüklü olan font adını girin"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Başlık Font Boyutu (Desktop)",
+      "min": 24,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Başlık Font Boyutu (Mobil)",
+      "min": 18,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Başlık Rengi (Desktop)",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "heading_color_mobile",
+      "label": "Başlık Rengi (Mobil)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Alt Metin",
+      "default": "Discover our ethical and sustainable jewelry that will warm your heart."
+    },
+    {
+      "type": "range",
+      "id": "subtext_size",
+      "label": "Alt Metin Font Boyutu",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Alt Metin Rengi (Desktop)",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color_mobile",
+      "label": "Alt Metin Rengi (Mobil)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Desktop İçerik Konumu"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_side",
+      "label": "Hangi Taraf",
+      "options": [
+        { "value": "right", "label": "Sağ" },
+        { "value": "left", "label": "Sol" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "desktop_content_width",
+      "label": "İçerik Genişliği",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "desktop_content_offset",
+      "label": "Yatay Kaydırma",
+      "min": -50,
+      "max": 50,
+      "step": 5,
+      "unit": "%",
+      "default": 20,
+      "info": "Pozitif değer sağa, negatif sola kaydırır"
+    },
+    {
+      "type": "header",
+      "content": "Buton 1 (Ana Buton)"
+    },
+    {
+      "type": "text",
+      "id": "btn1_label",
+      "label": "Buton 1 Metin",
+      "default": "Shop Wedding Bands"
+    },
+    {
+      "type": "url",
+      "id": "btn1_link",
+      "label": "Buton 1 Link"
+    },
+    {
+      "type": "color",
+      "id": "btn1_bg",
+      "label": "Buton 1 Arkaplan",
+      "default": "#46021D"
+    },
+    {
+      "type": "color",
+      "id": "btn1_text",
+      "label": "Buton 1 Metin Rengi",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Buton 2 (İkincil Buton)"
+    },
+    {
+      "type": "text",
+      "id": "btn2_label",
+      "label": "Buton 2 Metin",
+      "default": "Shop Engagement Rings"
+    },
+    {
+      "type": "url",
+      "id": "btn2_link",
+      "label": "Buton 2 Link"
+    },
+    {
+      "type": "color",
+      "id": "btn2_bg",
+      "label": "Buton 2 Arkaplan",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn2_text",
+      "label": "Buton 2 Metin Rengi",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "btn2_border",
+      "label": "Buton 2 Kenarlık Rengi",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_gap",
+      "label": "Butonlar Arası Boşluk",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Mobil Ayarlar"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_gradient",
+      "label": "Mobilde Altta Koyu Gradyan",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Banner"
+    }
+  ]
+}
+{% endschema %}
