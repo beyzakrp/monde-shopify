@@ -2315,27 +2315,24 @@ input[type='checkbox'] {
 }
 
 /* section-header */
+.announcement-bar-section {
+  position: sticky;
+  top: 0;
+  z-index: 103;
+}
+
 .section-header.shopify-section-group-header-group {
   z-index: 3;
 }
 
 .shopify-section-header-sticky {
   position: sticky;
-  top: 0;
-}
-
-/* Header'ın sticky announcement bar altında olması için */
-body:has(.announcement-bar--sticky) .shopify-section-header-sticky {
   top: var(--announcement-bar-height, 0px);
-}
-
-/* Non-sticky announcement bar olduğunda header normal sticky */
-body:not(:has(.announcement-bar--sticky)) .shopify-section-header-sticky {
-  top: 0;
+  z-index: 102;
 }
 
 .shopify-section-header-hidden {
-  top: calc(-1 * var(--header-height));
+  top: calc(var(--announcement-bar-height, 0px) - var(--header-height));
 }
 
 .shopify-section-header-hidden.menu-open {
@@ -2358,7 +2355,6 @@ body:not(:has(.announcement-bar--sticky)) .shopify-section-header-sticky {
 .header-wrapper {
   display: block;
   position: relative;
-  background-color: #0000003b !important;;
 }
 
 .header-wrapper--border-bottom {
