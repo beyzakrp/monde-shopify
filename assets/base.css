@@ -2249,10 +2249,12 @@ input[type='checkbox'] {
 
 .announcement-bar__message {
   text-align: center;
-  padding: 1rem 0;
   margin: 0;
   letter-spacing: 0.1rem;
-  min-height: 3.8rem;
+  padding: 12px;
+  font-size: 11px;
+  font-weight: 400 !important;
+  font-family: 'Avenir LT Pro', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 .announcement-bar-slider--fade-in-next .announcement-bar__message,
@@ -2356,7 +2358,7 @@ body:not(:has(.announcement-bar--sticky)) .shopify-section-header-sticky {
 .header-wrapper {
   display: block;
   position: relative;
-  background-color: rgb(var(--color-background));
+  background-color: #0000003b !important;;
 }
 
 .header-wrapper--border-bottom {
@@ -2947,6 +2949,7 @@ details-disclosure > details {
 .gradient {
   background: rgb(var(--color-background));
   background: var(--gradient-background);
+  /**/
   background-attachment: fixed;
 }
 
