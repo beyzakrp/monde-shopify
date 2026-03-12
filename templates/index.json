@@ -18,7 +18,7 @@
         "min_height_mobile": 510,
         "heading": "Love, Set in Stone.",
         "heading_tag": "h1",
-        "heading_font": "Avenir LT Pro",
+        "heading_font": "Optima",
         "heading_size": 60,
         "heading_size_mobile": 28,
         "heading_color": "#000000",
@@ -32,7 +32,7 @@
         "desktop_content_offset": 20,
         "btn1_label": "Shop Sheet Face Mask",
         "btn1_link": "",
-        "btn1_bg": "#46021D",
+        "btn1_bg": "#46021d",
         "btn1_text": "#ffffff",
         "btn2_label": "Shop Face Cream",
         "btn2_link": "",
@@ -45,47 +45,6 @@
     },
     "slideshow_cmJy7T": {
       "type": "slideshow",
-      "blocks": {
-        "slide_t4prkg": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/0_0_34.png",
-            "image_overlay_opacity": 0,
-            "heading": "Görsel slaytı",
-            "heading_size": "h1",
-            "subheading": "Görsellerle marka öykünüzü anlatın",
-            "button_label": "Düğme etiketi",
-            "link": "",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        },
-        "slide_y9FNBQ": {
-          "type": "slide",
-          "settings": {
-            "image_overlay_opacity": 0,
-            "heading": "Görsel slaytı",
-            "heading_size": "h1",
-            "subheading": "Görsellerle marka öykünüzü anlatın",
-            "button_label": "Düğme etiketi",
-            "link": "",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_t4prkg",
-        "slide_y9FNBQ"
-      ],
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
