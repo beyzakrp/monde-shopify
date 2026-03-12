@@ -54,6 +54,103 @@
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
 
+      /* Avenir Font Families */
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProLight.otf" | asset_url }}') format('opentype');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProLightOblique.otf" | asset_url }}') format('opentype');
+        font-weight: 300;
+        font-style: italic;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProBook.otf" | asset_url }}') format('opentype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProBookOblique.otf" | asset_url }}') format('opentype');
+        font-weight: 400;
+        font-style: italic;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProRoman.otf" | asset_url }}') format('opentype');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProOblique.otf" | asset_url }}') format('opentype');
+        font-weight: 500;
+        font-style: italic;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProMedium.otf" | asset_url }}') format('opentype');
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProMediumOblique.otf" | asset_url }}') format('opentype');
+        font-weight: 600;
+        font-style: italic;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProHeavy.otf" | asset_url }}') format('opentype');
+        font-weight: 800;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProHeavyOblique.otf" | asset_url }}') format('opentype');
+        font-weight: 800;
+        font-style: italic;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProBlack.otf" | asset_url }}') format('opentype');
+        font-weight: 900;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Avenir LT Pro';
+        src: url('{{ "AvenirLTProBlackOblique.otf" | asset_url }}') format('opentype');
+        font-weight: 900;
+        font-style: italic;
+        font-display: swap;
+      }
+
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
         {% if forloop.index == 1 -%}

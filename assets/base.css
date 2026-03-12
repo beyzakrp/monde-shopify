@@ -2156,6 +2156,8 @@ input[type='checkbox'] {
   flex-wrap: wrap;
   align-content: center;
   grid-area: announcements;
+  font-family: 'Avenir LT Pro', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-weight: 800 !important;
 }
 
 .announcement-bar .slider--everywhere {
