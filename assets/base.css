@@ -2092,20 +2092,7 @@ input[type='checkbox'] {
 /* utility-bar */
 .utility-bar {
   height: 100%;
-  position: relative;
-  z-index: 5;
-}
 
-/* Sticky announcement bar */
-.announcement-bar--sticky {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-}
-
-/* Non-sticky announcement bar - normal document flow */
-.utility-bar:not(.announcement-bar--sticky) {
-  position: relative;
 }
 
 .utility-bar--bottom-border {
