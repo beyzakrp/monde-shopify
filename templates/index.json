@@ -13,7 +13,7 @@
       "type": "home-banner",
       "name": "Home Banner",
       "settings": {
-        "desktop_image": "shopify://shop_images/0_0_34.png",
+        "desktop_image": "shopify://shop_images/banner-mask.png",
         "image_position": "center right",
         "min_height_mobile": 510,
         "heading": "Love, Set in Stone.",
@@ -27,9 +27,9 @@
         "subtext_size": 16,
         "subtext_color": "#000000",
         "subtext_color_mobile": "#ffffff",
-        "desktop_content_side": "right",
+        "desktop_content_side": "left",
         "desktop_content_width": 40,
-        "desktop_content_offset": -5,
+        "desktop_content_offset": 5,
         "btn1_label": "Shop Sheet Face Mask",
         "btn1_link": "",
         "btn1_bg": "#46021d",
@@ -43,18 +43,52 @@
         "mobile_gradient": false
       }
     },
-    "slideshow_cmJy7T": {
-      "type": "slideshow",
-      "name": "t:sections.slideshow.presets.name",
+    "shop_by_category_66X9Gw": {
+      "type": "shop-by-category",
+      "blocks": {
+        "category_JtAzpk": {
+          "type": "category",
+          "settings": {
+            "category_name": "Maske",
+            "image": "shopify://shop_images/cvit1_cdb1e66b-eea5-4686-942d-0766380e0881.jpg",
+            "collection_link": ""
+          }
+        },
+        "category_Kt8wPJ": {
+          "type": "category",
+          "settings": {
+            "category_name": "Engagement Rings",
+            "collection_link": ""
+          }
+        },
+        "category_MBrhVV": {
+          "type": "category",
+          "settings": {
+            "category_name": "Earrings",
+            "collection_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_JtAzpk",
+        "category_Kt8wPJ",
+        "category_MBrhVV"
+      ],
+      "name": "Shop by Category",
       "settings": {
-        "layout": "full_bleed",
-        "slide_height": "medium",
-        "slider_visual": "counter",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": "Markamız hakkında slayt gösterisi"
+        "heading": "Kategoriler",
+        "heading_size": 28,
+        "heading_color": "#000000",
+        "heading_alignment": "left",
+        "heading_font": "Avenir LT Pro",
+        "label_size": 16,
+        "gap_mobile": 8,
+        "gap_tablet": 16,
+        "gap_desktop": 16,
+        "margin_top": 40,
+        "margin_bottom": 40,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "image-with-text": {
@@ -127,7 +161,7 @@
   },
   "order": [
     "home_banner_mLHnFg",
-    "slideshow_cmJy7T",
+    "shop_by_category_66X9Gw",
     "image-with-text",
     "featured-collection"
   ]
