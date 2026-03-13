@@ -13,7 +13,7 @@
       "type": "home-banner",
       "name": "Home Banner",
       "settings": {
-        "desktop_image": "shopify://shop_images/banner-mask.png",
+        "desktop_image": "shopify://shop_images/banner-mask-wide.png",
         "image_position": "center right",
         "min_height_mobile": 510,
         "heading": "Love, Set in Stone.",
