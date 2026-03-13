@@ -1,0 +1,392 @@
+{%- style -%}
+  #shop-by-category-{{ section.id }} {
+    margin: {{ section.settings.margin_top }}px 5px {{ section.settings.margin_bottom }}px;
+    padding: {{ section.settings.padding_top }}px 16px {{ section.settings.padding_bottom }}px;
+  }
+
+  #shop-by-category-{{ section.id }} .shop-by-header {
+    font-size: {{ section.settings.heading_size }}px;
+    color: {{ section.settings.heading_color }};
+    text-align: {{ section.settings.heading_alignment }};
+    margin-bottom: 24px;
+    font-family: '{{ section.settings.heading_font }}', serif;
+    font-weight: 500;
+  }
+
+  #shop-by-category-{{ section.id }} .category-container {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  #shop-by-category-{{ section.id }} .category-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  #shop-by-category-{{ section.id }} .category-container:active {
+    cursor: grabbing;
+  }
+
+  #shop-by-category-{{ section.id }} .category-wrapper {
+    display: flex;
+    gap: {{ section.settings.gap_mobile }}px;
+    min-width: min-content;
+    padding: 0;
+    margin: 0;
+  }
+
+  #shop-by-category-{{ section.id }} .category-item {
+    flex: 0 0 auto;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #shop-by-category-{{ section.id }} .category-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 318px;
+    height: 318px;
+    aspect-ratio: 1;
+  }
+
+  #shop-by-category-{{ section.id }} .category-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: transform 0.3s ease;
+  }
+
+  #shop-by-category-{{ section.id }} .category-item:hover .category-image {
+    transform: scale(1.1);
+  }
+
+  #shop-by-category-{{ section.id }} .category-label {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: {{ section.settings.label_size }}px;
+    color: white;
+    font-family: 'Avenir LT Pro', sans-serif;
+    font-weight: 500;
+    pointer-events: none;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (min-width: 640px) {
+    #shop-by-category-{{ section.id }} .category-image-wrapper {
+      width: 384px;
+      height: 384px;
+    }
+
+    #shop-by-category-{{ section.id }} .category-wrapper {
+      gap: {{ section.settings.gap_tablet }}px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #shop-by-category-{{ section.id }} .category-image-wrapper {
+      width: calc((100vw - 40px - 60px) / 4);
+      height: auto;
+    }
+
+    #shop-by-category-{{ section.id }} .category-wrapper {
+      gap: {{ section.settings.gap_desktop }}px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #shop-by-category-{{ section.id }} .shop-by-header {
+      font-size: {{ section.settings.heading_size | times: 0.8 | round }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section id="shop-by-category-{{ section.id }}">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="shop-by-header">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  <div class="category-container">
+    <div class="category-wrapper">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.collection_link }}" class="category-item">
+          <div class="category-image-wrapper">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 600 | image_tag:
+                class: 'category-image',
+                widths: '318, 384, 600',
+                sizes: '(min-width: 1024px) calc((100vw - 100px) / 4), (min-width: 640px) 384px, 318px',
+                loading: 'lazy',
+                alt: block.settings.category_name | default: 'Category'
+              }}
+            {%- else -%}
+              <div class="category-image" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                {{ 'image' | placeholder_svg_tag }}
+              </div>
+            {%- endif -%}
+            <p class="category-label">{{ block.settings.category_name }}</p>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% javascript %}
+  (function() {
+    const slider = document.querySelector('#shop-by-category-{{ section.id }} .category-container');
+    if (!slider) return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let isDragging = false;
+    const dragThreshold = 5;
+    let startY;
+
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      slider.style.cursor = 'grabbing';
+      startX = e.pageX - slider.offsetLeft;
+      startY = e.pageY;
+      scrollLeft = slider.scrollLeft;
+      isDragging = false;
+      e.preventDefault();
+    });
+
+    slider.addEventListener('mouseleave', () => {
+      isDown = false;
+      slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mouseup', () => {
+      isDown = false;
+      slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+
+      const x = e.pageX - slider.offsetLeft;
+      const y = e.pageY;
+      const walkX = Math.abs(x - startX);
+      const walkY = Math.abs(y - startY);
+
+      if (walkX > dragThreshold || walkY > dragThreshold) {
+        isDragging = true;
+      }
+
+      if (isDragging) {
+        const walk = (x - startX) * 1.5;
+        slider.scrollLeft = scrollLeft - walk;
+      }
+    });
+
+    document.querySelectorAll('#shop-by-category-{{ section.id }} .category-item').forEach((link) => {
+      link.addEventListener('click', function(event) {
+        if (isDragging) {
+          event.preventDefault();
+        }
+      });
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Shop by Category",
+  "tag": "section",
+  "class": "shop-by-category-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Başlık",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Başlık Font Boyutu",
+      "min": 18,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Başlık Rengi",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Başlık Hizalaması",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" },
+        { "value": "right", "label": "Sağ" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "heading_font",
+      "label": "Başlık Font Adı",
+      "default": "Avenir LT Pro",
+      "info": "Sistemde yüklü olan font adını girin"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Kategori Etiket Font Boyutu",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Mobil Boşluk",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "gap_tablet",
+      "label": "Tablet Boşluk",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "Desktop Boşluk",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Boşluk"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Üst Dış Boşluk",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Alt Dış Boşluk",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Üst İç Boşluk",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Alt İç Boşluk",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Kategori",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category_name",
+          "label": "Kategori Adı",
+          "placeholder": "örn: Wedding Rings"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Kategori Görsel"
+        },
+        {
+          "type": "url",
+          "id": "collection_link",
+          "label": "Kategori Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by Category",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Wedding Rings"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Engagement Rings"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Earrings"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
