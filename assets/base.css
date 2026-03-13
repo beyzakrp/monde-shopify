@@ -2382,7 +2382,7 @@ input[type='checkbox'] {
 
   .header--middle-left {
     grid-template-areas: 'heading navigation icons';
-    grid-template-columns: auto auto 1fr;
+    /* grid-template-columns: auto auto 1fr;*/
     column-gap: 2rem;
   }
 
@@ -2860,6 +2860,7 @@ details[open] > .header__menu-item .icon-caret {
 }
 
 .header__submenu .header__menu-item {
+   font-family: 'Avenir LT Pro', -apple-system, BlinkMacSystemFont, sans-serif !important;
   justify-content: space-between;
   padding: 0.8rem 2rem;
 }
