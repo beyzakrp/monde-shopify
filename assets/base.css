@@ -2792,6 +2792,7 @@ details[open] > .header__submenu {
   padding: 1.2rem;
   text-decoration: none;
   color: rgba(var(--color-foreground), 0.75);
+  position: relative;
 }
 
 .header__menu-item:hover {
@@ -2799,20 +2800,41 @@ details[open] > .header__submenu {
 }
 
 .header__menu-item span {
-  transition: text-decoration var(--duration-short) ease;
+  position: relative;
+  display: inline-block;
+  transition: color var(--duration-short) ease;
 }
 
-.header__menu-item:hover span {
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+.header__menu-item span::after {
+  position: absolute;
+  content: '';
+  bottom: -22px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: rgb(var(--color-foreground));
+  opacity: 0;
+  transform: scale(0, 1);
+  transform-origin: left center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.header__menu-item:hover span::after {
+  opacity: 1;
+  transform: scale(1, 1);
 }
 
 details[open] > .header__menu-item {
-  text-decoration: underline;
+  color: rgb(var(--color-foreground));
+}
+
+details[open] > .header__menu-item span::after {
+  opacity: 1;
+  transform: scale(1, 1);
 }
 
 details[open]:hover > .header__menu-item {
-  text-decoration-thickness: 0.2rem;
+  opacity: 1;
 }
 
 details[open] > .header__menu-item .icon-caret {
@@ -2820,14 +2842,24 @@ details[open] > .header__menu-item .icon-caret {
 }
 
 .header__active-menu-item {
-  transition: text-decoration-thickness var(--duration-short) ease;
+  transition: color var(--duration-short) ease;
   color: rgb(var(--color-foreground));
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+}
+
+.header__active-menu-item::after {
+  position: absolute;
+  content: '';
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(var(--color-foreground));
+  opacity: 1;
+  transform: scale(1, 1);
 }
 
 .header__menu-item:hover .header__active-menu-item {
-  text-decoration-thickness: 0.2rem;
+  opacity: 1;
 }
 
 .header__submenu {
