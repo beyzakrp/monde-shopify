@@ -50,7 +50,7 @@
           "type": "category",
           "settings": {
             "category_name": "Maske",
-            "image": "shopify://shop_images/cvit1_cdb1e66b-eea5-4686-942d-0766380e0881.jpg",
+            "image": "shopify://shop_images/maske-kapak.png",
             "collection_link": ""
           }
         },
@@ -58,6 +58,7 @@
           "type": "category",
           "settings": {
             "category_name": "Engagement Rings",
+            "image": "shopify://shop_images/image_594.png",
             "collection_link": ""
           }
         },
@@ -65,6 +66,15 @@
           "type": "category",
           "settings": {
             "category_name": "Earrings",
+            "image": "shopify://shop_images/image_602.png",
+            "collection_link": ""
+          }
+        },
+        "category_bGLCkd": {
+          "type": "category",
+          "settings": {
+            "category_name": "",
+            "image": "shopify://shop_images/image_606.png",
             "collection_link": ""
           }
         }
@@ -72,16 +82,17 @@
       "block_order": [
         "category_JtAzpk",
         "category_Kt8wPJ",
-        "category_MBrhVV"
+        "category_MBrhVV",
+        "category_bGLCkd"
       ],
       "name": "Shop by Category",
       "settings": {
         "heading": "Kategoriler",
-        "heading_size": 28,
+        "heading_size": 26,
         "heading_color": "#000000",
         "heading_alignment": "left",
         "heading_font": "Avenir LT Pro",
-        "label_size": 16,
+        "label_size": 19,
         "gap_mobile": 8,
         "gap_tablet": 16,
         "gap_desktop": 16,
