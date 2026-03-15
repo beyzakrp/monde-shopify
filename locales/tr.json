@@ -133,7 +133,7 @@
         "in_cart_aria_label": "Adet (sepetteki: {{ quantity }})"
       },
       "price": {
-        "from_price_html": "Başlangıç fiyatı: {{ price }}",
+        "from_price_html": "{{ price }}",
         "regular_price": "Normal fiyat",
         "sale_price": "İndirimli fiyat",
         "unit_price": "Birim fiyat"
