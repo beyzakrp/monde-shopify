@@ -17,6 +17,7 @@
         "desktop_image": "shopify://shop_images/banner-mask-wide.png",
         "image_position": "center right",
         "min_height_mobile": 510,
+<<<<<<< HEAD
         "overlay_strength": 55,
         "campaign_label": "NEW SEASON CAMPAIGN",
         "heading": "The Glow of Eternity",
@@ -27,6 +28,16 @@
         "heading_color": "#fff4e6",
         "heading_color_mobile": "#fff4e6",
         "subtext": "A dialogue between light and skin. Our new formula awakens your innate luminosity.",
+=======
+        "heading": "Cildine iyi bak.",
+        "heading_tag": "h1",
+        "heading_font": "Optima",
+        "heading_size": 60,
+        "heading_size_mobile": 28,
+        "heading_color": "#000000",
+        "heading_color_mobile": "#ffffff",
+        "subtext": "Discover our products and sustainable skin care that will warm your heart.",
+>>>>>>> 54baa27290ee88d77f4025b35b1edfc1fade5e51
         "subtext_size": 16,
         "subtext_color": "#f3e6d4",
         "subtext_color_mobile": "#f3e6d4",
