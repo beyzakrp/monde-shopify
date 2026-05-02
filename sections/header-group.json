@@ -17,19 +17,35 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "%20 İNDİRİM İÇİN | HOSGELDIN Kodunu Kullanabilirsin",
+            "text": "Ilk sipariste %15 avantaj | KOD: SKIN15",
+            "link": ""
+          }
+        },
+        "announcement-bar-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "15.00 oncesi siparislerde ayni gun kargo",
+            "link": ""
+          }
+        },
+        "announcement-bar-2": {
+          "type": "announcement",
+          "settings": {
+            "text": "50 ml ve uzeri urunlerde premium hediye kutu",
             "link": ""
           }
         }
       },
       "block_order": [
-        "announcement-bar-0"
+        "announcement-bar-0",
+        "announcement-bar-1",
+        "announcement-bar-2"
       ],
       "settings": {
         "enable_sticky": true,
         "auto_rotate": true,
         "change_slides_speed": 5,
-        "color_scheme": "scheme-892721f6-3d5a-43b7-841e-c732f955c779",
+        "color_scheme": "scheme-3",
         "show_line_separator": true,
         "show_social": false,
         "enable_country_selector": false,
@@ -42,22 +58,22 @@
         "logo_position": "middle-left",
         "mobile_logo_position": "center",
         "menu": "main-menu",
-        "menu_type_desktop": "dropdown",
+        "menu_type_desktop": "mega",
         "sticky_header_type": "always",
         "show_line_separator": false,
-        "header_bg": "#2F2F2F",
-        "header_bg_opacity": 35,
-        "header_text": "#ffffff",
-        "header_icons": "#ffffff",
+        "header_bg": "#1f1711",
+        "header_bg_opacity": 62,
+        "header_text": "#fdf5ea",
+        "header_icons": "#fdf5ea",
         "header_border": "#e8e8e1",
-        "sticky_bg": "#ffffff",
-        "sticky_bg_opacity": 66,
-        "sticky_text": "#121212",
-        "sticky_icons": "#121212",
+        "sticky_bg": "#f9f3eb",
+        "sticky_bg_opacity": 88,
+        "sticky_text": "#201710",
+        "sticky_icons": "#201710",
         "sticky_border": "#e8e8e1",
         "menu_color_scheme": "scheme-1",
-        "enable_country_selector": true,
-        "enable_language_selector": true,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
         "enable_customer_avatar": true,
         "margin_bottom": 0,
         "padding_top": 8,

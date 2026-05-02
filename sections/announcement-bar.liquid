@@ -18,6 +18,52 @@
   {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
 {% endif %}
 
+{%- style -%}
+  .announcement-bar-section {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+
+  .announcement-bar-section .utility-bar {
+    background: linear-gradient(95deg, #2a2017 0%, #3a2b1d 52%, #2f241a 100%);
+    border-bottom: 0px solid rgba(255, 247, 232, 0.16);
+  }
+
+  .announcement-bar-section .utility-bar__grid {
+    min-height: 4rem;
+  }
+
+  .announcement-bar-section .announcement-bar__message {
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff6e8;
+  }
+
+  .announcement-bar-section .announcement-bar__link:hover .announcement-bar__message {
+    color: #ffffff;
+  }
+
+  .announcement-bar-section .slider-button {
+    color: #fdf1dd;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .announcement-bar-section .slider-button:hover {
+    color: #ffffff;
+    transform: scale(1.04);
+  }
+
+  @media screen and (max-width: 749px) {
+    .announcement-bar-section .announcement-bar__message {
+      font-size: 1.05rem;
+      letter-spacing: 0.09em;
+    }
+  }
+{%- endstyle -%}
+
 <div
   class="utility-bar color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator and section.blocks.size > 0 %} utility-bar--bottom-border{% elsif section.settings.show_line_separator and section.settings.show_social and social_icons%} utility-bar--bottom-border-social-only{% endif %}{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header-localization{% endif %}"
 >

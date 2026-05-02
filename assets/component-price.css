@@ -1,8 +1,9 @@
 .price {
-  font-size: 1.6rem;
-  letter-spacing: 0.1rem;
+  font-size: 1.65rem;
+  letter-spacing: 0.08rem;
   line-height: calc(1 + 0.5 / var(--font-body-scale));
   color: rgb(var(--color-foreground));
+  font-weight: 600;
 }
 
 .price > * {
@@ -86,8 +87,16 @@
 
 .price--on-sale .price-item--regular {
   text-decoration: line-through;
-  color: rgba(var(--color-foreground), 0.75);
-  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.55);
+  font-size: 1.2rem;
+}
+
+.card-information .price {
+  margin-top: 0.3rem;
+}
+
+.price .price-item--sale {
+  color: #231a12;
 }
 
 .unit-price {

@@ -48,7 +48,7 @@
       style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
     >
       {%- if card_collection.featured_image -%}
-        <div class="card__media">
+        <div class="card__media" style="aspect-ratio: 2323/3484;">
           <div class="media media--transparent media--hover-effect">
             <img
               srcset="
@@ -104,6 +104,9 @@
                 {%- endif %}
               </a>
             </h3>
+            {%- if card_collection != blank -%}
+              <p class="card__caption">{{ card_collection.products_count }} urun | Rituelini olustur</p>
+            {%- endif -%}
             {%- if card_collection.description != blank -%}
               <p class="card__caption">
                 {{- card_collection.description | strip_html | truncatewords: 12 -}}
@@ -140,6 +143,9 @@
               {%- endif %}
             </a>
           </h3>
+          {%- if card_collection != blank -%}
+            <p class="card__caption">{{ card_collection.products_count }} urun | Rituel secimi</p>
+          {%- endif -%}
           {%- if card_collection.featured_image == null and card_collection.description != blank -%}
             <p class="card__caption">
               {{- card_collection.description | strip_html | truncatewords: 12 -}}

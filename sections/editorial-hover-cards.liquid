@@ -1,0 +1,789 @@
+{%- style -%}
+  #editorial-hover-cards-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-inner {
+    max-width: min(var(--page-width), 132rem);
+    margin: 0 auto;
+    padding: 0 1.6rem;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-kicker {
+    margin: 0 0 1rem;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 1.1rem;
+    color: #a06e4b;
+    font-weight: 600;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2.8rem;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-title {
+    margin: 0;
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    font-size: clamp(4rem, 4.4vw, 6rem);
+    line-height: 0.92;
+    color: #313339;
+    letter-spacing: 0.01em;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-title em {
+    color: #ae844e;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.4rem;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card {
+    position: relative;
+    display: block;
+    min-height: 58rem;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background: #ddd2c4;
+    isolation: isolate;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card:focus-visible {
+    outline: 2px solid #ae844e;
+    outline-offset: 4px;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card__image {
+    position: absolute;
+    inset: 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: opacity 0.55s ease, transform 0.7s ease, filter 0.55s ease;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card__image--primary {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card__image--secondary {
+    opacity: 0;
+    transform: scale(1.06);
+    z-index: 2;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: linear-gradient(180deg, rgba(18, 12, 8, 0.05) 0%, rgba(18, 12, 8, 0.08) 42%, rgba(18, 12, 8, 0.68) 100%);
+    transition: background 0.55s ease;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card__content {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 4;
+    padding: 2.4rem 2.4rem 2.2rem;
+    color: #fff7ef;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card__eyebrow {
+    margin: 0 0 0.8rem;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 1rem;
+    color: rgba(255, 244, 230, 0.78);
+    font-weight: 600;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card__title {
+    margin: 0;
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    font-size: clamp(3rem, 2.9vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: 0.01em;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card__body {
+    margin: 1.2rem 0 0;
+    max-width: 30rem;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.55;
+    color: rgba(255, 244, 230, 0.92);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1.6rem;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 1.05rem;
+    color: #fff7ef;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card__cta svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 14, 11, 0.62);
+    backdrop-filter: blur(12px);
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__panel {
+    position: relative;
+    z-index: 1;
+    width: min(1040px, 100%);
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    background: #f8f5ef;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__media {
+    min-height: 58rem;
+    background: #d7c8b5;
+    background-size: cover;
+    background-position: center;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__content {
+    position: relative;
+    padding: 2.4rem 2.4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 58rem;
+    color: #2c2622;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    color: #443c36;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__close:hover {
+    transform: scale(1.04);
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__eyebrow {
+    margin: 0 0 0.8rem;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 1rem;
+    color: #a06e4b;
+    font-weight: 600;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__title {
+    margin: 0;
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    font-size: clamp(3.2rem, 3vw, 4.4rem);
+    line-height: 0.98;
+    color: #242222;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__body {
+    margin: 1rem 0 0;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: rgba(44, 38, 34, 0.78);
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__included-label {
+    margin: 2.2rem 0 1rem;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 1rem;
+    color: rgba(44, 38, 34, 0.58);
+    font-weight: 600;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 8px 16px rgba(17, 12, 9, 0.05);
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__thumb {
+    width: 5.4rem;
+    height: 5.4rem;
+    border-radius: 10px;
+    object-fit: cover;
+    flex: 0 0 auto;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__product-title {
+    margin: 0;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #2d2723;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__product-meta {
+    display: block;
+    margin-top: 0.2rem;
+    color: rgba(77, 68, 60, 0.62);
+    font-size: 1.1rem;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__summary {
+    margin-top: 2.2rem;
+    padding-top: 1.8rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__summary-label {
+    margin: 0;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    color: rgba(73, 64, 58, 0.66);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 1rem;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__summary-price {
+    margin: 0.4rem 0 0;
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    font-size: 3rem;
+    color: #222;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__summary-price del {
+    color: rgba(44, 38, 34, 0.35);
+    margin-left: 0.55rem;
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-modal__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 19rem;
+    padding: 1.15rem 2rem;
+    border-radius: 999px;
+    background: #181513;
+    color: #fff8ef;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: 989px) {
+    #editorial-hover-cards-{{ section.id }} .editorial-modal__panel {
+      grid-template-columns: 1fr;
+      max-height: 90vh;
+      overflow: auto;
+    }
+
+    #editorial-hover-cards-{{ section.id }} .editorial-modal__media,
+    #editorial-hover-cards-{{ section.id }} .editorial-modal__content {
+      min-height: 36rem;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #editorial-hover-cards-{{ section.id }} .editorial-modal {
+      padding: 1rem;
+    }
+
+    #editorial-hover-cards-{{ section.id }} .editorial-modal__content {
+      padding: 2rem 1.6rem 1.6rem;
+    }
+
+    #editorial-hover-cards-{{ section.id }} .editorial-modal__summary {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card:hover .editorial-card__image--primary,
+  #editorial-hover-cards-{{ section.id }} .editorial-card.is-hovered .editorial-card__image--primary {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card:hover .editorial-card__image--secondary,
+  #editorial-hover-cards-{{ section.id }} .editorial-card.is-hovered .editorial-card__image--secondary {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card:hover::before,
+  #editorial-hover-cards-{{ section.id }} .editorial-card.is-hovered::before {
+    background: linear-gradient(180deg, rgba(18, 12, 8, 0.06) 0%, rgba(18, 12, 8, 0.18) 35%, rgba(18, 12, 8, 0.8) 100%);
+  }
+
+  #editorial-hover-cards-{{ section.id }} .editorial-card:hover .editorial-card__body,
+  #editorial-hover-cards-{{ section.id }} .editorial-card.is-hovered .editorial-card__body,
+  #editorial-hover-cards-{{ section.id }} .editorial-card:hover .editorial-card__cta,
+  #editorial-hover-cards-{{ section.id }} .editorial-card.is-hovered .editorial-card__cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media screen and (max-width: 989px) {
+    #editorial-hover-cards-{{ section.id }} .editorial-grid {
+      grid-template-columns: 1fr;
+    }
+
+    #editorial-hover-cards-{{ section.id }} .editorial-card {
+      min-height: 46rem;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #editorial-hover-cards-{{ section.id }} .editorial-head {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+
+    #editorial-hover-cards-{{ section.id }} .editorial-card__content {
+      padding: 2rem 1.8rem 1.8rem;
+    }
+  }
+{%- endstyle -%}
+
+<section id="editorial-hover-cards-{{ section.id }}">
+  <div class="editorial-inner">
+    <div class="editorial-head">
+      <div>
+        <p class="editorial-kicker">{{ section.settings.kicker | escape }}</p>
+        <h2 class="editorial-title">{{ section.settings.title }} <em>{{ section.settings.title_emphasis }}</em></h2>
+      </div>
+    </div>
+
+    <div class="editorial-grid">
+      {%- for block in section.blocks -%}
+        <button type="button" class="editorial-card" data-modal-trigger="editorial-modal-{{ section.id }}-{{ block.id }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image_primary != blank -%}
+            <div class="editorial-card__image editorial-card__image--primary" style="background-image: url('{{ block.settings.image_primary | image_url: width: 1400 }}');"></div>
+          {%- endif -%}
+          {%- if block.settings.image_secondary != blank -%}
+            <div class="editorial-card__image editorial-card__image--secondary" style="background-image: url('{{ block.settings.image_secondary | image_url: width: 1400 }}');"></div>
+          {%- endif -%}
+
+          <div class="editorial-card__content">
+            {%- if block.settings.eyebrow != blank -%}
+              <p class="editorial-card__eyebrow">{{ block.settings.eyebrow | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h3 class="editorial-card__title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <p class="editorial-card__body">{{ block.settings.body }}</p>
+            {%- endif -%}
+            {%- if block.settings.cta_label != blank -%}
+              <span class="editorial-card__cta">
+                {{ block.settings.cta_label | escape }}
+                {{- 'icon-arrow.svg' | inline_asset_content -}}
+              </span>
+            {%- endif -%}
+          </div>
+        </button>
+      {%- endfor -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      <div class="editorial-modal" id="editorial-modal-{{ section.id }}-{{ block.id }}" aria-hidden="true" role="dialog" aria-modal="true" hidden>
+        <div class="editorial-modal__backdrop" data-modal-close></div>
+        <div class="editorial-modal__panel" role="document">
+          <button class="editorial-modal__close" type="button" aria-label="Kapat" data-modal-close>
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </button>
+
+          {%- assign modal_image = block.settings.popup_image | default: block.settings.image_secondary | default: block.settings.image_primary -%}
+          <div class="editorial-modal__media" {% if modal_image != blank %}style="background-image: url('{{ modal_image | image_url: width: 1400 }}');"{% endif %}></div>
+
+          <div class="editorial-modal__content">
+            <div>
+              {%- if block.settings.popup_eyebrow != blank -%}
+                <p class="editorial-modal__eyebrow">{{ block.settings.popup_eyebrow | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.popup_title != blank -%}
+                <h3 class="editorial-modal__title">{{ block.settings.popup_title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.popup_body != blank -%}
+                <div class="editorial-modal__body">{{ block.settings.popup_body }}</div>
+              {%- endif -%}
+
+              {%- if block.settings.popup_items != blank -%}
+                <p class="editorial-modal__included-label">Included in this set</p>
+                <ul class="editorial-modal__list">
+                  {%- assign modal_items = block.settings.popup_items | split: '|' -%}
+                  {%- for item in modal_items -%}
+                    {%- if item != blank -%}
+                      <li>
+                        {%- if modal_image != blank -%}
+                          {{ modal_image | image_url: width: 120 | image_tag: class: 'editorial-modal__thumb', loading: 'lazy', widths: '120', sizes: '120px', alt: block.settings.popup_title }}
+                        {%- endif -%}
+                        <div>
+                          <p class="editorial-modal__product-title">{{ item | strip | escape }}</p>
+                          <span class="editorial-modal__product-meta">{{ block.settings.popup_item_meta | default: '30ml' | escape }}</span>
+                        </div>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+
+            <div>
+              <div class="editorial-modal__summary">
+                <div>
+                  <p class="editorial-modal__summary-label">{{ block.settings.popup_summary_label | escape }}</p>
+                  <p class="editorial-modal__summary-price">{{ block.settings.popup_price | escape }}{%- if block.settings.popup_compare_price != blank -%} <del>{{ block.settings.popup_compare_price | escape }}</del>{%- endif -%}</p>
+                </div>
+
+                {%- if block.settings.popup_button_label != blank -%}
+                  <a class="editorial-modal__button" href="{{ block.settings.popup_button_link }}">{{ block.settings.popup_button_label | escape }}</a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% javascript %}
+  (function() {
+    const sections = document.querySelectorAll('.editorial-hover-cards-section');
+    if (!sections.length) return;
+
+    sections.forEach((section) => {
+      const cards = section.querySelectorAll('.editorial-card');
+      const modals = section.querySelectorAll('.editorial-modal');
+      if (!cards.length) return;
+
+      cards.forEach((card) => {
+        card.addEventListener('mouseenter', () => card.classList.add('is-hovered'));
+        card.addEventListener('mouseleave', () => card.classList.remove('is-hovered'));
+        card.addEventListener('focus', () => card.classList.add('is-hovered'));
+        card.addEventListener('blur', () => card.classList.remove('is-hovered'));
+        card.addEventListener('click', () => {
+          const modalId = card.getAttribute('data-modal-trigger');
+          if (!modalId) return;
+          const modal = section.querySelector('#' + modalId);
+          if (!modal) return;
+          modal.hidden = false;
+          modal.classList.add('is-open');
+          modal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      modals.forEach((modal) => {
+        const closeModal = () => {
+          modal.classList.remove('is-open');
+          modal.setAttribute('aria-hidden', 'true');
+          modal.hidden = true;
+          document.body.style.overflow = '';
+        };
+
+        modal.querySelectorAll('[data-modal-close]').forEach((control) => {
+          control.addEventListener('click', closeModal);
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+            closeModal();
+          }
+        });
+      });
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Editorial Hover Cards",
+  "tag": "section",
+  "class": "editorial-hover-cards-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "CURATED ROUTINES"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Başlık",
+      "default": "Shop by"
+    },
+    {
+      "type": "text",
+      "id": "title_emphasis",
+      "label": "Vurgulu kelime",
+      "default": "Solution"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Arka plan",
+      "default": "#f7f7f4"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Üst boşluk",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Alt boşluk",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hover_card",
+      "name": "Hover Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Üst etiket",
+          "default": "MORNING RITUAL"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Başlık",
+          "default": "3-Minute Awakening & De-Puffing Guide"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Açıklama",
+          "default": "<p>Hover ile ikinci görsel görünür, altında açıklama açılır.</p>"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA",
+          "default": "View Routine"
+        },
+        {
+          "type": "text",
+          "id": "popup_eyebrow",
+          "label": "Popup üst etiketi",
+          "default": "DEEP NIGHT REPAIR"
+        },
+        {
+          "type": "text",
+          "id": "popup_title",
+          "label": "Popup başlık",
+          "default": "The Late Night Savior"
+        },
+        {
+          "type": "richtext",
+          "id": "popup_body",
+          "label": "Popup açıklama",
+          "default": "<p>Counteract the effects of blue light and fatigue. This potent trio works in sync with your circadian rhythm to repair and reset while you sleep.</p>"
+        },
+        {
+          "type": "text",
+          "id": "popup_items",
+          "label": "Popup ürünleri (| ile ayır)",
+          "default": "Renewal Oil | Daily Moisturizer"
+        },
+        {
+          "type": "text",
+          "id": "popup_item_meta",
+          "label": "Popup ürün alt metin",
+          "default": "30ml"
+        },
+        {
+          "type": "text",
+          "id": "popup_summary_label",
+          "label": "Popup özet etiketi",
+          "default": "Bundle Savings"
+        },
+        {
+          "type": "text",
+          "id": "popup_price",
+          "label": "Popup fiyat",
+          "default": "$37.74"
+        },
+        {
+          "type": "text",
+          "id": "popup_compare_price",
+          "label": "Popup eski fiyat",
+          "default": "$50.00"
+        },
+        {
+          "type": "text",
+          "id": "popup_button_label",
+          "label": "Popup buton",
+          "default": "Add Bundle to Cart"
+        },
+        {
+          "type": "url",
+          "id": "popup_button_link",
+          "label": "Popup buton link"
+        },
+        {
+          "type": "image_picker",
+          "id": "popup_image",
+          "label": "Popup görseli"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_primary",
+          "label": "1. Görsel"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_secondary",
+          "label": "2. Görsel"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial Hover Cards",
+      "blocks": [
+        {
+          "type": "hover_card",
+          "settings": {
+            "eyebrow": "MORNING RITUAL",
+            "title": "3-Minute Awakening & De-Puffing Guide",
+            "body": "<p>Hover ile ikinci görsel görünür, altında açıklama açılır.</p>",
+            "cta_label": "View Routine",
+            "popup_eyebrow": "MORNING RITUAL",
+            "popup_title": "3-Minute Awakening & De-Puffing Guide",
+            "popup_body": "<p>Counteract morning puffiness and reset your skin with a fast, sculpting ritual.</p>",
+            "popup_items": "Awakening Serum | Cooling Eye Gel",
+            "popup_summary_label": "Routine Price",
+            "popup_price": "$42.00",
+            "popup_compare_price": "$58.00",
+            "popup_button_label": "Shop Routine"
+          }
+        },
+        {
+          "type": "hover_card",
+          "settings": {
+            "eyebrow": "DEEP NIGHT REPAIR",
+            "title": "The Late Night Savior",
+            "body": "<p>Hover ile ikinci görsel görünür, altında açıklama açılır.</p>",
+            "cta_label": "View Routine",
+            "popup_eyebrow": "DEEP NIGHT REPAIR",
+            "popup_title": "The Late Night Savior",
+            "popup_body": "<p>Repair and reset while you sleep with a potent trio that supports your circadian rhythm.</p>",
+            "popup_items": "Renewal Oil | Daily Moisturizer",
+            "popup_summary_label": "Bundle Savings",
+            "popup_price": "$37.74",
+            "popup_compare_price": "$50.00",
+            "popup_button_label": "Add Bundle to Cart"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

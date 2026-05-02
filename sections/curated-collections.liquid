@@ -1,0 +1,479 @@
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #curated-collections-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  #curated-collections-{{ section.id }} .curated-inner {
+    max-width: min(var(--page-width), 132rem);
+    margin: 0 auto;
+    padding: 0 1.6rem;
+  }
+
+  #curated-collections-{{ section.id }} .curated-head {
+    display: flex;
+    gap: 2.2rem;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3.2rem;
+  }
+
+  #curated-collections-{{ section.id }} .curated-kicker {
+    margin: 0 0 1.1rem;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 1.15rem;
+    color: #8a6750;
+    font-weight: 600;
+  }
+
+  #curated-collections-{{ section.id }} .curated-title {
+    margin: 0;
+    color: #1d2431;
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    font-size: clamp(3.8rem, 4.4vw, 5.8rem);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+  }
+
+  #curated-collections-{{ section.id }} .curated-title em {
+    color: #9f774d;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  #curated-collections-{{ section.id }} .curated-tabs {
+    display: flex;
+    gap: 2.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  #curated-collections-{{ section.id }} .curated-tab {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    margin: 0;
+    padding: 0.2rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.17em;
+    font-size: 1.16rem;
+    color: #816857;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    font-weight: 600;
+    position: relative;
+    transition: color 0.25s ease;
+  }
+
+  #curated-collections-{{ section.id }} .curated-tab::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.7rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: #9f774d;
+    transform: translateX(-50%) scale(0);
+    transition: transform 0.25s ease;
+  }
+
+  #curated-collections-{{ section.id }} .curated-tab.is-active {
+    color: #2f2f2f;
+  }
+
+  #curated-collections-{{ section.id }} .curated-tab.is-active::after {
+    transform: translateX(-50%) scale(1);
+  }
+
+  #curated-collections-{{ section.id }} .curated-panel {
+    display: none;
+  }
+
+  #curated-collections-{{ section.id }} .curated-panel.is-active {
+    display: block;
+  }
+
+  #curated-collections-{{ section.id }} .curated-grid {
+    display: grid;
+    gap: 2.6rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  #curated-collections-{{ section.id }} .curated-card {
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  #curated-collections-{{ section.id }} .curated-card-media {
+    position: relative;
+    overflow: hidden;
+    background: #e9e3df;
+    aspect-ratio: {% if section.settings.card_ratio == 'portrait' %} 0.67 {% else %} 1 {% endif %};
+  }
+
+  #curated-collections-{{ section.id }} .curated-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  #curated-collections-{{ section.id }} .curated-card:hover .curated-card-media img {
+    transform: scale(1.04);
+  }
+
+  #curated-collections-{{ section.id }} .curated-badge {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 2;
+    background: #cc5536;
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    padding: 0.45rem 0.8rem;
+    line-height: 1;
+  }
+
+  #curated-collections-{{ section.id }} .curated-info {
+    padding-top: 1.6rem;
+  }
+
+  #curated-collections-{{ section.id }} .curated-vendor {
+    margin: 0 0 0.65rem;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 1.16rem;
+    color: #9a7d61;
+  }
+
+  #curated-collections-{{ section.id }} .curated-product-title {
+    margin: 0;
+    color: #1f2a3a;
+    font-family: 'Poppins', 'Times New Roman', serif;
+    font-size: 2rem;
+    line-height: 1.03;
+  }
+
+  #curated-collections-{{ section.id }} .curated-price {
+    margin-top: 0.9rem;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    color: #6f6358;
+    font-size: 2.1rem;
+    line-height: 1.2;
+  }
+
+  #curated-collections-{{ section.id }} .curated-price .compare {
+    text-decoration: line-through;
+    margin-left: 0.55rem;
+    opacity: 0.6;
+  }
+
+  #curated-collections-{{ section.id }} .curated-empty {
+    padding: 1.8rem;
+    border: 1px dashed rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.55);
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #7f7062;
+    font-size: 1.1rem;
+  }
+
+  @media screen and (max-width: 1100px) {
+    #curated-collections-{{ section.id }} .curated-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #curated-collections-{{ section.id }} .curated-head {
+      align-items: flex-start;
+      flex-direction: column;
+      margin-bottom: 2rem;
+    }
+
+    #curated-collections-{{ section.id }} .curated-tabs {
+      gap: 1.8rem;
+    }
+
+    #curated-collections-{{ section.id }} .curated-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+{%- endstyle -%}
+
+<section id="curated-collections-{{ section.id }}" data-curated-collections>
+  <div class="curated-inner">
+    <div class="curated-head">
+      <div>
+        <p class="curated-kicker">{{ section.settings.kicker | escape }}</p>
+        <h2 class="curated-title">{{ section.settings.title }} <em>{{ section.settings.title_emphasis }}</em></h2>
+      </div>
+
+      <div class="curated-tabs" role="tablist" aria-label="Collection tabs">
+        <button class="curated-tab is-active" type="button" role="tab" aria-selected="true" data-panel="one">{{ section.settings.tab_1_label | escape }}</button>
+        <button class="curated-tab" type="button" role="tab" aria-selected="false" data-panel="two">{{ section.settings.tab_2_label | escape }}</button>
+        <button class="curated-tab" type="button" role="tab" aria-selected="false" data-panel="three">{{ section.settings.tab_3_label | escape }}</button>
+      </div>
+    </div>
+
+    {%- assign c1 = section.settings.collection_1 -%}
+    {%- assign c2 = section.settings.collection_2 -%}
+    {%- assign c3 = section.settings.collection_3 -%}
+
+    <div class="curated-panel is-active" data-panel-content="one" role="tabpanel">
+      {%- if c1 != blank and c1.products_count > 0 -%}
+        <div class="curated-grid">
+          {%- for product in c1.products limit: section.settings.products_limit -%}
+            <a href="{{ product.url }}" class="curated-card">
+              <div class="curated-card-media">
+                {%- assign compare_price = product.compare_at_price_max -%}
+                {%- assign sale_price = product.price -%}
+                {%- if compare_price > sale_price and compare_price > 0 -%}
+                  {%- assign discount = compare_price | minus: sale_price | times: 100 | divided_by: compare_price | round -%}
+                  <span class="curated-badge">-{{ discount }}%</span>
+                {%- endif -%}
+
+                {%- if product.featured_image != blank -%}
+                  {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 500, 700, 900', sizes: '(max-width: 749px) 100vw, (max-width: 1100px) 50vw, 25vw', alt: product.title }}
+                {%- endif -%}
+              </div>
+              <div class="curated-info">
+                <p class="curated-vendor">{{ product.vendor | default: shop.name | escape }}</p>
+                <h3 class="curated-product-title">{{ product.title | escape }}</h3>
+                <p class="curated-price">
+                  {%- if product.price_varies -%}From {% endif -%}{{ product.price | money }}
+                  {%- if compare_price > sale_price -%}<span class="compare">{{ compare_price | money }}</span>{%- endif -%}
+                </p>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="curated-empty">Select a collection for {{ section.settings.tab_1_label | escape }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="curated-panel" data-panel-content="two" role="tabpanel" hidden>
+      {%- if c2 != blank and c2.products_count > 0 -%}
+        <div class="curated-grid">
+          {%- for product in c2.products limit: section.settings.products_limit -%}
+            <a href="{{ product.url }}" class="curated-card">
+              <div class="curated-card-media">
+                {%- assign compare_price = product.compare_at_price_max -%}
+                {%- assign sale_price = product.price -%}
+                {%- if compare_price > sale_price and compare_price > 0 -%}
+                  {%- assign discount = compare_price | minus: sale_price | times: 100 | divided_by: compare_price | round -%}
+                  <span class="curated-badge">-{{ discount }}%</span>
+                {%- endif -%}
+
+                {%- if product.featured_image != blank -%}
+                  {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 500, 700, 900', sizes: '(max-width: 749px) 100vw, (max-width: 1100px) 50vw, 25vw', alt: product.title }}
+                {%- endif -%}
+              </div>
+              <div class="curated-info">
+                <p class="curated-vendor">{{ product.vendor | default: shop.name | escape }}</p>
+                <h3 class="curated-product-title">{{ product.title | escape }}</h3>
+                <p class="curated-price">
+                  {%- if product.price_varies -%}From {% endif -%}{{ product.price | money }}
+                  {%- if compare_price > sale_price -%}<span class="compare">{{ compare_price | money }}</span>{%- endif -%}
+                </p>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="curated-empty">Select a collection for {{ section.settings.tab_2_label | escape }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="curated-panel" data-panel-content="three" role="tabpanel" hidden>
+      {%- if c3 != blank and c3.products_count > 0 -%}
+        <div class="curated-grid">
+          {%- for product in c3.products limit: section.settings.products_limit -%}
+            <a href="{{ product.url }}" class="curated-card">
+              <div class="curated-card-media">
+                {%- assign compare_price = product.compare_at_price_max -%}
+                {%- assign sale_price = product.price -%}
+                {%- if compare_price > sale_price and compare_price > 0 -%}
+                  {%- assign discount = compare_price | minus: sale_price | times: 100 | divided_by: compare_price | round -%}
+                  <span class="curated-badge">-{{ discount }}%</span>
+                {%- endif -%}
+
+                {%- if product.featured_image != blank -%}
+                  {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 500, 700, 900', sizes: '(max-width: 749px) 100vw, (max-width: 1100px) 50vw, 25vw', alt: product.title }}
+                {%- endif -%}
+              </div>
+              <div class="curated-info">
+                <p class="curated-vendor">{{ product.vendor | default: shop.name | escape }}</p>
+                <h3 class="curated-product-title">{{ product.title | escape }}</h3>
+                <p class="curated-price">
+                  {%- if product.price_varies -%}From {% endif -%}{{ product.price | money }}
+                  {%- if compare_price > sale_price -%}<span class="compare">{{ compare_price | money }}</span>{%- endif -%}
+                </p>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="curated-empty">Select a collection for {{ section.settings.tab_3_label | escape }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% javascript %}
+  (function() {
+    const sections = document.querySelectorAll('[data-curated-collections]');
+    if (!sections.length) return;
+
+    sections.forEach((section) => {
+      const tabs = section.querySelectorAll('.curated-tab');
+      const panels = section.querySelectorAll('[data-panel-content]');
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const target = tab.getAttribute('data-panel');
+
+          tabs.forEach((btn) => {
+            btn.classList.remove('is-active');
+            btn.setAttribute('aria-selected', 'false');
+          });
+
+          panels.forEach((panel) => {
+            const isMatch = panel.getAttribute('data-panel-content') === target;
+            panel.classList.toggle('is-active', isMatch);
+            panel.hidden = !isMatch;
+          });
+
+          tab.classList.add('is-active');
+          tab.setAttribute('aria-selected', 'true');
+        });
+      });
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Curated Collections",
+  "tag": "section",
+  "class": "curated-collections-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "CURATED EDIT"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Baslik",
+      "default": "Featured"
+    },
+    {
+      "type": "text",
+      "id": "title_emphasis",
+      "label": "Vurgulu baslik",
+      "default": "Collections"
+    },
+    {
+      "type": "text",
+      "id": "tab_1_label",
+      "label": "Tab 1",
+      "default": "NEW ARRIVALS"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Tab 1 koleksiyonu"
+    },
+    {
+      "type": "text",
+      "id": "tab_2_label",
+      "label": "Tab 2",
+      "default": "BEST SELLERS"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Tab 2 koleksiyonu"
+    },
+    {
+      "type": "text",
+      "id": "tab_3_label",
+      "label": "Tab 3",
+      "default": "STAFF PICKS"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Tab 3 koleksiyonu"
+    },
+    {
+      "type": "select",
+      "id": "card_ratio",
+      "label": "Kart oranı",
+      "default": "square",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Portrait" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Urun sayisi",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Arka plan",
+      "default": "#f1f1f1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Ust bosluk",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Alt bosluk",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Curated Collections"
+    }
+  ]
+}
+{% endschema %}

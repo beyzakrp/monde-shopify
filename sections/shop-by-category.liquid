@@ -1,6 +1,6 @@
 {%- style -%}
   #shop-by-category-{{ section.id }} {
-    margin: {{ section.settings.margin_top }}px 5px {{ section.settings.margin_bottom }}px;
+    margin: {{ section.settings.margin_top }}px 0 {{ section.settings.margin_bottom }}px;
     padding: {{ section.settings.padding_top }}px 16px {{ section.settings.padding_bottom }}px;
   }
 
@@ -8,9 +8,11 @@
     font-size: {{ section.settings.heading_size }}px;
     color: {{ section.settings.heading_color }};
     text-align: {{ section.settings.heading_alignment }};
-    margin-bottom: 24px;
+    margin: 0 0 28px;
     font-family: '{{ section.settings.heading_font }}', serif;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-wrap: balance;
   }
 
   #shop-by-category-{{ section.id }} .category-container {
@@ -36,7 +38,7 @@
     display: flex;
     gap: {{ section.settings.gap_mobile }}px;
     min-width: min-content;
-    padding: 0;
+    padding: 0 2px;
     margin: 0;
   }
 
@@ -55,7 +57,7 @@
     width: 318px;
     height: 318px;
     aspect-ratio: 1;
-    border-radius: 18px 0;
+    border-radius: 26px;
   }
 
   #shop-by-category-{{ section.id }} .category-image {
@@ -67,11 +69,21 @@
     pointer-events: none;
     user-select: none;
     -webkit-user-drag: none;
-    transition: transform 0.3s ease;
+    transition: transform 0.42s ease, filter 0.42s ease;
+    filter: saturate(0.92) contrast(1.04);
   }
 
   #shop-by-category-{{ section.id }} .category-item:hover .category-image {
-    transform: scale(1.1);
+    transform: scale(1.08);
+    filter: saturate(1) contrast(1.08);
+  }
+
+  #shop-by-category-{{ section.id }} .category-image-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(19, 14, 9, 0.52) 10%, rgba(19, 14, 9, 0.08) 54%, rgba(19, 14, 9, 0.02) 100%);
+    pointer-events: none;
   }
 
   #shop-by-category-{{ section.id }} .category-label {
@@ -82,13 +94,14 @@
     text-align: center;
     text-transform: uppercase;
     font-size: {{ section.settings.label_size }}px;
-    color: #2b2a2a;
+    color: #fff7ea;
     font-family: 'Avenir LT Pro', sans-serif;
-    font-weight: 800;
+    font-weight: 700;
     pointer-events: none;
-    letter-spacing: .2em;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.18em;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.34);
     display: inline-block;
+    z-index: 1;
   }
 
   #shop-by-category-{{ section.id }} .category-label::after {
@@ -135,6 +148,10 @@
     #shop-by-category-{{ section.id }} .shop-by-header {
       font-size: {{ section.settings.heading_size | times: 0.8 | round }}px;
     }
+
+    #shop-by-category-{{ section.id }} .category-label {
+      letter-spacing: 0.12em;
+    }
   }
 {%- endstyle -%}
 
@@ -171,60 +188,62 @@
 
 {% javascript %}
   (function() {
-    const slider = document.querySelector('#shop-by-category-{{ section.id }} .category-container');
-    if (!slider) return;
+    const sliders = document.querySelectorAll('.shop-by-category-section .category-container');
+    if (!sliders.length) return;
 
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-    let isDragging = false;
-    const dragThreshold = 5;
-    let startY;
+    sliders.forEach((slider) => {
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+      let isDragging = false;
+      const dragThreshold = 5;
+      let startY;
 
-    slider.addEventListener('mousedown', (e) => {
-      isDown = true;
-      slider.style.cursor = 'grabbing';
-      startX = e.pageX - slider.offsetLeft;
-      startY = e.pageY;
-      scrollLeft = slider.scrollLeft;
-      isDragging = false;
-      e.preventDefault();
-    });
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.style.cursor = 'grabbing';
+        startX = e.pageX - slider.offsetLeft;
+        startY = e.pageY;
+        scrollLeft = slider.scrollLeft;
+        isDragging = false;
+        e.preventDefault();
+      });
 
-    slider.addEventListener('mouseleave', () => {
-      isDown = false;
-      slider.style.cursor = 'grab';
-    });
+      slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+      });
 
-    slider.addEventListener('mouseup', () => {
-      isDown = false;
-      slider.style.cursor = 'grab';
-    });
+      slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+      });
 
-    slider.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
 
-      const x = e.pageX - slider.offsetLeft;
-      const y = e.pageY;
-      const walkX = Math.abs(x - startX);
-      const walkY = Math.abs(y - startY);
+        const x = e.pageX - slider.offsetLeft;
+        const y = e.pageY;
+        const walkX = Math.abs(x - startX);
+        const walkY = Math.abs(y - startY);
 
-      if (walkX > dragThreshold || walkY > dragThreshold) {
-        isDragging = true;
-      }
-
-      if (isDragging) {
-        const walk = (x - startX) * 1.5;
-        slider.scrollLeft = scrollLeft - walk;
-      }
-    });
-
-    document.querySelectorAll('#shop-by-category-{{ section.id }} .category-item').forEach((link) => {
-      link.addEventListener('click', function(event) {
-        if (isDragging) {
-          event.preventDefault();
+        if (walkX > dragThreshold || walkY > dragThreshold) {
+          isDragging = true;
         }
+
+        if (isDragging) {
+          const walk = (x - startX) * 1.5;
+          slider.scrollLeft = scrollLeft - walk;
+        }
+      });
+
+      slider.closest('.shop-by-category-section')?.querySelectorAll('.category-item').forEach((link) => {
+        link.addEventListener('click', function(event) {
+          if (isDragging) {
+            event.preventDefault();
+          }
+        });
       });
     });
   })();
@@ -240,7 +259,7 @@
       "type": "text",
       "id": "heading",
       "label": "Başlık",
-      "default": "Shop by Category"
+      "default": "Bakim Kategorileri"
     },
     {
       "type": "range",
@@ -392,19 +411,19 @@
         {
           "type": "category",
           "settings": {
-            "category_name": "Wedding Rings"
+            "category_name": "Temizleyici"
           }
         },
         {
           "type": "category",
           "settings": {
-            "category_name": "Engagement Rings"
+            "category_name": "Serum"
           }
         },
         {
           "type": "category",
           "settings": {
-            "category_name": "Earrings"
+            "category_name": "Nemlendirici"
           }
         }
       ]

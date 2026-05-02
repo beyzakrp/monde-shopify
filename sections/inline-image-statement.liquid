@@ -1,0 +1,404 @@
+{%- style -%}
+  #inline-image-statement-{{ section.id }} {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+  }
+
+  #inline-image-statement-{{ section.id }}::before,
+  #inline-image-statement-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 380px;
+    height: 380px;
+    border-radius: 999px;
+    filter: blur(48px);
+    opacity: 0.22;
+    pointer-events: none;
+  }
+
+  #inline-image-statement-{{ section.id }}::before {
+    top: -200px;
+    left: -120px;
+    background: #f6dfc7;
+  }
+
+  #inline-image-statement-{{ section.id }}::after {
+    right: -120px;
+    bottom: -240px;
+    background: #e7d7c2;
+  }
+
+  #inline-image-statement-{{ section.id }} .statement-wrap {
+    max-width: {{ section.settings.content_max_width }}px;
+    margin: 0 auto;
+    padding: clamp(18px, 2.6vw, 34px);
+    border-radius: clamp(16px, 2vw, 30px);
+    background: linear-gradient(145deg, rgba(255, 252, 246, 0.66), rgba(245, 235, 220, 0.42));
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    box-shadow: 0 16px 40px rgba(39, 29, 20, 0.14);
+    backdrop-filter: blur(2px);
+  }
+
+  #inline-image-statement-{{ section.id }} .statement-heading {
+    margin: 0;
+    color: {{ section.settings.text_color }};
+    font-family: '{{ section.settings.heading_font }}', 'Times New Roman', serif;
+    font-size: clamp(34px, {{ section.settings.heading_size | times: 0.42 | round }}px + 1.6vw, {{ section.settings.heading_size }}px);
+    font-weight: {{ section.settings.heading_weight }};
+    line-height: 1.02;
+    letter-spacing: 0.012em;
+    text-wrap: balance;
+  }
+
+  #inline-image-statement-{{ section.id }} .heading-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(10px, 1.2vw, 18px);
+  }
+
+  #inline-image-statement-{{ section.id }} .heading-row + .heading-row {
+    margin-top: {{ section.settings.row_gap }}px;
+  }
+
+  #inline-image-statement-{{ section.id }} .heading-image {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: {{ section.settings.image_radius }}px;
+    flex: 0 0 auto;
+    background: #f0e8de;
+    box-shadow: 0 10px 26px rgba(36, 24, 15, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  #inline-image-statement-{{ section.id }} .heading-image--one {
+    width: {{ section.settings.image_1_width }}px;
+    height: {{ section.settings.image_1_height }}px;
+  }
+
+  #inline-image-statement-{{ section.id }} .heading-image--two {
+    width: {{ section.settings.image_2_width }}px;
+    height: {{ section.settings.image_2_height }}px;
+  }
+
+  #inline-image-statement-{{ section.id }} .heading-image img,
+  #inline-image-statement-{{ section.id }} .heading-image svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.01);
+    transition: transform 0.4s ease;
+  }
+
+  #inline-image-statement-{{ section.id }} .heading-row > span:not(.heading-image) {
+    position: relative;
+  }
+
+  #inline-image-statement-{{ section.id }} .heading-row > span:not(.heading-image)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.05em;
+    width: 100%;
+    height: 0.06em;
+    background: currentColor;
+    opacity: 0.16;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.4s ease;
+  }
+
+  #inline-image-statement-{{ section.id }}:hover .heading-image {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 34px rgba(36, 24, 15, 0.24);
+  }
+
+  #inline-image-statement-{{ section.id }}:hover .heading-image img,
+  #inline-image-statement-{{ section.id }}:hover .heading-image svg {
+    transform: scale(1.05);
+  }
+
+  #inline-image-statement-{{ section.id }}:hover .heading-row > span:not(.heading-image)::after {
+    transform: scaleX(1);
+  }
+
+  @media screen and (max-width: 989px) {
+    #inline-image-statement-{{ section.id }} {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+
+    #inline-image-statement-{{ section.id }} .statement-heading {
+      font-size: clamp(26px, {{ section.settings.heading_size | times: 0.32 | round }}px + 2.8vw, {{ section.settings.heading_size | times: 0.66 | round }}px);
+      line-height: 1.1;
+    }
+
+    #inline-image-statement-{{ section.id }} .heading-row {
+      gap: 9px;
+    }
+
+    #inline-image-statement-{{ section.id }} .heading-row + .heading-row {
+      margin-top: {{ section.settings.row_gap | times: 0.7 | round }}px;
+    }
+
+    #inline-image-statement-{{ section.id }} .heading-image--one {
+      width: {{ section.settings.image_1_width | times: 0.58 | round }}px;
+      height: {{ section.settings.image_1_height | times: 0.58 | round }}px;
+      border-radius: {{ section.settings.image_radius | times: 0.72 | round }}px;
+    }
+
+    #inline-image-statement-{{ section.id }} .heading-image--two {
+      width: {{ section.settings.image_2_width | times: 0.58 | round }}px;
+      height: {{ section.settings.image_2_height | times: 0.58 | round }}px;
+      border-radius: {{ section.settings.image_radius | times: 0.72 | round }}px;
+    }
+
+    #inline-image-statement-{{ section.id }} .heading-row > span:not(.heading-image)::after {
+      opacity: 0.12;
+    }
+  }
+{%- endstyle -%}
+
+<section id="inline-image-statement-{{ section.id }}">
+  <div class="statement-wrap">
+    <{{ section.settings.heading_tag }} class="statement-heading">
+      <span class="heading-row heading-row--first">
+        {%- if section.settings.line_1_start != blank -%}
+          <span>{{ section.settings.line_1_start }}</span>
+        {%- endif -%}
+
+        <span class="heading-image heading-image--one" aria-hidden="true">
+          {%- if section.settings.image_1 != blank -%}
+            {{ section.settings.image_1 | image_url: width: 640 | image_tag:
+              widths: '220, 320, 420, 640',
+              sizes: '(max-width: 989px) 42vw, 26vw',
+              loading: 'lazy',
+              alt: section.settings.image_1.alt | default: section.settings.line_1_start
+            }}
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag }}
+          {%- endif -%}
+        </span>
+
+        {%- if section.settings.line_1_end != blank -%}
+          <span>{{ section.settings.line_1_end }}</span>
+        {%- endif -%}
+      </span>
+
+      <span class="heading-row heading-row--second">
+        <span class="heading-image heading-image--two" aria-hidden="true">
+          {%- if section.settings.image_2 != blank -%}
+            {{ section.settings.image_2 | image_url: width: 640 | image_tag:
+              widths: '220, 320, 420, 640',
+              sizes: '(max-width: 989px) 38vw, 22vw',
+              loading: 'lazy',
+              alt: section.settings.image_2.alt | default: section.settings.line_2_text
+            }}
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag }}
+          {%- endif -%}
+        </span>
+
+        {%- if section.settings.line_2_text != blank -%}
+          <span>{{ section.settings.line_2_text }}</span>
+        {%- endif -%}
+      </span>
+    </{{ section.settings.heading_tag }}>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Inline Image Statement",
+  "tag": "section",
+  "class": "section-inline-image-statement",
+  "settings": [
+    {
+      "type": "text",
+      "id": "line_1_start",
+      "label": "1. satır metin (başlangıç)",
+      "default": "Cildinize bugun"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "1. satır görsel"
+    },
+    {
+      "type": "text",
+      "id": "line_1_end",
+      "label": "1. satır metin (bitiş)",
+      "default": "ipeksi bir isilti hediye edin"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "2. satır görsel"
+    },
+    {
+      "type": "text",
+      "id": "line_2_text",
+      "label": "2. satır metin",
+      "default": "aktiflerle guclenen nazik bir rutinle."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Başlık etiketi",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "p", "label": "P" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "text",
+      "id": "heading_font",
+      "label": "Font adı",
+      "default": "Cormorant Garamond"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Başlık boyutu",
+      "min": 28,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Font kalınlığı",
+      "options": [
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" },
+        { "value": "700", "label": "700" },
+        { "value": "800", "label": "800" },
+        { "value": "900", "label": "900" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Arka plan rengi",
+      "default": "#f6f0e7"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Yazı rengi",
+      "default": "#1d1510"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "İçerik maksimum genişlik",
+      "min": 900,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1500
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Üst boşluk",
+      "min": 0,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Alt boşluk",
+      "min": 0,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "Satırlar arası boşluk",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Görsel köşe yuvarlaklığı",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "image_1_width",
+      "label": "1. görsel genişlik",
+      "min": 120,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 230
+    },
+    {
+      "type": "range",
+      "id": "image_1_height",
+      "label": "1. görsel yükseklik",
+      "min": 80,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "image_2_width",
+      "label": "2. görsel genişlik",
+      "min": 120,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 190
+    },
+    {
+      "type": "range",
+      "id": "image_2_height",
+      "label": "2. görsel yükseklik",
+      "min": 80,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 130
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inline Image Statement"
+    }
+  ]
+}
+{% endschema %}

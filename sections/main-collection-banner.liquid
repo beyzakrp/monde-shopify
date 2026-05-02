@@ -1,47 +1,175 @@
 {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
 {{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
 
+{%- assign hero_image = section.settings.hero_image | default: collection.image -%}
+{%- assign hero_title = section.settings.hero_title | default: collection.title -%}
+{%- assign hero_description = section.settings.hero_description -%}
+
+{%- if hero_description == blank and section.settings.show_collection_description -%}
+  {%- assign hero_description = collection.description -%}
+{%- endif -%}
+
 {%- style -%}
+  .collection-hero--dynamic {
+    background: radial-gradient(circle at 14% 28%, rgba(245, 228, 208, 0.44), transparent 46%),
+      linear-gradient(125deg, #f8f2e9 0%, #efe5d8 100%);
+    overflow: hidden;
+  }
+
+  .collection-hero--dynamic.collection-hero--has-image {
+    background: #f4ebe0;
+  }
+
+  .collection-hero__panel {
+    position: relative;
+    min-height: clamp(28rem, 52vw, 58rem);
+    display: grid;
+    align-items: center;
+  }
+
+  .collection-hero__panel--no-image {
+    padding: clamp(3.5rem, 8vw, 7rem) 0;
+  }
+
+  .collection-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .collection-hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 249, 241, 0.04) 0%, rgba(255, 249, 241, 0.34) 72%, rgba(255, 249, 241, 0.7) 100%);
+  }
+
+  .collection-hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .collection-hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 88rem;
+    margin: 0 auto;
+    padding: clamp(3.2rem, 7vw, 7rem) clamp(1.6rem, 4vw, 4rem);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.96);
+  }
+
+  .collection-hero__content--left {
+    margin-left: 0;
+    margin-right: auto;
+    text-align: left;
+  }
+
+  .collection-hero__eyebrow {
+    display: inline-block;
+    margin-bottom: 1.2rem;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    font-size: 1rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: inherit;
+  }
+
+  .collection-hero__title {
+    margin: 0;
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    letter-spacing: 0.015em;
+    color: inherit;
+    font-size: clamp(4rem, 8vw, 8.4rem);
+    line-height: 0.92;
+  }
+
+  .collection-hero__description {
+    max-width: 58ch;
+    margin: 1.2rem auto 0;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 1.6rem;
+  }
+
+  .collection-hero__content--left .collection-hero__description {
+    margin-left: 0;
+  }
+
+  .collection-hero__content--dark {
+    color: rgba(34, 25, 16, 0.92);
+  }
+
+  .collection-hero__content--dark .collection-hero__eyebrow {
+    border-color: rgba(44, 32, 20, 0.16);
+    background: rgba(255, 251, 245, 0.82);
+    color: rgba(39, 28, 19, 0.84);
+  }
+
+  .collection-hero__content--dark .collection-hero__description {
+    color: rgba(34, 25, 16, 0.84);
+  }
+
+  .collection-hero__image-container {
+    border-radius: 0;
+    overflow: hidden;
+  }
+
   @media screen and (max-width: 749px) {
-    .collection-hero--with-image .collection-hero__inner {
-      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
+    .collection-hero__panel {
+      min-height: 36rem;
+    }
+
+    .collection-hero__content {
+      padding-inline: 1.4rem;
     }
   }
 {%- endstyle -%}
 
-<div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
-  <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    <div class="collection-hero__text-wrapper">
-      <h1 class="collection-hero__title">
-        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
-      </h1>
-
-      {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
-      {%- endif -%}
-    </div>
-
-    {%- if section.settings.show_collection_image and collection.image -%}
-      <div class="collection-hero__image-container media gradient">
+<div class="collection-hero collection-hero--dynamic{% if section.settings.show_collection_image and hero_image != blank %} collection-hero--has-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
+  <div class="collection-hero__panel{% if section.settings.show_collection_image and hero_image != blank %} collection-hero__panel--with-image{% else %} collection-hero__panel--no-image{% endif %} page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    {%- if section.settings.show_collection_image and hero_image != blank -%}
+      <div class="collection-hero__media">
         <img
           srcset="
-            {%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
-            {%- if collection.image.width >= 360 -%}{{ collection.image | image_url: width: 360 }} 360w,{%- endif -%}
-            {%- if collection.image.width >= 535 -%}{{ collection.image | image_url: width: 535 }} 535w,{%- endif -%}
-            {%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}
-            {%- if collection.image.width >= 1070 -%}{{ collection.image | image_url: width: 1070 }} 1070w,{%- endif -%}
-            {%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- endif -%}
-            {{ collection.image | image_url }} {{ collection.image.width }}w
+            {%- if hero_image.width >= 165 -%}{{ hero_image | image_url: width: 165 }} 165w,{%- endif -%}
+            {%- if hero_image.width >= 360 -%}{{ hero_image | image_url: width: 360 }} 360w,{%- endif -%}
+            {%- if hero_image.width >= 535 -%}{{ hero_image | image_url: width: 535 }} 535w,{%- endif -%}
+            {%- if hero_image.width >= 750 -%}{{ hero_image | image_url: width: 750 }} 750w,{%- endif -%}
+            {%- if hero_image.width >= 1070 -%}{{ hero_image | image_url: width: 1070 }} 1070w,{%- endif -%}
+            {%- if hero_image.width >= 1500 -%}{{ hero_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+            {{ hero_image | image_url }} {{ hero_image.width }}w
           "
-          src="{{ collection.image | image_url: width: 750 }}"
-          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
-          alt="{{ collection.image.alt | escape }}"
-          width="{{ collection.image.width }}"
-          height="{{ collection.image.height }}"
+          src="{{ hero_image | image_url: width: 1500 }}"
+          sizes="100vw"
+          alt="{{ hero_image.alt | default: hero_title | escape }}"
+          width="{{ hero_image.width }}"
+          height="{{ hero_image.height }}"
+          loading="eager"
+          fetchpriority="high"
         >
       </div>
     {%- endif -%}
+
+    <div class="collection-hero__content{% unless section.settings.show_collection_image and hero_image != blank %} collection-hero__content--dark{% endunless %}{% if section.settings.text_alignment == 'left' %} collection-hero__content--left{% endif %}">
+      {%- if section.settings.hero_eyebrow != blank -%}
+        <p class="collection-hero__eyebrow">{{ section.settings.hero_eyebrow | escape }}</p>
+      {%- endif -%}
+
+      <h1 class="collection-hero__title">
+        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+        {{- hero_title | escape -}}
+      </h1>
+
+      {%- if hero_description != blank -%}
+        <div class="collection-hero__description rte">{{ hero_description }}</div>
+      {%- endif -%}
+    </div>
   </div>
 </div>
 
@@ -52,7 +180,24 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "t:sections.main-collection-banner.settings.paragraph.content"
+      "content": "Koleksiyon başlığı, açıklaması ve görseli için varsayılan alanlar kullanır; bu alanları tema editöründen veya dinamik kaynaklarla özelleştirebilirsiniz."
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Giriş metni",
+      "default": "Monde Skincare Seçkisi"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Başlık",
+      "info": "Boş bırakırsanız koleksiyon başlığı kullanılır."
+    },
+    {
+      "type": "richtext",
+      "id": "hero_description",
+      "label": "Açıklama"
     },
     {
       "type": "checkbox",
@@ -65,6 +210,28 @@
       "id": "show_collection_image",
       "default": false,
       "label": "t:sections.main-collection-banner.settings.show_collection_image.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Görsel",
+      "info": "Boş bırakırsanız koleksiyon görseli kullanılır."
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Metin hizası",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Ortala"
+        },
+        {
+          "value": "left",
+          "label": "Sola hizala"
+        }
+      ]
     },
     {
       "type": "color_scheme",

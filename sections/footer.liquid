@@ -8,6 +8,9 @@
 {%- style -%}
   .footer {
     margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
+    background: radial-gradient(circle at 12% 18%, rgba(248, 236, 220, 0.32), transparent 40%),
+      linear-gradient(180deg, #f7f1e8 0%, #f0e7db 100%);
+    border-top: 1px solid rgba(49, 37, 24, 0.08);
   }
 
   .section-{{ section.id }}-padding {
@@ -23,6 +26,63 @@
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .footer .footer-block__heading {
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    letter-spacing: 0.04em;
+    font-size: clamp(2rem, 1.25vw, 2.8rem);
+  }
+
+  .footer .footer-block__details-content,
+  .footer .copyright__content,
+  .footer .list-menu__item--link {
+    color: rgba(34, 24, 14, 0.84);
+  }
+
+  .footer .list-menu__item--link {
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+  }
+
+  .footer .list-menu__item--link:hover {
+    color: #1d1510;
+  }
+
+  .footer-trust {
+    margin: 0 auto 2.6rem;
+    max-width: 118rem;
+    padding: 1.2rem 1.6rem;
+    border-radius: 18px;
+    border: 1px solid rgba(47, 35, 22, 0.12);
+    background: rgba(255, 249, 240, 0.66);
+  }
+
+  .footer-trust__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.2rem;
+  }
+
+  .footer-trust__item {
+    text-align: center;
+    font-size: 1.08rem;
+    line-height: 1.45;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #2e2218;
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 989px) {
+    .footer-trust__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
     }
   }
 {%- endstyle -%}
@@ -249,6 +309,15 @@
       </div>
     {%- endunless -%}
   {%- endif -%}
+
+  <div class="footer-trust page-width">
+    <ul class="footer-trust__list" role="list">
+      <li class="footer-trust__item">Dermatolojik Uyumlu Formuller</li>
+      <li class="footer-trust__item">Paraben ve Mineral Yag Icermez</li>
+      <li class="footer-trust__item">24 Saatte Hizli Kargo</li>
+      <li class="footer-trust__item">Guvenli Odeme ve Kolay Iade</li>
+    </ul>
+  </div>
 
   <div
     class="footer__content-bottom{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"

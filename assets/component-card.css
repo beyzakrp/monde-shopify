@@ -46,6 +46,7 @@
   box-sizing: border-box;
   border-radius: var(--border-radius);
   border: var(--border-width) solid rgba(var(--color-foreground), var(--border-opacity));
+  background: linear-gradient(180deg, rgba(255, 251, 245, 0.92), rgba(247, 238, 226, 0.78));
 }
 
 .card--card:after,
@@ -303,6 +304,46 @@
 .card__heading {
   margin-top: 0;
   margin-bottom: 0;
+  font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+  letter-spacing: 0.01em;
+}
+
+.card-product__focus {
+  display: inline-block;
+  margin: 0.2rem 0 0.8rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(41, 30, 20, 0.74);
+}
+
+.card-product__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.7rem;
+}
+
+.card-product__chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(54, 39, 25, 0.18);
+  padding: 0.2rem 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #2d2117;
+  background: rgba(255, 250, 243, 0.92);
+}
+
+.card-product__packaging {
+  margin: 0.8rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: rgba(44, 33, 22, 0.78);
 }
 
 .card__heading:last-child {

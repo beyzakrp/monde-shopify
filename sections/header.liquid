@@ -58,7 +58,7 @@
     font-size: 12px;
     font-style: normal;
     text-transform: uppercase;
-    letter-spacing: .2em;
+    letter-spacing: .3em;
     display: flex;
     align-items: center;
     line-height: calc(1 + 0.3 / var(--font-body-scale));
@@ -102,7 +102,33 @@
     --color-foreground: {{ section.settings.header_text | color_extract: 'red' }},{{ section.settings.header_text | color_extract: 'green' }},{{ section.settings.header_text | color_extract: 'blue' }};
     --color-background: {{ section.settings.header_bg | color_extract: 'red' }},{{ section.settings.header_bg | color_extract: 'green' }},{{ section.settings.header_bg | color_extract: 'blue' }};
     background-color: rgba({{ section.settings.header_bg | color_extract: 'red' }}, {{ section.settings.header_bg | color_extract: 'green' }}, {{ section.settings.header_bg | color_extract: 'blue' }}, {{ section.settings.header_bg_opacity | divided_by: 100.0 }});
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 0;
+    
+    border-top: 0;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  }
+
+  .section-header .header-wrapper .header__heading-link {
+    position: relative;
+  }
+
+  .section-header .header-wrapper .header__heading-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.35rem;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.32;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.3s ease;
+  }
+
+  .section-header .header-wrapper .header__heading-link:hover::after {
+    transform: scaleX(1);
+       
   }
 
   .section-header .header-wrapper .header__icon {
@@ -120,6 +146,7 @@
     box-shadow: 0 -1px {{ section.settings.sticky_border }} inset;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    border-color: rgba(42, 31, 20, 0.16);
   }
 
   .section-header .header-wrapper.header-wrapper--scrolled .header__icon {
@@ -171,6 +198,7 @@
                 src="{{ 'logo-white.svg' | asset_url }}"
                 alt="{{ shop.name }}"
                 width="{{ settings.logo_width }}"
+                height="56"
                 class="header__heading-logo header__logo--white"
                 loading="eager"
               >
@@ -178,6 +206,7 @@
                 src="{{ 'logo-black.svg' | asset_url }}"
                 alt="{{ shop.name }}"
                 width="{{ settings.logo_width }}"
+                height="56"
                 class="header__heading-logo header__logo--black"
                 loading="eager"
               >
@@ -208,6 +237,7 @@
                 src="{{ 'logo-white.svg' | asset_url }}"
                 alt="{{ shop.name }}"
                 width="{{ settings.logo_width }}"
+                height="56"
                 class="header__heading-logo header__logo--white"
                 loading="eager"
               >
@@ -215,6 +245,7 @@
                 src="{{ 'logo-black.svg' | asset_url }}"
                 alt="{{ shop.name }}"
                 width="{{ settings.logo_width }}"
+                height="56"
                 class="header__heading-logo header__logo--black"
                 loading="eager"
               >

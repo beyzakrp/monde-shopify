@@ -8,6 +8,102 @@
   --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
 }
 
+body {
+  background: linear-gradient(180deg, #fffaf4 0%, #fbf5ed 100%);
+  color: rgb(var(--color-foreground));
+}
+
+body,
+.text-body,
+.button,
+.customer button,
+button.shopify-payment-button__button--unbranded {
+  font-family: 'Avenir LT Pro', 'Helvetica Neue', Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h0,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5 {
+  letter-spacing: 0.02em;
+}
+
+.button,
+.shopify-challenge__button,
+.customer button,
+button.shopify-payment-button__button--unbranded {
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 1.2rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.button:not([disabled]):hover,
+.shopify-challenge__button:hover,
+.customer button:hover {
+  transform: translateY(-1px);
+}
+
+.button--secondary,
+.button--tertiary {
+  background: rgba(255, 252, 246, 0.72);
+}
+
+.button--secondary:after,
+.button--tertiary:after {
+  border-radius: 999px;
+}
+
+.badge {
+  border-radius: 999px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card-wrapper .card,
+.card,
+.content-container,
+.collection-card-wrapper .card,
+.product-card-wrapper .card,
+.article-card-wrapper .card {
+  border-radius: 24px;
+}
+
+.card-wrapper .card,
+.collection-card-wrapper .card,
+.product-card-wrapper .card,
+.article-card-wrapper .card {
+  box-shadow: 0 10px 24px rgba(43, 30, 19, 0.06);
+}
+
+.card-wrapper .card:hover,
+.collection-card-wrapper .card:hover,
+.product-card-wrapper .card:hover,
+.article-card-wrapper .card:hover {
+  transform: translateY(-3px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 16px 30px rgba(43, 30, 19, 0.1);
+}
+
+.card__information,
+.card-information {
+  padding-inline: 0.2rem;
+}
+
+.price,
+.card-information .price {
+  letter-spacing: 0.08em;
+}
+
 .product-card-wrapper .card,
 .contains-card--product {
   --border-radius: var(--product-card-corner-radius);
@@ -20,6 +116,38 @@
   --shadow-visible: var(--product-card-shadow-visible);
   --image-padding: var(--product-card-image-padding);
   --text-alignment: var(--product-card-text-alignment);
+}
+
+.product-card-wrapper .card__content {
+  padding-inline: 0.5rem;
+}
+
+.product-card-wrapper .card__heading {
+  font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+  font-size: clamp(1.9rem, 1.5vw, 2.4rem);
+  letter-spacing: 0.02em;
+}
+
+.product-card-wrapper .card-information,
+.product-card-wrapper .price,
+.product-card-wrapper .caption-large {
+  text-align: center;
+}
+
+.product-card-wrapper .card-product__focus,
+.product-card-wrapper .card-product__packaging {
+  display: block;
+  text-align: center;
+}
+
+.product-card-wrapper .card-product__chips {
+  justify-content: center;
+}
+
+.product-card-wrapper .card-product__chip {
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  font-size: 1rem;
 }
 
 .collection-card-wrapper .card,

@@ -1,0 +1,548 @@
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+  endif
+-%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<div
+  class="section section--{{ section.settings.section_width }} section-product-hotspots color-{{ section.settings.color_scheme }} spacing-style gap-style"
+  data-testid="product-hotspots"
+  style="
+    padding-top: {{ section.settings.padding-block-start }}px;
+    padding-bottom: {{ section.settings.padding-block-end }}px;
+    --gap: 28px;
+    {% if section.settings.section_height != 'auto' %}
+      --ratio: {{ section.settings.section_height }};
+    {% elsif section.settings.image != blank %}
+      --ratio: {{ section.settings.image.aspect_ratio }};
+    {% endif %}
+    --product-title-gap: {{ section.settings.product_title_gap }}px;
+    --hotspot-size: 36px;
+    --minimum-width-dialog: 260px;
+    --maximum-width-dialog: 330px;
+    --width-product-image-dialog: 110px;
+  "
+>
+  <div class="section-product-hotspots__wrapper">
+    <div class="section-product-hotspots__header page-width">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="section-product-hotspots__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="section-product-hotspots__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <div class="section-product-hotspots__text rte">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="section-product-hotspots__content">
+      {%- if section.settings.toggle_overlay -%}
+        <div
+          class="section-product-hotspots__overlay"
+          style="
+            {% if section.settings.overlay_style == 'gradient' %}
+              background: linear-gradient({{ section.settings.gradient_direction }}, {{ section.settings.overlay_color }}, transparent);
+            {% else %}
+              background: {{ section.settings.overlay_color }};
+            {% endif %}
+          "
+        ></div>
+      {%- endif -%}
+
+      <div class="hotspots__media">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 3000
+            | image_tag:
+              widths: '375, 550, 750, 1100, 1500, 2000, 3000',
+              sizes: '100vw',
+              fetchpriority: fetch_priority,
+              class: 'hotspots__background-image'
+          }}
+        {%- else -%}
+          {{ 'hero-apparel-1' | placeholder_svg_tag: 'hotspots__background-image' }}
+        {%- endif -%}
+      </div>
+
+      <div class="hotspots-container">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'product_hotspot' and block.settings.product != blank -%}
+            {%- assign product = block.settings.product -%}
+            {%- assign image = product.featured_image -%}
+            {%- assign button_x = block.settings.x_position | default: 50 -%}
+            {%- assign button_y = block.settings.y_position | default: 50 -%}
+            <div
+              class="hotspot"
+              style="left: {{ button_x }}%; top: {{ button_y }}%; --button-size: 44px;"
+              {{ block.shopify_attributes }}
+            >
+              <details class="hotspot-details">
+                <summary class="hotspot-trigger" aria-label="{{ product.title | escape }}"></summary>
+                <div class="hotspot-dialog" data-placement="{{ block.settings.dialog_position }}">
+                  <a class="hotspot-dialog__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
+                  <div class="hotspot-dialog__product">
+                    <div class="hotspot-dialog__media">
+                      {%- if image != blank -%}
+                        {{
+                          image
+                          | image_url: width: 220
+                          | image_tag:
+                            widths: '110, 165, 220',
+                            sizes: '(min-width: 750px) 110px, 80px',
+                            loading: 'lazy',
+                            class: 'hotspot-dialog__product-image',
+                            alt: image.alt | default: product.title | escape
+                        }}
+                      {%- else -%}
+                        {{ 'product-1' | placeholder_svg_tag: 'hotspot-dialog__placeholder-product-image' }}
+                      {%- endif -%}
+                    </div>
+                    <div class="hotspot-dialog__product-content">
+                      <div class="hotspot-dialog__product-title">
+                        <p class="hotspot-dialog__product-vendor caption-with-letter-spacing">{{ product.vendor }}</p>
+                        <h3 class="hotspot-dialog__product-name h5">{{ product.title | escape }}</h3>
+                      </div>
+
+                      <div class="hotspot-dialog__product-price">
+                        {%- render 'price', product: product, price_class: '' -%}
+                      </div>
+
+                      {%- if block.settings.show_quick_add -%}
+                        <div class="hotspot-dialog__quick-add">
+                          {%- render 'buy-buttons', product: product, block: block, product_form_id: 'QuickAdd-' | append: section.id | append: '-' | append: block.id, section_id: section.id, show_pickup_availability: false -%}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .section-product-hotspots {
+    position: relative;
+  }
+
+  .section-product-hotspots.spacing-style {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .section-product-hotspots__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    width: 100%;
+  }
+
+  .section-product-hotspots__header {
+    text-align: center;
+  }
+
+  .section-product-hotspots__eyebrow {
+    margin: 0 0 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    color: rgba(var(--color-foreground), 0.72);
+  }
+
+  .section-product-hotspots__heading {
+    margin: 0;
+    font-family: 'Avenir LT Pro', 'Times New Roman', serif;
+    font-size: clamp(3.2rem, 5vw, 6.2rem);
+    line-height: 0.95;
+  }
+
+  .section-product-hotspots__text {
+    max-width: 68rem;
+    margin: 1.2rem auto 0;
+  }
+
+  .section-product-hotspots__content {
+    position: relative;
+    aspect-ratio: var(--ratio, 21 / 9);
+    overflow: hidden;
+    border-radius: 28px;
+  }
+
+  .section-product-hotspots__overlay,
+  .hotspots__media,
+  .hotspots-container {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hotspots__media {
+    overflow: hidden;
+  }
+
+  .hotspots__background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .hotspots-container {
+    z-index: 2;
+  }
+
+  @media (hover: none) {
+    .hotspot.hotspot--hidden-touch {
+      display: none;
+    }
+  }
+
+  .hotspot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+
+  .hotspot-details {
+    position: relative;
+  }
+
+  .hotspot-trigger {
+    width: var(--hotspot-size);
+    height: var(--hotspot-size);
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+  }
+
+  .hotspot-trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .hotspot-trigger::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 40%;
+    height: 40%;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .hotspot-dialog {
+    position: absolute;
+    top: calc(var(--hotspot-size) + 1rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    min-width: var(--minimum-width-dialog);
+    max-width: var(--maximum-width-dialog);
+    padding: 0;
+    border-radius: 22px;
+    background: rgb(var(--color-background));
+    border: 1px solid rgba(var(--color-foreground), 0.08);
+    box-shadow: 0 20px 40px rgba(30, 22, 15, 0.18);
+    overflow: hidden;
+    display: none;
+  }
+
+  .hotspot-details[open] .hotspot-dialog {
+    display: block;
+  }
+
+  .hotspot-dialog__link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .hotspot-dialog__product {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hotspot-dialog__media {
+    padding: 1rem 0 1rem 1rem;
+  }
+
+  .hotspot-dialog__product-image,
+  .hotspot-dialog__placeholder-product-image {
+    width: var(--width-product-image-dialog);
+    height: var(--width-product-image-dialog);
+    object-fit: cover;
+    border-radius: 18px;
+  }
+
+  .hotspot-dialog__product-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.2rem 1.2rem 1.2rem 1rem;
+  }
+
+  .hotspot-dialog__product-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-right: 1rem;
+  }
+
+  .hotspot-dialog__product-vendor {
+    margin: 0;
+  }
+
+  .hotspot-dialog__product-name {
+    margin: 0;
+    font-size: 1.8rem;
+    line-height: 1.15;
+  }
+
+  .hotspot-dialog__product-price .price {
+    font-size: 1.4rem;
+  }
+
+  .hotspot-dialog__quick-add {
+    position: relative;
+    z-index: 3;
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-product-hotspots__content {
+      aspect-ratio: var(--ratio, 4 / 5);
+      border-radius: 20px;
+    }
+
+    .hotspot-dialog {
+      top: calc(var(--hotspot-size) + 0.8rem);
+      max-width: min(320px, calc(100vw - 2rem));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ürün hotspotları",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Arka plan görseli"
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle_overlay",
+      "label": "Overlay göster",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay rengi",
+      "alpha": true,
+      "default": "#00000026",
+      "visible_if": "{{ section.settings.toggle_overlay }}"
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "Overlay tipi",
+      "options": [
+        {"value": "solid", "label": "Düz"},
+        {"value": "gradient", "label": "Gradient"}
+      ],
+      "default": "solid",
+      "visible_if": "{{ section.settings.toggle_overlay }}"
+    },
+    {
+      "type": "select",
+      "id": "gradient_direction",
+      "label": "Gradient yönü",
+      "options": [
+        {"value": "to top", "label": "Yukarı"},
+        {"value": "to bottom", "label": "Aşağı"}
+      ],
+      "default": "to top",
+      "visible_if": "{{ section.settings.toggle_overlay and section.settings.overlay_style == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Bölüm görünümü"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Genişlik",
+      "options": [
+        {"value": "page-width", "label": "Sayfa genişliği"},
+        {"value": "full-width", "label": "Tam genişlik"}
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Yükseklik",
+      "options": [
+        {"value": "auto", "label": "Otomatik"},
+        {"value": "21 / 9", "label": "Yatay"},
+        {"value": "16 / 9", "label": "Orta"},
+        {"value": "4 / 3", "label": "Daha büyük"}
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "header",
+      "content": "Metin"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Üst metin",
+      "default": "Shop the look"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Başlık",
+      "default": "Ürünleri görsel üzerinde keşfedin"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Açıklama"
+    },
+    {
+      "type": "header",
+      "content": "Hotspot alanı"
+    },
+    {
+      "type": "range",
+      "id": "product_title_gap",
+      "label": "Başlık-altı boşluk",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Renkler"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Renk şeması",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Boşluk"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Üst boşluk",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Alt boşluk",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_hotspot",
+      "name": "Ürün hotspotu",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Ürün"
+        },
+        {
+          "type": "range",
+          "id": "x_position",
+          "label": "X konumu",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y_position",
+          "label": "Y konumu",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "select",
+          "id": "dialog_position",
+          "label": "Balon yönü",
+          "options": [
+            {"value": "bottom", "label": "Alt"},
+            {"value": "top", "label": "Üst"}
+          ],
+          "default": "bottom"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_quick_add",
+          "label": "Hızlı ekle göster",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ürün hotspotları",
+      "category": "Ürün",
+      "blocks": [
+        {"type": "product_hotspot"},
+        {"type": "product_hotspot"}
+      ]
+    }
+  ]
+}
+{% endschema %}

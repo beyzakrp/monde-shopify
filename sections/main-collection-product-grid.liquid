@@ -28,6 +28,62 @@
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
+  .collection-premium-shell {
+    background: radial-gradient(circle at 12% 18%, rgba(248, 234, 216, 0.35), transparent 40%),
+      linear-gradient(180deg, #fbf7f1 0%, #f3ece2 100%);
+  }
+
+  .collection-premium-shell .facets-container {
+    border-radius: 18px;
+    border: 1px solid rgba(44, 33, 22, 0.12);
+    background: rgba(255, 250, 244, 0.75);
+    padding: 1.2rem 1.4rem;
+  }
+
+  .collection-premium-shell .collection-premium-note {
+    margin: 0 0 1.8rem;
+    padding: 1rem 1.4rem;
+    border-radius: 14px;
+    background: rgba(255, 249, 240, 0.76);
+    border: 1px solid rgba(42, 31, 20, 0.12);
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: rgba(34, 25, 16, 0.84);
+    letter-spacing: 0.02em;
+  }
+
+  .collection-premium-shell .product-grid-container {
+    margin-top: 2rem;
+  }
+
+  .collection-premium-shell .product-grid {
+    row-gap: 2.6rem;
+  }
+
+  .collection-premium-shell .facets-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .collection-premium-shell .facets-container,
+  .collection-premium-shell .sorting,
+  .collection-premium-shell .facet-filters__field,
+  .collection-premium-shell .select,
+  .collection-premium-shell .select__select {
+    border-radius: 999px;
+  }
+
+  .collection-premium-shell .select__select,
+  .collection-premium-shell .facet-filters__sort {
+    background: rgba(255, 252, 247, 0.92);
+    border-color: rgba(44, 33, 22, 0.12);
+  }
+
+  .collection-premium-shell .product-count__text,
+  .collection-premium-shell .facet-filters__label {
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
@@ -36,7 +92,7 @@
   }
 {%- endstyle -%}
 
-<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }} collection-premium-shell">
   {%- paginate collection.products by section.settings.products_per_page -%}
     {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
     {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
@@ -143,6 +199,7 @@
             class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
           >
             <div class="loading-overlay gradient"></div>
+            <p class="collection-premium-note">Koleksiyonumuzdaki tum urunler dermatolojik uyumlu aktiflerle gelistirildi, koruyucu paketleme ile hazirlanir.</p>
             <ul
               id="product-grid"
               data-id="{{ section.id }}"

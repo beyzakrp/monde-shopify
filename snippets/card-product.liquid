@@ -39,6 +39,10 @@
     if ratio == 0 or ratio == null
       assign ratio = 1
     endif
+
+    assign tags_text = card_product.tags | join: ',' | downcase
+    assign skin_focus = card_product.metafields.custom.card_highlight.value | default: card_product.type
+    assign packaging_note = card_product.metafields.custom.packaging_note.value | default: 'Koruyucu cam ambalaj ile gonderilir.'
   -%}
   <div class="card-wrapper product-card-wrapper underline-links-hover">
     <div
@@ -55,7 +59,7 @@
     >
       <div
         class="card__inner {% if settings.card_style == 'standard' %}color-{{ settings.card_color_scheme }} gradient{% endif %}{% if card_product.featured_media or settings.card_style == 'standard' %} ratio{% endif %}"
-        style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
+        style="--ratio-percent: 150%;"
       >
         {%- if card_product.featured_media -%}
           <div class="card__media{% if image_shape and image_shape != 'default' %} shape--{{ image_shape }} color-{{ settings.card_color_scheme }} gradient{% endif %}">
@@ -130,14 +134,14 @@
                 id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
               >
-                {{- 'products.product.sold_out' | t -}}
+                TUKENDI
               </span>
             {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
               <span
                 id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
               >
-                {{- 'products.product.on_sale' | t -}}
+                RITUEL FIYATI
               </span>
             {%- endif -%}
           </div>
@@ -166,7 +170,9 @@
               <div class="caption-with-letter-spacing light">{{ card_product.vendor }}</div>
             {%- endif -%}
 
-            <span class="caption-large light">{{ block.settings.description | escape }}</span>
+            {%- if skin_focus != blank -%}
+              <span class="caption-large light card-product__focus">{{ skin_focus | escape }}</span>
+            {%- endif -%}
 
             {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
               {% liquid
@@ -205,6 +211,20 @@
             {%- endif -%}
 
             {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+
+            <div class="card-product__chips" aria-label="Urun ozellikleri">
+              {%- if tags_text contains 'vegan' -%}
+                <span class="card-product__chip">Vegan</span>
+              {%- endif -%}
+              {%- if tags_text contains 'parfum' or tags_text contains 'fragrance free' or tags_text contains 'kokusuz' -%}
+                <span class="card-product__chip">Parfum Icermez</span>
+              {%- endif -%}
+              {%- if tags_text contains 'hyaluronik' or tags_text contains 'hyaluronic' -%}
+                <span class="card-product__chip">Hyaluronik Asit</span>
+              {%- endif -%}
+            </div>
+
+            <p class="card-product__packaging">{{ packaging_note | escape }}</p>
             {%- if card_product.quantity_price_breaks_configured? -%}
               {% if card_product.variants_count == 1 and quick_add == 'bulk' %}
                 {% liquid

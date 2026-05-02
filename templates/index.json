@@ -9,6 +9,7 @@
  */
 {
   "sections": {
+    
     "home_banner_mLHnFg": {
       "type": "home-banner",
       "name": "Home Banner",
@@ -16,31 +17,74 @@
         "desktop_image": "shopify://shop_images/banner-mask-wide.png",
         "image_position": "center right",
         "min_height_mobile": 510,
-        "heading": "Love, Set in Stone.",
+        "overlay_strength": 55,
+        "campaign_label": "NEW SEASON CAMPAIGN",
+        "heading": "The Glow of Eternity",
         "heading_tag": "h1",
-        "heading_font": "Optima",
-        "heading_size": 60,
-        "heading_size_mobile": 28,
-        "heading_color": "#000000",
-        "heading_color_mobile": "#ffffff",
-        "subtext": "Discover our ethical and sustainable skin care that will warm your heart.",
+        "heading_font": "Cormorant Garamond",
+        "heading_size": 90,
+        "heading_size_mobile": 54,
+        "heading_color": "#fff4e6",
+        "heading_color_mobile": "#fff4e6",
+        "subtext": "A dialogue between light and skin. Our new formula awakens your innate luminosity.",
         "subtext_size": 16,
-        "subtext_color": "#000000",
-        "subtext_color_mobile": "#ffffff",
+        "subtext_color": "#f3e6d4",
+        "subtext_color_mobile": "#f3e6d4",
         "desktop_content_side": "left",
         "desktop_content_width": 40,
         "desktop_content_offset": 5,
-        "btn1_label": "Shop Sheet Face Mask",
+        "btn1_label": "Shop Now",
         "btn1_link": "",
-        "btn1_bg": "#46021d",
-        "btn1_text": "#ffffff",
-        "btn2_label": "Shop Face Cream",
+        "btn1_bg": "#ffffff",
+        "btn1_text": "#1d150f",
+        "btn2_label": "Read Story",
         "btn2_link": "",
-        "btn2_bg": "#ffffff",
-        "btn2_text": "#000000",
-        "btn2_border": "#ffffff",
-        "button_gap": 50,
-        "mobile_gradient": false
+        "btn2_bg": "transparent",
+        "btn2_text": "#fff8ee",
+        "btn2_border": "#fff8ee",
+        "button_gap": 20,
+        "scroll_label": "Scroll",
+        "mobile_gradient": true
+      }
+    },
+    "movable_banner_8LzQ2p": {
+      "type": "movable-banner",
+      "blocks": {
+        "ticker_message_1": {
+          "type": "ticker_message",
+          "settings": {
+            "badge": "NEW",
+            "text": "New season arrival - shop the collection",
+            "link": ""
+          }
+        },
+        "ticker_message_2": {
+          "type": "ticker_message",
+          "settings": {
+            "badge": "SKINCARE",
+            "text": "Dermatologist tested and barrier-safe formulas",
+            "link": ""
+          }
+        },
+        "ticker_message_3": {
+          "type": "ticker_message",
+          "settings": {
+            "badge": "GIFT",
+            "text": "Premium gift packaging on selected orders",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "ticker_message_1",
+        "ticker_message_2",
+        "ticker_message_3"
+      ],
+      "settings": {
+        "aria_label": "Promosyon bantı",
+        "duration": 24,
+        "padding_top": 10,
+        "padding_bottom": 10
       }
     },
     "shop_by_category_66X9Gw": {
@@ -49,7 +93,7 @@
         "category_JtAzpk": {
           "type": "category",
           "settings": {
-            "category_name": "Maske",
+            "category_name": "Temizleyici",
             "image": "shopify://shop_images/maske-kapak.png",
             "collection_link": ""
           }
@@ -57,7 +101,7 @@
         "category_Kt8wPJ": {
           "type": "category",
           "settings": {
-            "category_name": "Krem",
+            "category_name": "Serum",
             "image": "shopify://shop_images/image_594.png",
             "collection_link": ""
           }
@@ -65,7 +109,7 @@
         "category_MBrhVV": {
           "type": "category",
           "settings": {
-            "category_name": "Serum",
+            "category_name": "Nemlendirici",
             "image": "shopify://shop_images/image_602.png",
             "collection_link": ""
           }
@@ -73,7 +117,7 @@
         "category_bGLCkd": {
           "type": "category",
           "settings": {
-            "category_name": "Toner",
+            "category_name": "Gunes Koruyucu",
             "image": "shopify://shop_images/image_606.png",
             "collection_link": ""
           }
@@ -87,11 +131,11 @@
       ],
       "name": "Shop by Category",
       "settings": {
-        "heading": "Kategoriler",
+        "heading": "Rituelinizi Secin",
         "heading_size": 26,
-        "heading_color": "#000000",
+        "heading_color": "#1f1711",
         "heading_alignment": "left",
-        "heading_font": "Avenir LT Pro",
+        "heading_font": "Cormorant Garamond",
         "label_size": 19,
         "gap_mobile": 8,
         "gap_tablet": 16,
@@ -108,14 +152,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Browse our latest products",
+            "heading": "Gece rutininize ipeksi bir dokunus",
             "heading_size": "h1"
           }
         },
         "button": {
           "type": "button",
           "settings": {
-            "button_label": "Shop now",
+            "button_label": "Bakim koleksiyonunu incele",
             "button_link": "shopify://collections/all",
             "button_style_secondary": false
           }
@@ -141,12 +185,91 @@
         "padding_bottom": 0
       }
     },
+    "inline_image_statement_tjKH2X": {
+      "type": "inline-image-statement",
+      "settings": {
+        "line_1_start": "Cildinize bugun",
+        "line_1_end": "ipeksi bir isilti hediye edin",
+        "line_2_text": "aktiflerle guclenen nazik bir rutinle.",
+        "heading_tag": "h2",
+        "heading_font": "Cormorant Garamond",
+        "heading_size": 72,
+        "heading_weight": "700",
+        "background_color": "#f6f0e7",
+        "text_color": "#1d1510",
+        "content_max_width": 1500,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "row_gap": 18,
+        "image_radius": 22,
+        "image_1_width": 230,
+        "image_1_height": 160,
+        "image_2_width": 190,
+        "image_2_height": 130
+      }
+    },
+    "editorial_hover_cards_X8mQ2V": {
+      "type": "editorial-hover-cards",
+      "blocks": {
+        "hover_card_1": {
+          "type": "hover_card",
+          "settings": {
+            "eyebrow": "MORNING RITUAL",
+            "title": "3-Minute Awakening & De-Puffing Guide",
+            "body": "<p>Hover ile ikinci görsel görünür, altında açıklama açılır.</p>",
+            "cta_label": "View Routine",
+            "link": ""
+          }
+        },
+        "hover_card_2": {
+          "type": "hover_card",
+          "settings": {
+            "eyebrow": "DEEP NIGHT REPAIR",
+            "title": "The Late Night Savior",
+            "body": "<p>Hover ile ikinci görsel görünür, altında açıklama açılır.</p>",
+            "cta_label": "View Routine",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "hover_card_1",
+        "hover_card_2"
+      ],
+      "settings": {
+        "kicker": "CURATED ROUTINES",
+        "title": "Shop by",
+        "title_emphasis": "Solution",
+        "background_color": "#f7f7f4",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "curated_collections_P4aL9d": {
+      "type": "curated-collections",
+      "settings": {
+        "kicker": "CURATED EDIT",
+        "title": "Featured",
+        "title_emphasis": "Collections",
+        "tab_1_label": "NEW ARRIVALS",
+        "collection_1": "all",
+        "tab_2_label": "BEST SELLERS",
+        "collection_2": "all",
+        "tab_3_label": "STAFF PICKS",
+        "collection_3": "all",
+        "card_ratio": "square",
+        "products_limit": 4,
+        "background_color": "#f1f1f1",
+        "padding_top": 56,
+        "padding_bottom": 64
+      }
+    },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
         "collection": "all",
         "products_to_show": 4,
-        "title": "Featured products",
+        "title": "En Cok Tercih Edilenler",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
@@ -172,8 +295,12 @@
   },
   "order": [
     "home_banner_mLHnFg",
+    "movable_banner_8LzQ2p",
     "shop_by_category_66X9Gw",
     "image-with-text",
+    "inline_image_statement_tjKH2X",
+    "editorial_hover_cards_X8mQ2V",
+    "curated_collections_P4aL9d",
     "featured-collection"
   ]
 }

@@ -3,11 +3,23 @@
     position: relative;
     overflow: hidden;
     min-height: {{ section.settings.min_height_mobile }}px;
+    background: #e8dfd4;
+  }
+
+  #home-banner-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 72% 44%, rgba(255, 217, 176, 0.18), transparent 44%),
+      linear-gradient(180deg, rgba(12, 8, 6, {{ section.settings.overlay_strength | divided_by: 220.0 }}) 0%, rgba(12, 8, 6, {{ section.settings.overlay_strength | divided_by: 170.0 }}) 42%, rgba(12, 8, 6, {{ section.settings.overlay_strength | divided_by: 130.0 }}) 100%);
+    z-index: 1;
+    pointer-events: none;
   }
 
   #home-banner-{{ section.id }} .banner__image--desktop {
     width: 100%;
-    height: 100%;
+    height: clamp(620px, 87vh, 920px);
     display: block;
     object-fit: cover;
     object-position: {{ section.settings.image_position }};
@@ -19,42 +31,55 @@
     object-fit: cover;
   }
 
-  /* Desktop content */
   #home-banner-{{ section.id }} .banner__content--desktop {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%) translateX({{ section.settings.desktop_content_offset }}%);
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: {{ section.settings.desktop_content_width }}%;
-    z-index: 2;
-    {% if section.settings.desktop_content_side == 'right' %}
-      right: 0;
-    {% else %}
-      left: 0;
-    {% endif %}
+    width: min(860px, 90vw);
+    z-index: 3;
+    text-align: center;
+  }
+
+  #home-banner-{{ section.id }} .banner__campaign {
+    margin: 0 0 1.4rem;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.26em;
+    color: rgba(250, 238, 222, 0.88);
+    font-weight: 600;
   }
 
   #home-banner-{{ section.id }} .banner__heading {
     font-size: {{ section.settings.heading_size }}px;
     color: {{ section.settings.heading_color }};
-    font-family: '{{ section.settings.heading_font }}', serif;
-    line-height: 1.2;
+    font-family: '{{ section.settings.heading_font }}', 'Times New Roman', serif;
+    line-height: 0.98;
+    letter-spacing: 0.005em;
     text-align: center;
-    margin: 0 0 16px;
+    text-wrap: balance;
+    margin: 0 0 2rem;
+    max-width: 11.5ch;
+    text-shadow: 0 7px 26px rgba(0, 0, 0, 0.23);
   }
 
   #home-banner-{{ section.id }} .banner__subtext {
     font-size: {{ section.settings.subtext_size }}px;
     color: {{ section.settings.subtext_color }};
-    line-height: 1.5;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
     text-align: center;
-    font-family: 'Avenir LT Pro', serif;
-    max-width: 450px;
-    margin: 0 0 30px;
-    padding: 0 5px;
+    font-family: 'Avenir LT Pro', 'Segoe UI', sans-serif;
+    max-width: 34ch;
+    margin: 0 0 3.2rem;
+    padding: 0;
+    font-weight: 500;
+    text-shadow: 0 5px 18px rgba(0, 0, 0, 0.25);
   }
 
   #home-banner-{{ section.id }} .banner__buttons {
@@ -68,133 +93,174 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 202px;
-    height: 44px;
+    min-width: 200px;
+    height: 48px;
     font-size: 14px;
     font-family: 'Avenir LT Pro', sans-serif;
-    font-weight: 500;
+    font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s, border 0.2s;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     background-color: {{ section.settings.btn1_bg }};
     color: {{ section.settings.btn1_text }};
     border: 1px solid {{ section.settings.btn1_bg }};
+    border-radius: 999px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0 2.4rem;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
   }
 
   #home-banner-{{ section.id }} .banner__btn--primary:hover {
-    background-color: transparent;
-    color: white;
-    border-color: white;
+    transform: translateY(-2px) scale(1.01);
+    background-color: #ffffff;
+    color: #1d150f;
+    border-color: #ffffff;
   }
 
   #home-banner-{{ section.id }} .banner__btn--secondary {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 202px;
-    height: 44px;
+    min-width: 200px;
+    height: 48px;
     font-size: 14px;
     font-family: 'Avenir LT Pro', sans-serif;
-    font-weight: 500;
+    font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s, border 0.2s;
+    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     background-color: {{ section.settings.btn2_bg }};
     color: {{ section.settings.btn2_text }};
     border: 1px solid {{ section.settings.btn2_border }};
+    border-radius: 999px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0 2.4rem;
   }
 
   #home-banner-{{ section.id }} .banner__btn--secondary:hover {
-    background-color: transparent;
-    color: white;
-    border-color: white;
+    transform: translateY(-2px) scale(1.01);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.95);
   }
 
-  /* Mobile content */
+  #home-banner-{{ section.id }} .banner__scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(20px, 5vh, 42px);
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    color: rgba(252, 242, 229, 0.92);
+    letter-spacing: 0.18em;
+    font-size: 1.08rem;
+    font-family: 'Avenir LT Pro', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  #home-banner-{{ section.id }} .banner__scroll-line {
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.95));
+  }
+
   #home-banner-{{ section.id }} .banner__content--mobile {
     display: none;
     position: absolute;
-    bottom: 20px;
+    bottom: 28px;
     left: 0;
     right: 0;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 2;
-    padding: 0 16px;
+    z-index: 3;
+    padding: 0 1.6rem;
+    text-align: center;
   }
 
   #home-banner-{{ section.id }} .banner__heading--mobile {
     font-size: {{ section.settings.heading_size_mobile }}px;
     color: {{ section.settings.heading_color_mobile }};
-    font-family: '{{ section.settings.heading_font }}', serif;
-    line-height: 1.2;
+    font-family: '{{ section.settings.heading_font }}', 'Times New Roman', serif;
+    line-height: 1.03;
+    letter-spacing: 0.01em;
     text-align: center;
-    margin: 0 0 10px;
+    margin: 0 0 1.2rem;
+    text-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   }
 
   #home-banner-{{ section.id }} .banner__subtext--mobile {
-    font-size: 15px;
+    font-size: 1.5rem;
     color: {{ section.settings.subtext_color_mobile }};
     line-height: 1.5;
     text-align: center;
-    margin: 0 0 16px;
+    margin: 0 0 2rem;
+    max-width: 30ch;
   }
 
   #home-banner-{{ section.id }} .banner__btn--mobile {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 300px;
-    height: 44px;
+    width: min(320px, 85vw);
+    height: 46px;
     font-size: 14px;
     font-family: 'Avenir LT Pro', sans-serif;
-    font-weight: 500;
+    font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    background-color: transparent;
-    color: white;
-    border: 1px solid white;
+    background-color: {{ section.settings.btn1_bg }};
+    color: {{ section.settings.btn1_text }};
+    border: 1px solid {{ section.settings.btn1_bg }};
+    border-radius: 999px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     margin-bottom: 10px;
-    transition: background-color 0.2s, color 0.2s;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   }
 
   #home-banner-{{ section.id }} .banner__btn--mobile:hover {
-    background-color: rgba(255,255,255,0.15);
+    transform: translateY(-1px) scale(1.01);
   }
 
-  /* Mobile dark gradient overlay */
+  #home-banner-{{ section.id }} .banner__btn--mobile-secondary {
+    background: transparent;
+    color: {{ section.settings.btn2_text }};
+    border-color: {{ section.settings.btn2_border }};
+  }
+
   {% if section.settings.mobile_gradient %}
   #home-banner-{{ section.id }}::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+    background: linear-gradient(to top, rgba(15, 11, 9, 0.68) 0%, rgba(15, 11, 9, 0.2) 58%, transparent 82%);
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
   }
   {% endif %}
 
   @media screen and (max-width: 1008px) {
     #home-banner-{{ section.id }} .banner__image--desktop { display: none; }
     #home-banner-{{ section.id }} .banner__image--mobile { display: block; }
+    #home-banner-{{ section.id }} .banner__image--mobile { min-height: {{ section.settings.min_height_mobile }}px; object-fit: cover; }
     #home-banner-{{ section.id }} .banner__content--desktop { display: none !important; }
     #home-banner-{{ section.id }} .banner__content--mobile { display: flex; }
+    #home-banner-{{ section.id }} .banner__scroll-cue { display: none; }
   }
 
   @media screen and (max-width: 1250px) {
     #home-banner-{{ section.id }} .banner__buttons {
-      max-width: 300px;
-      gap: 8px;
+      gap: 10px;
     }
     #home-banner-{{ section.id }} .banner__heading {
       font-size: {{ section.settings.heading_size | times: 0.75 | round }}px;
-    }
-  }
-
-  @media screen and (max-width: 1335px) {
-    #home-banner-{{ section.id }} .banner__buttons {
-      gap: 10px;
     }
   }
 {%- endstyle -%}
@@ -239,6 +305,10 @@
 
     <!-- Desktop Content -->
     <div class="banner__content--desktop">
+      {%- if section.settings.campaign_label != blank -%}
+        <p class="banner__campaign">{{ section.settings.campaign_label }}</p>
+      {%- endif -%}
+
       {%- if section.settings.heading != blank -%}
         <{{ section.settings.heading_tag }} class="banner__heading">
           {{ section.settings.heading }}
@@ -265,6 +335,10 @@
 
     <!-- Mobile Content -->
     <div class="banner__content--mobile">
+      {%- if section.settings.campaign_label != blank -%}
+        <p class="banner__campaign">{{ section.settings.campaign_label }}</p>
+      {%- endif -%}
+
       {%- if section.settings.heading != blank -%}
         <{{ section.settings.heading_tag }} class="banner__heading--mobile">
           {{ section.settings.heading }}
@@ -281,11 +355,18 @@
         </a>
       {%- endif -%}
       {%- if section.settings.btn2_label != blank -%}
-        <a href="{{ section.settings.btn2_link }}" class="banner__btn--mobile">
+        <a href="{{ section.settings.btn2_link }}" class="banner__btn--mobile banner__btn--mobile-secondary">
           {{ section.settings.btn2_label }}
         </a>
       {%- endif -%}
     </div>
+
+    {%- if section.settings.scroll_label != blank -%}
+      <div class="banner__scroll-cue" aria-hidden="true">
+        <span>{{ section.settings.scroll_label }}</span>
+        <span class="banner__scroll-line"></span>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -333,14 +414,30 @@
       "default": 500
     },
     {
+      "type": "range",
+      "id": "overlay_strength",
+      "label": "Gorsel koyuluk seviyesi",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 55
+    },
+    {
       "type": "header",
       "content": "İçerik"
     },
     {
       "type": "text",
+      "id": "campaign_label",
+      "label": "Ust etiket metni",
+      "default": "NEW SEASON CAMPAIGN"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Başlık",
-      "default": "Love, Set in Stone."
+      "default": "The Glow of Eternity"
     },
     {
       "type": "select",
@@ -357,7 +454,7 @@
       "type": "text",
       "id": "heading_font",
       "label": "Başlık Font Adı",
-      "default": "Avenir LT Pro",
+      "default": "Cormorant Garamond",
       "info": "Sistemde yüklü olan font adını girin"
     },
     {
@@ -396,7 +493,7 @@
       "type": "textarea",
       "id": "subtext",
       "label": "Alt Metin",
-      "default": "Discover our ethical and sustainable jewelry that will warm your heart."
+      "default": "A dialogue between light and skin. Our new formula awakens your innate luminosity."
     },
     {
       "type": "range",
@@ -463,7 +560,7 @@
       "type": "text",
       "id": "btn1_label",
       "label": "Buton 1 Metin",
-      "default": "Shop Wedding Bands"
+      "default": "Shop Now"
     },
     {
       "type": "url",
@@ -490,7 +587,7 @@
       "type": "text",
       "id": "btn2_label",
       "label": "Buton 2 Metin",
-      "default": "Shop Engagement Rings"
+      "default": "Read Story"
     },
     {
       "type": "url",
@@ -523,7 +620,13 @@
       "max": 60,
       "step": 5,
       "unit": "px",
-      "default": 50
+      "default": 20
+    },
+    {
+      "type": "text",
+      "id": "scroll_label",
+      "label": "Alt scroll metni",
+      "default": "Scroll"
     },
     {
       "type": "header",
