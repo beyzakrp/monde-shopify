@@ -101,8 +101,8 @@
         "category_JtAzpk": {
           "type": "category",
           "settings": {
-            "category_name": "Temizleyici",
-            "image": "shopify://shop_images/maske-kapak.png",
+            "category_name": "Krem",
+            "image": "shopify://shop_images/Heartleaf-Cream-5_23e2ba1b-c7f8-4c8b-aa86-18f4f5126e93.png",
             "collection_link": ""
           }
         },
@@ -110,23 +110,23 @@
           "type": "category",
           "settings": {
             "category_name": "Serum",
-            "image": "shopify://shop_images/image_594.png",
+            "image": "shopify://shop_images/Heartleaf-Serum-6_4aaed91c-fe4a-4bf3-a0ef-d4e3a921f400.png",
             "collection_link": ""
           }
         },
         "category_MBrhVV": {
           "type": "category",
           "settings": {
-            "category_name": "Nemlendirici",
-            "image": "shopify://shop_images/image_602.png",
+            "category_name": "Temizleyici",
+            "image": "shopify://shop_images/image_607.png",
             "collection_link": ""
           }
         },
         "category_bGLCkd": {
           "type": "category",
           "settings": {
-            "category_name": "Gunes Koruyucu",
-            "image": "shopify://shop_images/image_606.png",
+            "category_name": "Tonik",
+            "image": "shopify://shop_images/Heartleaf-Tonik-5.png",
             "collection_link": ""
           }
         }
@@ -139,7 +139,7 @@
       ],
       "name": "Shop by Category",
       "settings": {
-        "heading": "Rituelinizi Secin",
+        "heading": "",
         "heading_size": 26,
         "heading_color": "#1f1711",
         "heading_alignment": "left",
@@ -148,8 +148,8 @@
         "gap_mobile": 8,
         "gap_tablet": 16,
         "gap_desktop": 16,
-        "margin_top": 40,
-        "margin_bottom": 40,
+        "margin_top": 0,
+        "margin_bottom": 0,
         "padding_top": 0,
         "padding_bottom": 0
       }
