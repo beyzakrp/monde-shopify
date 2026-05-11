@@ -40,7 +40,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(255, 249, 241, 0.04) 0%, rgba(255, 249, 241, 0.34) 72%, rgba(255, 249, 241, 0.7) 100%);
+    background: linear-gradient(180deg, rgba(255, 249, 241, 0.04) 0%, rgba(255, 249, 241, 0.34) 72%, #fef9f8 100%);
   }
 
   .collection-hero__media img {
@@ -81,7 +81,7 @@
   }
 
   .collection-hero__title {
-    margin: 0;
+    margin: 0 0 0 100px;
     font-family: 'Avenir LT Pro', 'Times New Roman', serif;
     letter-spacing: 0.015em;
     color: inherit;
@@ -132,7 +132,7 @@
 {%- endstyle -%}
 
 <div class="collection-hero collection-hero--dynamic{% if section.settings.show_collection_image and hero_image != blank %} collection-hero--has-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
-  <div class="collection-hero__panel{% if section.settings.show_collection_image and hero_image != blank %} collection-hero__panel--with-image{% else %} collection-hero__panel--no-image{% endif %} page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+  <div class="collection-hero__panel{% if section.settings.show_collection_image and hero_image != blank %} collection-hero__panel--with-image{% else %} collection-hero__panel--no-image{% endif %}  {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     {%- if section.settings.show_collection_image and hero_image != blank -%}
       <div class="collection-hero__media">
         <img

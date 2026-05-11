@@ -1,17 +1,18 @@
 {%- style -%}
   #shop-by-category-{{ section.id }} {
     margin: {{ section.settings.margin_top }}px 0 {{ section.settings.margin_bottom }}px;
-    padding: {{ section.settings.padding_top }}px 16px {{ section.settings.padding_bottom }}px;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    overflow: hidden;
   }
 
   #shop-by-category-{{ section.id }} .shop-by-header {
     font-size: {{ section.settings.heading_size }}px;
     color: {{ section.settings.heading_color }};
     text-align: {{ section.settings.heading_alignment }};
-    margin: 0 0 28px;
+    margin: 0 0 24px;
     font-family: '{{ section.settings.heading_font }}', serif;
     font-weight: 600;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     text-wrap: balance;
   }
 
@@ -24,6 +25,7 @@
     scroll-behavior: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    padding: 0 16px;
   }
 
   #shop-by-category-{{ section.id }} .category-container::-webkit-scrollbar {
@@ -36,6 +38,7 @@
 
   #shop-by-category-{{ section.id }} .category-wrapper {
     display: flex;
+    flex-wrap: nowrap;
     gap: {{ section.settings.gap_mobile }}px;
     min-width: min-content;
     padding: 0 2px;
@@ -57,7 +60,7 @@
     width: 318px;
     height: 318px;
     aspect-ratio: 1;
-    border-radius: 26px;
+    border-radius: 0;
   }
 
   #shop-by-category-{{ section.id }} .category-image {
@@ -82,7 +85,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(0deg, rgba(19, 14, 9, 0.52) 10%, rgba(19, 14, 9, 0.08) 54%, rgba(19, 14, 9, 0.02) 100%);
+    background: linear-gradient(0deg, rgba(19, 14, 9, 0.42) 10%, rgba(19, 14, 9, 0.06) 54%, rgba(19, 14, 9, 0.01) 100%);
     pointer-events: none;
   }
 
@@ -149,6 +152,10 @@
       font-size: {{ section.settings.heading_size | times: 0.8 | round }}px;
     }
 
+    #shop-by-category-{{ section.id }} .category-container {
+      padding: 0 12px;
+    }
+
     #shop-by-category-{{ section.id }} .category-label {
       letter-spacing: 0.12em;
     }
@@ -163,7 +170,7 @@
   <div class="category-container">
     <div class="category-wrapper">
       {%- for block in section.blocks -%}
-        <a href="{{ block.settings.collection_link }}" class="category-item">
+        <a href="{{ block.settings.collection_link }}" class="category-item" aria-label="{{ block.settings.category_name | escape }}">
           <div class="category-image-wrapper">
             {%- if block.settings.image != blank -%}
               {{ block.settings.image | image_url: width: 600 | image_tag:

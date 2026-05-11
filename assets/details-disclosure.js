@@ -36,6 +36,14 @@ class HeaderMenu extends DetailsDisclosure {
   constructor() {
     super();
     this.header = document.querySelector('.header-wrapper');
+    this.hoverEnabled = window.matchMedia('(min-width: 990px) and (hover: hover) and (pointer: fine)');
+    this.hoverLeaveTimeout = null;
+
+    this.handlePointerEnter = this.handlePointerEnter.bind(this);
+    this.handlePointerLeave = this.handlePointerLeave.bind(this);
+
+    this.addEventListener('pointerenter', this.handlePointerEnter);
+    this.addEventListener('pointerleave', this.handlePointerLeave);
   }
 
   onToggle() {
@@ -47,6 +55,24 @@ class HeaderMenu extends DetailsDisclosure {
       '--header-bottom-position-desktop',
       `${Math.floor(this.header.getBoundingClientRect().bottom)}px`
     );
+  }
+
+  handlePointerEnter() {
+    if (!this.hoverEnabled.matches) return;
+
+    clearTimeout(this.hoverLeaveTimeout);
+    this.mainDetailsToggle.setAttribute('open', '');
+    this.mainDetailsToggle.querySelector('summary').setAttribute('aria-expanded', true);
+  }
+
+  handlePointerLeave() {
+    if (!this.hoverEnabled.matches) return;
+
+    clearTimeout(this.hoverLeaveTimeout);
+    this.hoverLeaveTimeout = setTimeout(() => {
+      if (this.matches(':hover')) return;
+      this.close();
+    }, 75);
   }
 }
 

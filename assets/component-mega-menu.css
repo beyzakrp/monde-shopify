@@ -29,9 +29,23 @@
   transform: translateY(-1.5rem);
 }
 
+.mega-menu:hover .mega-menu__content,
+.mega-menu:focus-within .mega-menu__content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .mega-menu[open] .mega-menu__content {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media screen and (min-width: 990px) {
+  .list-menu.list-menu--inline li:hover .mega-menu__content,
+  .list-menu.list-menu--inline li:focus-within .mega-menu__content {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mega-menu__list {

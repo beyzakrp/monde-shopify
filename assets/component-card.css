@@ -427,6 +427,18 @@
     transition: transform var(--duration-long) ease;
   }
 
+  .collection-card-wrapper .card__media {
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity var(--duration-long) ease, transform var(--duration-long) ease;
+  }
+
+  .collection-card-wrapper:hover .card__media,
+  .collection-card-wrapper:focus-within .card__media {
+    opacity: 1;
+    transform: scale(1);
+  }
+
   .card:hover .media.media--hover-effect > img:first-child:only-child,
   .card-wrapper:hover .media.media--hover-effect > img:first-child:only-child {
     transform: scale(1.03);

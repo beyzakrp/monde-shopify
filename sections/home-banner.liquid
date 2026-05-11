@@ -34,14 +34,52 @@
   #home-banner-{{ section.id }} .banner__content--desktop {
     position: absolute;
     top: 54%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: min(860px, 90vw);
-    z-index: 3;
+    z-index: 2;
+    text-align: center;
+  }
+
+  #home-banner-{{ section.id }} .banner__content--desktop.is-left {
+    left: clamp(1.6rem, 5vw, 6rem);
+    transform: translate(0, -50%);
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  #home-banner-{{ section.id }} .banner__content--desktop.is-center {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    text-align: center;
+  }
+
+  #home-banner-{{ section.id }} .banner__content--desktop.is-right {
+    left: auto;
+    right: clamp(1.6rem, 5vw, 6rem);
+    transform: translate(0, -50%);
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  #home-banner-{{ section.id }} .banner__content--desktop.is-left .banner__campaign,
+  #home-banner-{{ section.id }} .banner__content--desktop.is-left .banner__heading,
+  #home-banner-{{ section.id }} .banner__content--desktop.is-left .banner__subtext {
+    text-align: left;
+  }
+
+  #home-banner-{{ section.id }} .banner__content--desktop.is-right .banner__campaign,
+  #home-banner-{{ section.id }} .banner__content--desktop.is-right .banner__heading,
+  #home-banner-{{ section.id }} .banner__content--desktop.is-right .banner__subtext {
+    text-align: right;
+  }
+
+  #home-banner-{{ section.id }} .banner__content--desktop.is-center .banner__campaign,
+  #home-banner-{{ section.id }} .banner__content--desktop.is-center .banner__heading,
+  #home-banner-{{ section.id }} .banner__content--desktop.is-center .banner__subtext {
     text-align: center;
   }
 
@@ -151,7 +189,7 @@
     left: 50%;
     bottom: clamp(20px, 5vh, 42px);
     transform: translateX(-50%);
-    z-index: 3;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -179,7 +217,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 3;
+    z-index: 2;
     padding: 0 1.6rem;
     text-align: center;
   }
@@ -263,6 +301,91 @@
       font-size: {{ section.settings.heading_size | times: 0.75 | round }}px;
     }
   }
+
+  /* Overlay badge that can be positioned from the section panel */
+  #home-banner-{{ section.id }} .banner__overlay {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    will-change: transform;
+    display: grid;
+    place-items: center;
+  }
+
+  #home-banner-{{ section.id }} .banner__overlay svg,
+  #home-banner-{{ section.id }} .banner__overlay img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* only rotate the text ring, keep image/static elements unrotated */
+  #home-banner-{{ section.id }} .banner__overlay__text {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+
+  #home-banner-{{ section.id }} .banner__overlay.is-rotating .banner__overlay__text {
+    animation-name: banner-badge-spin;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: var(--badge-rotation-duration, 12s);
+  }
+
+  /* outer (rotating) and inner (static) image styles */
+  #home-banner-{{ section.id }} .banner__overlay__outer {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+  }
+
+  #home-banner-{{ section.id }} .banner__overlay.is-rotating .banner__overlay__outer {
+    /* rotate the inner image element so the wrapper's translate is preserved */
+  }
+
+  #home-banner-{{ section.id }} .banner__overlay__outer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transform-origin: 50% 50%;
+  }
+
+  #home-banner-{{ section.id }} .banner__overlay.is-rotating .banner__overlay__outer-img {
+    animation-name: banner-badge-spin;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: var(--badge-rotation-duration, 12s);
+  }
+
+  #home-banner-{{ section.id }} .banner__overlay__inner {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @keyframes banner-badge-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* position helpers */
+  #home-banner-{{ section.id }} .banner__overlay--top-left { top: 8%; left: 6%; }
+  #home-banner-{{ section.id }} .banner__overlay--top-right { top: 8%; right: 6%; }
+  #home-banner-{{ section.id }} .banner__overlay--center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  #home-banner-{{ section.id }} .banner__overlay--bottom-left { bottom: 8%; left: 6%; }
+  #home-banner-{{ section.id }} .banner__overlay--bottom-right { bottom: 8%; right: 6%; }
 {%- endstyle -%}
 
 <section id="home-banner-{{ section.id }}">
@@ -304,7 +427,7 @@
     </picture>
 
     <!-- Desktop Content -->
-    <div class="banner__content--desktop">
+    <div class="banner__content--desktop is-{{ section.settings.desktop_content_side }}">
       {%- if section.settings.campaign_label != blank -%}
         <p class="banner__campaign">{{ section.settings.campaign_label }}</p>
       {%- endif -%}
@@ -367,6 +490,53 @@
         <span class="banner__scroll-line"></span>
       </div>
     {%- endif -%}
+
+    {%- if section.settings.overlay_enable -%}
+      {%- assign pos = section.settings.overlay_position -%}
+      <div
+        class="banner__overlay banner__overlay--{{ pos }} {% if section.settings.overlay_rotate %}is-rotating{% endif %}"
+        style="width: {{ section.settings.overlay_size }}px; height: {{ section.settings.overlay_size }}px; {% if pos == 'center' %}left:50%; top:50%; transform: translate(calc(-50% + {{ section.settings.overlay_offset_x }}px), calc(-50% + {{ section.settings.overlay_offset_y }}px));{% else %}{% if pos contains 'left' %}left:6%;{% else %}right:6%;{% endif %}{% if pos contains 'top' %}top:8%;{% else %}bottom:8%;{% endif %} transform: translate({{ section.settings.overlay_offset_x }}px, {{ section.settings.overlay_offset_y }}px);{% endif %} --badge-rotation-duration: {{ section.settings.overlay_rotate_speed }}s;">
+
+        <!-- Inline SVG badge (keeps crisp vector) -->
+        <!-- You can replace this markup or add options to swap it for an uploaded image -->
+        <div class="banner__overlay__svg">
+          <!-- user-provided SVG -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 611 623" fill="none" aria-hidden="true">
+            <!-- simplified: embed the provided SVG content trimmed for brevity -->
+            <!-- full SVG content inserted here -->
+            
+            <!-- fallback/outer graphic: user may upload inner image below -->
+            <g>
+             
+            </g>
+          </svg>
+        </div>
+
+        <!-- outer rotating image (badge text) -->
+        {% if section.settings.overlay_outer_image != blank %}
+          <div class="banner__overlay__outer" aria-hidden="true">
+            <img class="banner__overlay__outer-img" src="{{ section.settings.overlay_outer_image | image_url: 'master' }}" width="{{ section.settings.overlay_size }}" height="{{ section.settings.overlay_size }}" alt="" />
+          </div>
+        {% else %}
+          <div class="banner__overlay__outer" aria-hidden="true">
+            <img class="banner__overlay__outer-img" src="https://cdn.shopify.com/s/files/1/0734/7001/7730/files/bagde-text.png?v=1777970007" width="{{ section.settings.overlay_size }}" height="{{ section.settings.overlay_size }}" alt="" />
+          </div>
+        {% endif %}
+
+        <!-- inner static image (flag) centered over the rotating outer badge -->
+        {% assign inner_px = section.settings.overlay_size | times: section.settings.overlay_inner_scale | divided_by: 100 %}
+        {% if section.settings.overlay_inner_image != blank %}
+          <img style="padding: 20px;", class="banner__overlay__inner" src="{{ section.settings.overlay_inner_image | image_url: 'master' }}" width="{{ inner_px }}" height="{{ inner_px }}" alt="" />
+        {% else %}
+          <img style="padding: 20px;", class="banner__overlay__inner" src="https://cdn.shopify.com/s/files/1/0734/7001/7730/files/korean-flag-png.png?v=1777969830" width="{{ inner_px }}" height="{{ inner_px }}" alt="" />
+        {% endif %}
+
+        <!-- rotating text (keeps image static) -->
+        <div class="banner__overlay__text">
+          <span class="banner__overlay__text-content">{{ section.settings.overlay_text }}</span>
+        </div>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -416,7 +586,7 @@
     {
       "type": "range",
       "id": "overlay_strength",
-      "label": "Gorsel koyuluk seviyesi",
+      "label": "Gradient yoğunluğu",
       "min": 10,
       "max": 90,
       "step": 5,
@@ -524,12 +694,13 @@
     {
       "type": "select",
       "id": "desktop_content_side",
-      "label": "Hangi Taraf",
+      "label": "Yazı konumu",
       "options": [
         { "value": "right", "label": "Sağ" },
+        { "value": "center", "label": "Orta" },
         { "value": "left", "label": "Sol" }
       ],
-      "default": "right"
+      "default": "center"
     },
     {
       "type": "range",
@@ -631,6 +802,102 @@
     {
       "type": "header",
       "content": "Mobil Ayarlar"
+    },
+
+    {
+      "type": "header",
+      "content": "Overlay Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "overlay_enable",
+      "label": "Overlay Badge Göster",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "overlay_position",
+      "label": "Overlay Konumu",
+      "options": [
+        { "value": "top-left", "label": "Üst Sol" },
+        { "value": "top-right", "label": "Üst Sağ" },
+        { "value": "center", "label": "Orta" },
+        { "value": "bottom-left", "label": "Alt Sol" },
+        { "value": "bottom-right", "label": "Alt Sağ" }
+      ],
+      "default": "top-left"
+    },
+    {
+      "type": "range",
+      "id": "overlay_size",
+      "label": "Badge Boyutu (px)",
+      "min": 60,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "overlay_offset_x",
+      "label": "X Offset (px)",
+      "min": -400,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "overlay_offset_y",
+      "label": "Y Offset (px)",
+      "min": -400,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "overlay_rotate",
+      "label": "Döndür (animasyon)",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_rotate_speed",
+      "label": "Dönme süresi (s)",
+      "min": 4,
+      "max": 60,
+      "step": 1,
+      "unit": "s",
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "overlay_text",
+      "label": "Badge Dönen Yazı",
+      "default": "●kore Cilt bakımı● Kore | Kore | Kore | Kore   |Kore"
+    },
+    {
+      "type": "image_picker",
+      "id": "overlay_outer_image",
+      "label": "Badge Dış Görsel (dönen)"
+    },
+    {
+      "type": "range",
+      "id": "overlay_inner_scale",
+      "label": "İç Görsel Ölçeği (%)",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "image_picker",
+      "id": "overlay_inner_image",
+      "label": "Badge içi görsel (opsiyonel)"
     },
     {
       "type": "checkbox",

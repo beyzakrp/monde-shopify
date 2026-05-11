@@ -410,7 +410,7 @@
 {
   "name": "t:sections.header.name",
   "class": "section-header",
-  "max_blocks": 3,
+  "max_blocks": 12,
   "settings": [
     {
       "type": "select",
@@ -658,6 +658,33 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "mega_menu_promo",
+      "name": "Mega Menü Görsel",
+      "settings": [
+        {
+          "type": "text",
+          "id": "parent_menu_handle",
+          "label": "Üst menü handle",
+          "info": "Header menü öğesinin handle değerini girin. Örn: toner"
+        },
+        {
+          "type": "image_picker",
+          "id": "promo_image",
+          "label": "Görsel"
+        },
+        {
+          "type": "text",
+          "id": "promo_title",
+          "label": "Görsel başlığı"
+        },
+        {
+          "type": "url",
+          "id": "promo_link",
+          "label": "Görsel linki (opsiyonel)"
+        }
+      ]
     }
   ]
 }
