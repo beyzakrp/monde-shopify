@@ -26,6 +26,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     padding: 0 16px;
+    border-bottom: 1px solid rgba(14, 11, 8, 0.9);
   }
 
   #shop-by-category-{{ section.id }} .category-container::-webkit-scrollbar {
@@ -170,7 +171,7 @@
   <div class="category-container">
     <div class="category-wrapper">
       {%- for block in section.blocks -%}
-        <a href="{{ block.settings.collection_link }}" class="category-item" aria-label="{{ block.settings.category_name | escape }}">
+        <a href="{{ block.settings.collection_link | default: '#' }}" class="category-item" aria-label="{{ block.settings.category_name | escape }}">
           <div class="category-image-wrapper">
             {%- if block.settings.image != blank -%}
               {{ block.settings.image | image_url: width: 600 | image_tag:
