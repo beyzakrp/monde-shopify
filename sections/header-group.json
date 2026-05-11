@@ -54,6 +54,20 @@
     },
     "header": {
       "type": "header",
+      "blocks": {
+        "mega_menu_promo_zxtqYg": {
+          "type": "mega_menu_promo",
+          "settings": {
+            "parent_menu_handle": "daksg",
+            "promo_image": "shopify://shop_images/c682336b-eaec-443f-bc13-1a7e2988e051_1.png",
+            "promo_title": "dsfads",
+            "promo_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_promo_zxtqYg"
+      ],
       "settings": {
         "logo_position": "middle-left",
         "mobile_logo_position": "center",

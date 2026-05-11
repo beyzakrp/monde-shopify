@@ -13,7 +13,7 @@
       "type": "main-collection-banner",
       "settings": {
         "hero_eyebrow": "",
-        "hero_title": "",
+        "hero_title": ".",
         "hero_description": "",
         "show_collection_description": true,
         "show_collection_image": true,
@@ -23,41 +23,10 @@
     },
     "shop_by_category_home": {
       "type": "shop-by-category",
-      "blocks": {
-        "category_solitaire": {
-          "type": "category",
-          "settings": {
-            "category_name": "Solitaire",
-            "image": "",
-            "collection_link": ""
-          }
-        },
-        "category_side_stone": {
-          "type": "category",
-          "settings": {
-            "category_name": "Side Stone",
-            "image": "",
-            "collection_link": ""
-          }
-        },
-        "category_vintage": {
-          "type": "category",
-          "settings": {
-            "category_name": "Vintage",
-            "image": "",
-            "collection_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "category_solitaire",
-        "category_side_stone",
-        "category_vintage"
-      ],
       "name": "Shop by Category",
       "settings": {
-        "heading": "Pre-Designed Engagement Rings",
-        "heading_size": 30,
+        "heading": "{{ collection.title }}",
+        "heading_size": 42,
         "heading_color": "#000000",
         "heading_alignment": "center",
         "heading_font": "Avenir LT Pro",
@@ -87,7 +56,7 @@
         "enable_filtering": true,
         "filter_type": "horizontal",
         "enable_sorting": true,
-        "padding_top": 0,
+        "padding_top": 4,
         "padding_bottom": 68
       }
     }
