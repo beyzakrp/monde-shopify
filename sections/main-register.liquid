@@ -93,6 +93,21 @@
         {{ 'customer.register.email' | t }}
       </label>
     </div>
+    <div class="field">
+      <select
+        name="customer[note]"
+        id="RegisterForm-customer-type"
+        aria-required="true"
+        required
+      >
+        <option value="" selected disabled>Üyelik Tipi Seçin</option>
+        <option value="Bireysel">Bireysel</option>
+        <option value="Kurumsal">Kurumsal</option>
+      </select>
+      <label for="RegisterForm-customer-type">
+        Müşteri Tipi
+      </label>
+    </div>
     {%- if form.errors contains 'email' -%}
       <span id="RegisterForm-email-error" class="form__message">
         <span class="svg-wrapper">
