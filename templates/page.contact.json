@@ -15,33 +15,9 @@
         "padding_top": 100,
         "padding_bottom": 0
       }
-    },
-    "1778499221e2ed16d7": {
-      "type": "apps",
-      "blocks": {
-        "surecust_forms_lock_custom_form_PdTwiN": {
-          "type": "shopify://apps/surecust-forms-lock/blocks/custom-form/11b1d95b-f9a2-49ad-9a53-3d6a172a070d",
-          "settings": {
-            "formid": "17784992009878",
-            "title": "Üyelik Formu",
-            "subtitle": "Submit the application by filling in this form.",
-            "selectproduct": "",
-            "fieldradius": 0,
-            "buttonback": "#5d0f29",
-            "buttoncolor": "#fdf5ea"
-          }
-        }
-      },
-      "block_order": [
-        "surecust_forms_lock_custom_form_PdTwiN"
-      ],
-      "settings": {
-        "include_margins": true
-      }
     }
   },
   "order": [
-    "main",
-    "1778499221e2ed16d7"
+    "main"
   ]
 }
