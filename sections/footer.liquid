@@ -8,9 +8,9 @@
 {%- style -%}
   .footer {
     margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
-    background: radial-gradient(circle at 12% 18%, rgba(248, 236, 220, 0.32), transparent 40%),
-      linear-gradient(180deg, #f7f1e8 0%, #f0e7db 100%);
-    border-top: 1px solid rgba(49, 37, 24, 0.08);
+    background: #f3ebe8;
+    color: #17120f ;
+    border-top: 1px solid rgba(248, 239, 227, 0.12);
   }
 
   .section-{{ section.id }}-padding {
@@ -29,35 +29,199 @@
     }
   }
 
+  .footer .page-width {
+    max-width: min(var(--page-width), 140rem);
+  }
+
+  .footer-brand {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.48fr);
+    gap: clamp(2.8rem, 6vw, 8rem);
+    align-items: end;
+    padding-bottom: clamp(3.6rem, 5vw, 6.8rem);
+    border-bottom: 1px solid rgba(248, 239, 227, 0.14);
+  }
+
+  .footer-brand__kicker {
+    margin: 0 0 1.4rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #caa987;
+  }
+
+  .footer-brand__logo {
+    display: block;
+    width: min(200px, 68vw);
+    margin-bottom: clamp(2.4rem, 4vw, 4.6rem);
+  }
+
+  .footer-brand__statement {
+    max-width: 11.5ch;
+    margin: 0;
+    font-family: 'Optima', 'Times New Roman', serif;
+    font-size: clamp(4.8rem, 8vw, 10.8rem);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: 0;
+    color: #fff8ee;
+    text-wrap: balance;
+  }
+
+  .footer-brand__copy {
+    max-width: 43rem;
+    margin: 0;
+    font-size: 1.55rem;
+    line-height: 1.75;
+    color: #17120f ;
+  }
+
+  .footer-brand__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2.4rem;
+  }
+
+  .footer-brand__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 4.4rem;
+    padding: 0 1.6rem;
+    border: 1px solid rgba(248, 239, 227, 0.22);
+    border-radius: 999px;
+    color: #fff8ee;
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: background-color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+  }
+
+  .footer-brand__link:hover {
+    transform: translateY(-1px);
+    background: rgba(248, 239, 227, 0.1);
+    border-color: rgba(248, 239, 227, 0.46);
+  }
+
+  .footer-routine {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-left: 1px solid rgba(248, 239, 227, 0.12);
+    border-top: 1px solid rgba(248, 239, 227, 0.12);
+    margin-top: clamp(2.4rem, 4vw, 4.2rem);
+  }
+
+  .footer-routine__item {
+    min-height: 12rem;
+    padding: 1.8rem;
+    border-right: 1px solid rgba(248, 239, 227, 0.12);
+    border-bottom: 1px solid rgba(248, 239, 227, 0.12);
+    color: #f8efe3;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.6rem;
+    transition: background-color 0.22s ease;
+  }
+
+  .footer-routine__item:hover {
+    background: rgba(248, 239, 227, 0.07);
+  }
+
+  .footer-routine__label {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #caa987;
+  }
+
+  .footer-routine__title {
+    font-family: 'Optima', 'Times New Roman', serif;
+    font-size: clamp(2rem, 1.8vw, 2.8rem);
+    line-height: 1.05;
+    letter-spacing: 0;
+  }
+
+  .footer-fallback {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 0.6fr));
+    gap: clamp(2.4rem, 5vw, 6rem);
+  }
+
+  .footer-fallback__note {
+    max-width: 42rem;
+    margin: 0;
+    color: rgba(54, 41, 23, 0.68);
+    font-size: 1.45rem;
+    line-height: 1.7;
+  }
+
+  .footer-fallback__heading {
+    margin: 0 0 1.4rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #caa987;
+  }
+
+  .footer-fallback__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .footer-fallback__link {
+    color: #302620;
+    text-decoration: none;
+    font-size: 1.35rem;
+    line-height: 1.45;
+  }
+
+  .footer-fallback__link:hover {
+    color: #17120f;
+    text-decoration: underline;
+    animation: linear 1s infinite;
+    text-underline-offset: 0.35rem;
+  }
+
   .footer .footer-block__heading {
-    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
-    letter-spacing: 0.04em;
-    font-size: clamp(2rem, 1.25vw, 2.8rem);
+    font-family: 'Avenir LT Pro', Arial, sans-serif;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #caa987;
   }
 
   .footer .footer-block__details-content,
   .footer .copyright__content,
   .footer .list-menu__item--link {
-    color: rgba(34, 24, 14, 0.84);
+    color: rgba(248, 239, 227, 0.72);
   }
 
   .footer .list-menu__item--link {
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    font-size: 1.35rem;
   }
 
   .footer .list-menu__item--link:hover {
-    color: #1d1510;
+    color: #fff8ee;
   }
 
   .footer-trust {
-    margin: 0 auto 2.6rem;
-    max-width: 118rem;
-    padding: 1.2rem 1.6rem;
-    border-radius: 18px;
-    border: 1px solid rgba(47, 35, 22, 0.12);
-    background: rgba(255, 249, 240, 0.66);
+    margin: 0 auto;
+    padding: 0;
+    border-top: 1px solid rgba(248, 239, 227, 0.14);
+    border-bottom: 1px solid rgba(248, 239, 227, 0.14);
   }
 
   .footer-trust__list {
@@ -66,23 +230,94 @@
     padding: 0;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.2rem;
   }
 
   .footer-trust__item {
+    min-height: 7.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.4rem;
     text-align: center;
     font-size: 1.08rem;
     line-height: 1.45;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #2e2218;
+    color: rgba(63, 52, 37, 0.82);
     font-weight: 600;
   }
 
+  .footer-trust__item + .footer-trust__item {
+    border-left: 1px solid rgba(248, 239, 227, 0.14);
+  }
+
+  .footer__content-top {
+    padding-top: clamp(3.2rem, 5vw, 5.8rem);
+  }
+
+  .footer__content-bottom {
+    border-top-color: rgba(248, 239, 227, 0.12);
+  }
+
+  .footer .list-payment__item .icon {
+    filter: saturate(0.8);
+  }
+
   @media screen and (max-width: 989px) {
+    .footer-brand {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .footer-routine {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-fallback {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-fallback__intro {
+      grid-column: 1 / -1;
+    }
+
     .footer-trust__list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
+    }
+
+    .footer-trust__item:nth-child(odd) {
+      border-left: 0;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .footer-brand__statement {
+      font-size: clamp(4.2rem, 16vw, 6.4rem);
+    }
+
+    .footer-routine {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-fallback {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-routine__item {
+      min-height: 9.6rem;
+    }
+
+    .footer-trust__list {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-trust__item {
+      min-height: 5.8rem;
+      border-left: 0 !important;
+    }
+
+    .footer-trust__item + .footer-trust__item {
+      border-top: 1px solid rgba(248, 239, 227, 0.14);
     }
   }
 {%- endstyle -%}
@@ -102,6 +337,54 @@
       assign only_empty_brand = true
     endif
   -%}
+
+
+  {%- if section.blocks.size == 0 -%}
+    <nav class="footer-fallback page-width" aria-label="Footer">
+      <div class="footer-fallback__intro">
+        <h2 class="footer-fallback__heading">Bakımını sadeleştir</h2>
+        <p class="footer-fallback__note">
+          Ürünleri cilt ihtiyacına, rutin adımına ve doku tercihine göre keşfet. Monde bakım akışı günlük kullanımı kolaylaştırmak için tasarlandı.
+        </p>
+        <div class="footer-brand" style="margin-top: 2.4rem;">
+         <img
+        class="footer-brand__logo"
+        src="https://cdn.shopify.com/s/files/1/0734/7001/7730/files/logoqd.png?v=1777902498"
+        alt="{{ shop.name | escape }}"
+        loading="lazy"
+      >
+</div>
+      </div>
+      <div>
+        <h2 class="footer-fallback__heading">Alışveriş</h2>
+        <ul class="footer-fallback__list" role="list">
+          <li><a class="footer-fallback__link" href="/collections/all">Tüm ürünler</a></li>
+          <li><a class="footer-fallback__link" href="/collections/serum">Serum</a></li>
+          <li><a class="footer-fallback__link" href="/collections/krem">Krem</a></li>
+          <li><a class="footer-fallback__link" href="/collections/temizleyici">Temizleyici</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-fallback__heading">Destek</h2>
+        <ul class="footer-fallback__list" role="list">
+          <li><a class="footer-fallback__link" href="/pages/contact">İletişim</a></li>
+          <li><a class="footer-fallback__link" href="/policies/shipping-policy">Kargo</a></li>
+          <li><a class="footer-fallback__link" href="/policies/refund-policy">İade</a></li>
+          <li><a class="footer-fallback__link" href="/search">Arama</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-fallback__heading">Monde</h2>
+        <ul class="footer-fallback__list" role="list">
+          <li><a class="footer-fallback__link" href="/pages/about">Hakkımızda</a></li>
+          <li><a class="footer-fallback__link" href="/blogs/news">Blog</a></li>
+          <li><a class="footer-fallback__link" href="/account">Hesabım</a></li>
+          <li><a class="footer-fallback__link" href="/cart">Sepet</a></li>
+        </ul>
+      </div>
+    </nav>
+  {%- endif -%}
+
   {%- if section.blocks.size > 0
     or section.settings.newsletter_enable
     or section.settings.show_social
@@ -312,10 +595,10 @@
 
   <div class="footer-trust page-width">
     <ul class="footer-trust__list" role="list">
-      <li class="footer-trust__item">Dermatolojik Uyumlu Formuller</li>
-      <li class="footer-trust__item">Paraben ve Mineral Yag Icermez</li>
-      <li class="footer-trust__item">24 Saatte Hizli Kargo</li>
-      <li class="footer-trust__item">Guvenli Odeme ve Kolay Iade</li>
+      <li class="footer-trust__item">PayTR ile güvenli ödeme</li>
+      <li class="footer-trust__item">3D Secure doğrulama</li>
+      <li class="footer-trust__item">Uygun kartlarda taksit</li>
+      <li class="footer-trust__item">Güvenli ödeme ve kolay iade</li>
     </ul>
   </div>
 

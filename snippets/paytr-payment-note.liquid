@@ -1,0 +1,15 @@
+{%- liquid
+  assign note_mode = mode | default: 'default'
+-%}
+
+<div class="paytr-trust paytr-trust--{{ note_mode }}" aria-label="PayTR ödeme güvenliği">
+  <div class="paytr-trust__head">
+    <span class="paytr-trust__mark">PayTR</span>
+    <span class="paytr-trust__title">Güvenli ödeme altyapısı</span>
+  </div>
+  <ul class="paytr-trust__list" role="list">
+    <li>3D Secure doğrulama</li>
+    <li>Taksit seçenekleri</li>
+    <li>Kart bilgileri PayTR altyapısında korunur</li>
+  </ul>
+</div>

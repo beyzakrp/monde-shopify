@@ -42,7 +42,7 @@
 
     assign tags_text = card_product.tags | join: ',' | downcase
     assign skin_focus = card_product.metafields.custom.card_highlight.value | default: card_product.type
-    assign packaging_note = card_product.metafields.custom.packaging_note.value | default: 'Koruyucu cam ambalaj ile gonderilir.'
+    assign packaging_note = card_product.metafields.custom.packaging_note.value | default: 'Koruyucu cam ambalaj ile gönderilir.'
   -%}
   <div class="card-wrapper product-card-wrapper underline-links-hover">
     <div

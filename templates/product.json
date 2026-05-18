@@ -1,1 +1,167 @@
-{"sections":{"main":{"type":"main-product","blocks":{"vendor":{"type":"text","settings":{"text":"{{ product.vendor }}","text_style":"uppercase"}},"title":{"type":"title","settings":{}},"price":{"type":"price","settings":{}},"variant_picker":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"quantity_selector":{"type":"quantity_selector","settings":{}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"description":{"type":"description","settings":{}},"share":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["vendor","title","price","variant_picker","quantity_selector","buy_buttons","description","share"],"settings":{"enable_sticky_info":true,"color_scheme":"scheme-1","media_size":"medium","constrain_to_viewport":true,"media_fit":"contain","gallery_layout":"stacked","mobile_thumbnails":"hide","media_position":"left","image_zoom":"lightbox","hide_variants":false,"enable_video_looping":false,"padding_top":24,"padding_bottom":24}},"related-products":{"type":"related-products","settings":{"heading":"You may also like","heading_size":"h2","products_to_show":4,"columns_desktop":4,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"adapt","image_shape":"default","show_secondary_image":false,"show_vendor":false,"show_rating":false,"padding_top":36,"padding_bottom":68}}},"order":["main","related-products"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "skin_meta": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% liquid\n  assign skin_type = product.metafields.custom.skin_type.value | default: 'Tüm cilt tipleri'\n  assign routine_step = product.metafields.custom.routine_step.value | default: product.type\n  assign active_ingredients = product.metafields.custom.active_ingredients.value | default: 'Kore ilhamlı bakım'\n  assign texture = product.metafields.custom.texture.value | default: 'Günlük kullanıma uygun'\n%}\n<div class=\"product-skin-meta\" aria-label=\"Ürün bakım özeti\">\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Cilt tipi</span><span class=\"product-skin-meta__value\">{{ skin_type }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Rutin adımı</span><span class=\"product-skin-meta__value\">{{ routine_step }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Aktif odak</span><span class=\"product-skin-meta__value\">{{ active_ingredients }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Doku</span><span class=\"product-skin-meta__value\">{{ texture }}</span></div>\n</div>"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "inventory": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "subtitle",
+            "inventory_threshold": 10,
+            "show_inventory_quantity": false
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true
+          }
+        },
+        "payment_trust": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'paytr-payment-note', mode: 'product' %}"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "how_to_use": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Nasıl kullanılır?",
+            "icon": "stopwatch",
+            "content": "<p>Temizlenmiş cilde rutindeki sırasına göre uygulayın. Gündüz kullanımında rutini güneş koruyucu ile tamamlayın.</p>",
+            "page": ""
+          }
+        },
+        "ingredients": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Aktif içerik odağı",
+            "icon": "leaf",
+            "content": "<p>Ürünün öne çıkan içeriklerini ve cilt ihtiyacına göre rolünü ürün açıklamasında inceleyebilirsiniz.</p>",
+            "page": ""
+          }
+        },
+        "routine": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Rutin içinde yeri",
+            "icon": "check_mark",
+            "content": "<p>Temizleyici, tonik, serum ve krem adımlarını cildinizin ihtiyacına göre birlikte kullanarak daha dengeli bir bakım rutini oluşturabilirsiniz.</p>",
+            "page": ""
+          }
+        },
+        "shipping": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Ödeme, teslimat ve iade",
+            "icon": "truck",
+            "content": "<p>Ödemeler PayTR güvenli ödeme altyapısı üzerinden alınır. Kart işlemlerinde 3D Secure doğrulama ve uygun kartlarda taksit seçenekleri ödeme adımında gösterilir. Teslimat ve iade detayları mağaza politikalarında güncel olarak yer alır.</p>",
+            "page": ""
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Paylaş"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "rating",
+        "skin_meta",
+        "variant_picker",
+        "inventory",
+        "quantity_selector",
+        "buy_buttons",
+        "payment_trust",
+        "description",
+        "how_to_use",
+        "ingredients",
+        "routine",
+        "shipping",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Rutini tamamlayan ürünler",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "padding_top": 36,
+        "padding_bottom": 68
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products"
+  ]
+}

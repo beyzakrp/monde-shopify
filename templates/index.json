@@ -25,7 +25,7 @@
         "heading_size_mobile": 28,
         "heading_color": "#fef9f8",
         "heading_color_mobile": "#ffffff",
-        "subtext": "Kore ilhamlı formüllerle geliştirilen özel serileri keşfet değişimi cildinde hisset.",
+        "subtext": "Kore ilhamlı formüllerle geliştirilen özel serileri keşfet, değişimi cildinde hisset.",
         "subtext_size": 16,
         "subtext_color": "#f3e6d4",
         "subtext_color_mobile": "#f3e6d4",
@@ -33,11 +33,11 @@
         "desktop_content_width": 40,
         "desktop_content_offset": 5,
         "btn1_label": "Serileri İncele",
-        "btn1_link": "",
+        "btn1_link": "/collections/all",
         "btn1_bg": "#ffffff",
         "btn1_text": "#1d150f",
         "btn2_label": "En çok satanlar",
-        "btn2_link": "",
+        "btn2_link": "/collections/all",
         "btn2_bg": "rgba(0,0,0,0)",
         "btn2_text": "#fff8ee",
         "btn2_border": "#fff8ee",
@@ -55,6 +55,45 @@
         "mobile_gradient": true
       }
     },
+    "skin_promise": {
+      "type": "rich-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "Monde bakım yaklaşımı",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "small"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Cildi yormayan, rutine kolayca yerleşen Kore ilhamlı bakım.",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Temizleyiciden seruma, tonikten nemlendiriciye kadar her adım; cilt bariyerini destekleyen, günlük kullanıma uygun ve anlaşılır formül mantığıyla kurgulanır.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "caption",
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 56,
+        "padding_bottom": 36
+      }
+    },
     "movable_banner_8LzQ2p": {
       "type": "movable-banner",
       "blocks": {
@@ -62,24 +101,24 @@
           "type": "ticker_message",
           "settings": {
             "badge": "NEW",
-            "text": "New season arrival - shop the collection",
-            "link": ""
+            "text": "Yeni sezon cilt bakım serilerini keşfet",
+            "link": "/collections/all"
           }
         },
         "ticker_message_2": {
           "type": "ticker_message",
           "settings": {
             "badge": "SKINCARE",
-            "text": "Dermatologist tested and barrier-safe formulas",
-            "link": ""
+            "text": "Bariyer dostu, günlük kullanıma uygun formüller",
+            "link": "/collections/all"
           }
         },
         "ticker_message_3": {
           "type": "ticker_message",
           "settings": {
-            "badge": "GIFT",
-            "text": "Premium gift packaging on selected orders",
-            "link": ""
+            "badge": "ROUTINE",
+            "text": "Cilt ihtiyacına göre temizleyici, serum, tonik ve krem seç",
+            "link": "/collections/all"
           }
         }
       },
@@ -89,7 +128,7 @@
         "ticker_message_3"
       ],
       "settings": {
-        "aria_label": "Promosyon bantı",
+        "aria_label": "Promosyon bandı",
         "duration": 24,
         "padding_top": 10,
         "padding_bottom": 10
@@ -103,7 +142,7 @@
           "settings": {
             "category_name": "Krem",
             "image": "shopify://shop_images/Heartleaf-Cream-5_23e2ba1b-c7f8-4c8b-aa86-18f4f5126e93.png",
-            "collection_link": ""
+            "collection_link": "/collections/krem"
           }
         },
         "category_Kt8wPJ": {
@@ -111,7 +150,7 @@
           "settings": {
             "category_name": "Serum",
             "image": "shopify://shop_images/Heartleaf-Serum-6_4aaed91c-fe4a-4bf3-a0ef-d4e3a921f400.png",
-            "collection_link": ""
+            "collection_link": "/collections/serum"
           }
         },
         "category_MBrhVV": {
@@ -119,7 +158,7 @@
           "settings": {
             "category_name": "Temizleyici",
             "image": "shopify://shop_images/image_607.png",
-            "collection_link": ""
+            "collection_link": "/collections/temizleyici"
           }
         },
         "category_bGLCkd": {
@@ -127,7 +166,7 @@
           "settings": {
             "category_name": "Tonik",
             "image": "shopify://shop_images/Heartleaf-Tonik-5.png",
-            "collection_link": ""
+            "collection_link": "/collections/tonik"
           }
         }
       },
@@ -139,11 +178,11 @@
       ],
       "name": "Shop by Category",
       "settings": {
-        "heading": "",
+        "heading": "Cilt bakım kategorileri",
         "heading_size": 26,
         "heading_color": "#1f1711",
         "heading_alignment": "left",
-        "heading_font": "Cormorant Garamond",
+        "heading_font": "Avenir LT Pro",
         "label_size": 19,
         "gap_mobile": 8,
         "gap_tablet": 16,
@@ -154,39 +193,155 @@
         "padding_bottom": 0
       }
     },
+    "routine_guide": {
+      "type": "skin-routine-guide",
+      "blocks": {
+        "routine_cleanse": {
+          "type": "routine_card",
+          "settings": {
+            "title": "Nazik temizleme",
+            "text": "Cildi germeden arındıran temizleyicilerle rutine yumuşak bir başlangıç yap.",
+            "tag": "Temizleyici",
+            "link": "/collections/temizleyici"
+          }
+        },
+        "routine_tone": {
+          "type": "routine_card",
+          "settings": {
+            "title": "Günlük denge",
+            "text": "Tonik adımıyla cildi sonraki bakım ürünlerine hazırlayan hafif dokuları seç.",
+            "tag": "Tonik",
+            "link": "/collections/tonik"
+          }
+        },
+        "routine_treat": {
+          "type": "routine_card",
+          "settings": {
+            "title": "Hedefli serum",
+            "text": "Matlık, nemsizlik veya hassasiyet gibi ihtiyaçlara aktif içeriklerle yanıt ver.",
+            "tag": "Serum",
+            "link": "/collections/serum"
+          }
+        },
+        "routine_moisturize": {
+          "type": "routine_card",
+          "settings": {
+            "title": "Bariyer desteği",
+            "text": "Nemi cilde hapseden ve konfor hissini artıran krem adımıyla rutini tamamla.",
+            "tag": "Krem",
+            "link": "/collections/krem"
+          }
+        }
+      },
+      "block_order": [
+        "routine_cleanse",
+        "routine_tone",
+        "routine_treat",
+        "routine_moisturize"
+      ],
+      "settings": {
+        "eyebrow": "Cilt ihtiyacına göre keşfet",
+        "heading": "Rutinin nereden başlamalı?",
+        "text": "Doğru ürünü seçmeyi kolaylaştıran kısa bir rehber: temizleme, dengeleme, hedefli bakım ve nem adımlarını cildinin ihtiyacına göre eşleştir.",
+        "footer_note": "Ürün sayfalarında cilt tipi, kullanım sırası ve aktif içerik bilgisini birlikte görebilirsin.",
+        "button_label": "Tüm ürünleri incele",
+        "button_link": "/collections/all",
+        "background_color": "#f7f1e8",
+        "text_color": "#1f1711",
+        "accent_color": "#8f5f3c",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
         "collection": "all",
         "products_to_show": 4,
-        "title": "En Cok Tercih Edilenler",
+        "title": "En Çok Tercih Edilenler",
         "heading_size": "h2",
-        "description": "",
-        "show_description": false,
+        "description": "Rutine kolayca eklenen favori bakım ürünleri.",
+        "show_description": true,
         "description_style": "body",
         "columns_desktop": 4,
         "enable_desktop_slider": false,
         "full_width": false,
-        "show_view_all": false,
+        "show_view_all": true,
         "view_all_style": "solid",
         "color_scheme": "scheme-1",
         "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
+        "show_rating": true,
+        "quick_add": "standard",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
         "padding_top": 56,
-        "padding_bottom": 68
+        "padding_bottom": 44
+      }
+    },
+    "trust_points": {
+      "type": "multicolumn",
+      "blocks": {
+        "trust_ingredients": {
+          "type": "column",
+          "settings": {
+            "title": "İçerik odaklı seçim",
+            "text": "<p>Ürünleri cilt ihtiyacı, aktif içerik ve rutin adımına göre daha kolay karşılaştır.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "trust_barrier": {
+          "type": "column",
+          "settings": {
+            "title": "Bariyer dostu yaklaşım",
+            "text": "<p>Günlük bakımda cildi yormayan, konfor hissini öne çıkaran formül anlatımı.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "trust_routine": {
+          "type": "column",
+          "settings": {
+            "title": "Rutin rehberi",
+            "text": "<p>Temizleyici, tonik, serum ve krem adımlarını tek akışta düşünmeye yardımcı olur.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "trust_ingredients",
+        "trust_barrier",
+        "trust_routine"
+      ],
+      "settings": {
+        "title": "Daha bilinçli bakım alışverişi",
+        "heading_size": "h1",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "scheme-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 28,
+        "padding_bottom": 72
       }
     }
   },
   "order": [
     "home_banner_mLHnFg",
+    "skin_promise",
     "movable_banner_8LzQ2p",
     "shop_by_category_66X9Gw",
-    "featured-collection"
+    "routine_guide",
+    "featured-collection",
+    "trust_points"
   ]
 }

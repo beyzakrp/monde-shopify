@@ -104,6 +104,8 @@
                 </small>
               </div>
             {%- else -%}
+              {% render 'paytr-payment-note', mode: 'cart' %}
+
               <div class="cart__ctas" {{ block.shopify_attributes }}>
                 <button
                   type="submit"

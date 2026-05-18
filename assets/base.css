@@ -3754,3 +3754,83 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+.paytr-trust {
+  border: 1px solid rgba(var(--color-foreground), 0.12);
+  border-radius: 8px;
+  background: rgba(var(--color-background), 0.72);
+  padding: 1.2rem 1.4rem;
+  color: rgba(var(--color-foreground), 0.82);
+}
+
+.paytr-trust__head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+
+.paytr-trust__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.4rem;
+  padding: 0 0.8rem;
+  border-radius: 999px;
+  background: #0b4ea2;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.paytr-trust__title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.paytr-trust__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.2rem;
+}
+
+.paytr-trust__list li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 1.25rem;
+  line-height: 1.45;
+  color: rgba(var(--color-foreground), 0.72);
+}
+
+.paytr-trust__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: #0b4ea2;
+}
+
+.paytr-trust--drawer,
+.paytr-trust--cart {
+  margin: 1.2rem 0;
+}
+
+.paytr-trust--product {
+  margin: 0.2rem 0 0.6rem;
+}
+
+@media screen and (max-width: 640px) {
+  .paytr-trust__list {
+    display: grid;
+    gap: 0.6rem;
+  }
+}
