@@ -10,38 +10,41 @@
 {
   "sections": {
     "main": {
-      "type": "main-page",
+      "type": "main-blog",
       "settings": {
-        "padding_top": 100,
-        "padding_bottom": 36
-      }
-    },
-    "1778568965acabb3cd": {
-      "type": "apps",
-      "blocks": {
-        "surecust_forms_lock_custom_form_hgkXEi": {
-          "type": "shopify://apps/surecust-forms-lock/blocks/custom-form/11b1d95b-f9a2-49ad-9a53-3d6a172a070d",
-          "settings": {
-            "formid": "17784992009878",
-            "title": "Toptan Satış Başvuru Formu",
-            "subtitle": "",
-            "selectproduct": "",
-            "fieldradius": 0,
-            "buttonback": "#5d0f29",
-            "buttoncolor": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "surecust_forms_lock_custom_form_hgkXEi"
-      ],
-      "settings": {
-        "include_margins": true
+        "eyebrow": "Skin journal",
+        "heading": "Cilt Bakim Rehberi",
+        "intro": "Cilt tipini daha iyi tanimana, aktif icerikleri dogru eslestirmene ve sade ama etkili bir rutin kurmana yardim eden bakim yazilari.",
+        "show_popular": true,
+        "popular_heading": "Populer Okumalar",
+        "filter_tags": "Cilt Bakimi, Icerik Rehberi, Rutinler, Gunes Koruma",
+        "all_filter_label": "Tum Yazilar",
+        "sort_label": "Yazilari sirala",
+        "sort_latest_label": "En Yeni",
+        "sort_oldest_label": "En Eski",
+        "search_placeholder": "Ara...",
+        "read_more_label": "Oku",
+        "empty_message": "Bu secime uygun yazi bulunamadi.",
+        "posts_per_page": 12,
+        "show_excerpt": true,
+        "show_date": true,
+        "cta_heading": "Rutinin icin dogru baslangici bul",
+        "cta_text": "Cilt ihtiyacina gore temizleyici, serum, nemlendirici ve gunes koruma adimlarini birlikte kesfet.",
+        "cta_primary_label": "Urunleri Kesfet",
+        "cta_secondary_label": "Cilt Rutinini Kur",
+        "background_color": "#fef9f8",
+        "card_background": "#f3ebe8",
+        "text_color": "#2e2a39",
+        "accent_color": "#5d0f29",
+        "filter_active_text_color": "#ffffff",
+        "cta_background": "#f3ebe8",
+        "cta_text_color": "#2e2a39",
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     }
   },
   "order": [
-    "main",
-    "1778568965acabb3cd"
+    "main"
   ]
 }
