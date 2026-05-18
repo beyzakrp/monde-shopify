@@ -1,0 +1,56 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "skincare_hero": {
+      "type": "page-skincare-hero",
+      "settings": {
+        "image_position": "center center",
+        "eyebrow": "Monde bakım felsefesi",
+        "heading": "Cildin için sakin, düzenli ve etkili bir bakım ritmi.",
+        "heading_tag": "h1",
+        "text": "<p>Kore ilhamlı formüllerle geliştirilen cilt bakım serileri; temizleme, dengeleme, hedefli bakım ve nem adımlarını sadeleştirir.</p>",
+        "button_label": "Ürünleri keşfet",
+        "button_link": "/collections/all",
+        "content_position": "left",
+        "text_alignment": "left",
+        "mobile_text_alignment": "left",
+        "content_width": 520,
+        "heading_size": 58,
+        "heading_size_mobile": 34,
+        "min_height_mobile": 520,
+        "height_vh": 65,
+        "max_height": 600,
+        "enable_overlay": true,
+        "overlay_opacity": 40,
+        "overlay_direction": "90deg",
+        "background_color": "#f5eee4",
+        "text_color": "#fff8ee",
+        "body_color": "#f2dfca",
+        "accent_color": "#f2c79f",
+        "full_width": true,
+        "loading": "eager",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 64,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "skincare_hero",
+    "main"
+  ]
+}

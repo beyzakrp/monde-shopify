@@ -1,0 +1,466 @@
+{%- style -%}
+  #page-skincare-hero-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__inner {
+    position: relative;
+    max-width: {% if section.settings.full_width %}100%{% else %}min(var(--page-width), 132rem){% endif %};
+    margin: 0 auto;
+    padding: {% if section.settings.full_width %}0{% else %}0 1.6rem{% endif %};
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__media {
+    position: relative;
+    min-height: {{ section.settings.min_height_mobile }}px;
+    overflow: hidden;
+    background: #eadfd2;
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        {{ section.settings.overlay_direction }},
+        rgba(18, 12, 8, {{ section.settings.overlay_opacity | divided_by: 100.0 }}) 0%,
+        rgba(18, 12, 8, {{ section.settings.overlay_opacity | times: 0.5 | divided_by: 100.0 }}) 48%,
+        rgba(18, 12, 8, 0.08) 100%
+      );
+    pointer-events: none;
+    opacity: {% if section.settings.enable_overlay %}1{% else %}0{% endif %};
+    z-index: 1;
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__image {
+    width: 100%;
+    height: clamp({{ section.settings.min_height_mobile }}px, {{ section.settings.height_vh }}vh, {{ section.settings.max_height }}px);
+    max-height: {{ section.settings.max_height }}px;
+    object-fit: cover;
+    object-position: {{ section.settings.image_position }};
+    display: block;
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__image--mobile {
+    display: none;
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__content {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    width: min({{ section.settings.content_width }}px, calc(100% - 3.2rem));
+    transform: translateY(-50%);
+    color: {{ section.settings.text_color }};
+    text-align: {{ section.settings.text_alignment }};
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__content--left {
+    left: clamp(1.6rem, 6vw, 7.2rem);
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__content--right {
+    right: clamp(1.6rem, 6vw, 7.2rem);
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__content--center {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__eyebrow {
+    margin: 0 0 1.2rem;
+    font-family: 'Avenir LT Pro', Arial, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: {{ section.settings.accent_color }};
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__heading {
+    margin: 0;
+    font-family: 'Optima', 'Times New Roman', serif;
+    font-size: clamp({{ section.settings.heading_size_mobile }}px, 5vw, {{ section.settings.heading_size }}px);
+    font-weight: 500;
+    line-height: 0.98;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__text {
+    margin: 1.8rem 0 0;
+    max-width: 46rem;
+    font-size: clamp(1.35rem, 1.15vw, 1.7rem);
+    line-height: 1.7;
+    color: {{ section.settings.body_color }};
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__content--center .page-skincare-hero__text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #page-skincare-hero-{{ section.id }} .page-skincare-hero__button {
+    margin-top: 2.4rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    #page-skincare-hero-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.6 | round }}px 0 {{ section.settings.padding_bottom | times: 0.6 | round }}px;
+    }
+
+    #page-skincare-hero-{{ section.id }} .page-skincare-hero__image {
+      height: {{ section.settings.min_height_mobile }}px;
+      max-height: none;
+    }
+
+    #page-skincare-hero-{{ section.id }} .page-skincare-hero__image--desktop.has-mobile-image {
+      display: none;
+    }
+
+    #page-skincare-hero-{{ section.id }} .page-skincare-hero__image--mobile {
+      display: block;
+    }
+
+    #page-skincare-hero-{{ section.id }} .page-skincare-hero__content {
+      top: auto;
+      left: 1.6rem;
+      right: 1.6rem;
+      bottom: 2.4rem;
+      width: auto;
+      transform: none;
+      text-align: {{ section.settings.mobile_text_alignment }};
+    }
+
+    #page-skincare-hero-{{ section.id }} .page-skincare-hero__content--center {
+      left: 1.6rem;
+      transform: none;
+    }
+  }
+{%- endstyle -%}
+
+<section id="page-skincare-hero-{{ section.id }}" class="page-skincare-hero">
+  <div class="page-skincare-hero__inner">
+    <div class="page-skincare-hero__media">
+      {%- if section.settings.image != blank -%}
+        {%- liquid
+          assign desktop_image_class = 'page-skincare-hero__image page-skincare-hero__image--desktop'
+          if section.settings.mobile_image != blank
+            assign desktop_image_class = desktop_image_class | append: ' has-mobile-image'
+          endif
+        -%}
+        {{ section.settings.image | image_url: width: 1800 | image_tag:
+          class: desktop_image_class,
+          widths: '750, 990, 1200, 1500, 1800',
+          sizes: '100vw',
+          loading: section.settings.loading,
+          alt: section.settings.image.alt | default: section.settings.heading
+        }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'page-skincare-hero__image page-skincare-hero__image--desktop' }}
+      {%- endif -%}
+
+      {%- if section.settings.mobile_image != blank -%}
+        {{ section.settings.mobile_image | image_url: width: 900 | image_tag:
+          class: 'page-skincare-hero__image page-skincare-hero__image--mobile',
+          widths: '360, 540, 720, 900',
+          sizes: '100vw',
+          loading: section.settings.loading,
+          alt: section.settings.mobile_image.alt | default: section.settings.heading
+        }}
+      {%- endif -%}
+
+      <div class="page-skincare-hero__content page-skincare-hero__content--{{ section.settings.content_position }}">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="page-skincare-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <{{ section.settings.heading_tag }} class="page-skincare-hero__heading">
+            {{ section.settings.heading | escape }}
+          </{{ section.settings.heading_tag }}>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="page-skincare-hero__text rte">{{ section.settings.text }}</div>
+        {%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <a
+            class="button button--primary page-skincare-hero__button"
+            {% if section.settings.button_link != blank %}
+              href="{{ section.settings.button_link }}"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+          >
+            {{ section.settings.button_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page Skincare Hero",
+  "tag": "section",
+  "class": "section-page-skincare-hero",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop görsel"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobil görsel"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Görsel pozisyonu",
+      "options": [
+        { "value": "center center", "label": "Orta" },
+        { "value": "top center", "label": "Üst" },
+        { "value": "bottom center", "label": "Alt" },
+        { "value": "center left", "label": "Sol" },
+        { "value": "center right", "label": "Sağ" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Üst etiket",
+      "default": "Monde bakım felsefesi"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Başlık",
+      "default": "Cildin için sakin, düzenli ve etkili bir bakım ritmi."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Başlık etiketi",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "p", "label": "Paragraf" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Açıklama",
+      "default": "<p>Kore ilhamlı formüllerle geliştirilen cilt bakım serileri; temizleme, dengeleme, hedefli bakım ve nem adımlarını sadeleştirir.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Buton metni",
+      "default": "Ürünleri keşfet"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Buton linki"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Desktop metin konumu",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" },
+        { "value": "right", "label": "Sağ" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Desktop metin hizası",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" },
+        { "value": "right", "label": "Sağ" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "mobile_text_alignment",
+      "label": "Mobil metin hizası",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" },
+        { "value": "right", "label": "Sağ" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Metin genişliği",
+      "min": 320,
+      "max": 760,
+      "step": 20,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Başlık boyutu desktop",
+      "min": 36,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Başlık boyutu mobil",
+      "min": 24,
+      "max": 54,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Mobil minimum yükseklik",
+      "min": 360,
+      "max": 720,
+      "step": 20,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "height_vh",
+      "label": "Desktop yükseklik",
+      "min": 40,
+      "max": 90,
+      "step": 5,
+      "unit": "vh",
+      "default": 65
+    },
+    {
+      "type": "range",
+      "id": "max_height",
+      "label": "Maksimum yükseklik",
+      "min": 420,
+      "max": 820,
+      "step": 10,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_overlay",
+      "label": "Okunurluk için overlay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay yoğunluğu",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "overlay_direction",
+      "label": "Overlay yönü",
+      "options": [
+        { "value": "90deg", "label": "Soldan sağa" },
+        { "value": "270deg", "label": "Sağdan sola" },
+        { "value": "0deg", "label": "Alttan üste" }
+      ],
+      "default": "90deg"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Arka plan",
+      "default": "#f5eee4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Başlık rengi",
+      "default": "#fff8ee"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Açıklama rengi",
+      "default": "#f2dfca"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Üst etiket rengi",
+      "default": "#f2c79f"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Tam genişlik",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "loading",
+      "label": "Görsel yükleme",
+      "options": [
+        { "value": "eager", "label": "Öncelikli" },
+        { "value": "lazy", "label": "Lazy" }
+      ],
+      "default": "eager"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Üst boşluk",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Alt boşluk",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page Skincare Hero"
+    }
+  ]
+}
+{% endschema %}
