@@ -18,23 +18,6 @@
     },
     "1778568965acabb3cd": {
       "type": "apps",
-      "blocks": {
-        "surecust_forms_lock_custom_form_hgkXEi": {
-          "type": "shopify://apps/surecust-forms-lock/blocks/custom-form/11b1d95b-f9a2-49ad-9a53-3d6a172a070d",
-          "settings": {
-            "formid": "17784992009878",
-            "title": "Toptan Satış Başvuru Formu",
-            "subtitle": "",
-            "selectproduct": "",
-            "fieldradius": 0,
-            "buttonback": "#5d0f29",
-            "buttoncolor": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "surecust_forms_lock_custom_form_hgkXEi"
-      ],
       "settings": {
         "include_margins": true
       }

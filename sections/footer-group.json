@@ -11,39 +11,6 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "newsletter": {
-      "type": "newsletter",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Cilt bakım notları ve özel teklifleri kaçırma",
-            "heading_size": "h1"
-          }
-        },
-        "paragraph": {
-          "type": "paragraph",
-          "settings": {
-            "text": "<p>Uzman önerileri, yeni lansmanlar ve sadece üyelere özel avantajlar e-postana gelsin.</p>"
-          }
-        },
-        "email-form": {
-          "type": "email_form",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "heading",
-        "paragraph",
-        "email-form"
-      ],
-      "settings": {
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 44,
-        "padding_bottom": 8
-      }
-    },
     "footer": {
       "type": "footer",
       "settings": {
@@ -63,7 +30,6 @@
     }
   },
   "order": [
-    "newsletter",
     "footer"
   ]
 }
