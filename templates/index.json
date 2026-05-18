@@ -23,7 +23,7 @@
         "heading_font": "Optima",
         "heading_size": 80,
         "heading_size_mobile": 28,
-        "heading_color": "#000000",
+        "heading_color": "#fef9f8",
         "heading_color_mobile": "#ffffff",
         "subtext": "Kore ilhamlı formüllerle geliştirilen özel serileri keşfet değişimi cildinde hisset.",
         "subtext_size": 16,
@@ -154,144 +154,6 @@
         "padding_bottom": 0
       }
     },
-    "image-with-text": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Gece rutininize ipeksi bir dokunus",
-            "heading_size": "h1"
-          }
-        },
-        "button": {
-          "type": "button",
-          "settings": {
-            "button_label": "Bakim koleksiyonunu incele",
-            "button_link": "shopify://collections/all",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/Instagram_post_-_401.png",
-        "height": "medium",
-        "desktop_image_width": "large",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "overlap",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "scheme-1",
-        "color_scheme": "scheme-2",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "inline_image_statement_tjKH2X": {
-      "type": "inline-image-statement",
-      "settings": {
-        "line_1_start": "Cildinize bugun",
-        "line_1_end": "ipeksi bir isilti hediye edin",
-        "line_2_text": "aktiflerle guclenen nazik bir rutinle.",
-        "heading_tag": "h2",
-        "heading_font": "Cormorant Garamond",
-        "heading_size": 72,
-        "heading_weight": "700",
-        "background_color": "#f6f0e7",
-        "text_color": "#1d1510",
-        "content_max_width": 1500,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "row_gap": 18,
-        "image_radius": 22,
-        "image_1_width": 230,
-        "image_1_height": 160,
-        "image_2_width": 190,
-        "image_2_height": 130
-      }
-    },
-    "editorial_hover_cards_X8mQ2V": {
-      "type": "editorial-hover-cards",
-      "blocks": {
-        "hover_card_1": {
-          "type": "hover_card",
-          "settings": {
-            "eyebrow": "MORNING RITUAL",
-            "title": "3-Minute Awakening & De-Puffing Guide",
-            "body": "<p>Hover ile ikinci görsel görünür, altında açıklama açılır.</p>",
-            "cta_label": "View Routine",
-            "popup_eyebrow": "DEEP NIGHT REPAIR",
-            "popup_title": "The Late Night Savior",
-            "popup_body": "<p>Counteract the effects of blue light and fatigue. This potent trio works in sync with your circadian rhythm to repair and reset while you sleep.</p>",
-            "popup_items": "Renewal Oil | Daily Moisturizer",
-            "popup_item_meta": "30ml",
-            "popup_summary_label": "Bundle Savings",
-            "popup_price": "$37.74",
-            "popup_compare_price": "$50.00",
-            "popup_button_label": "Add Bundle to Cart",
-            "popup_button_link": "",
-            "link": ""
-          }
-        },
-        "hover_card_2": {
-          "type": "hover_card",
-          "settings": {
-            "eyebrow": "DEEP NIGHT REPAIR",
-            "title": "The Late Night Savior",
-            "body": "<p>Hover ile ikinci görsel görünür, altında açıklama açılır.</p>",
-            "cta_label": "View Routine",
-            "popup_eyebrow": "DEEP NIGHT REPAIR",
-            "popup_title": "The Late Night Savior",
-            "popup_body": "<p>Counteract the effects of blue light and fatigue. This potent trio works in sync with your circadian rhythm to repair and reset while you sleep.</p>",
-            "popup_items": "Renewal Oil | Daily Moisturizer",
-            "popup_item_meta": "30ml",
-            "popup_summary_label": "Bundle Savings",
-            "popup_price": "$37.74",
-            "popup_compare_price": "$50.00",
-            "popup_button_label": "Add Bundle to Cart",
-            "popup_button_link": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "hover_card_1",
-        "hover_card_2"
-      ],
-      "settings": {
-        "kicker": "CURATED ROUTINES",
-        "title": "Shop by",
-        "title_emphasis": "Solution",
-        "background_color": "#f7f7f4",
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
-    },
-    "curated_collections_P4aL9d": {
-      "type": "curated-collections",
-      "settings": {
-        "kicker": "CURATED EDIT",
-        "title": "Featured",
-        "title_emphasis": "Collections",
-        "tab_1_label": "NEW ARRIVALS",
-        "collection_1": "all",
-        "tab_2_label": "BEST SELLERS",
-        "collection_2": "all",
-        "tab_3_label": "STAFF PICKS",
-        "collection_3": "all",
-        "card_ratio": "square",
-        "products_limit": 4,
-        "background_color": "#f1f1f1",
-        "padding_top": 56,
-        "padding_bottom": 64
-      }
-    },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
@@ -325,10 +187,6 @@
     "home_banner_mLHnFg",
     "movable_banner_8LzQ2p",
     "shop_by_category_66X9Gw",
-    "image-with-text",
-    "inline_image_statement_tjKH2X",
-    "editorial_hover_cards_X8mQ2V",
-    "curated_collections_P4aL9d",
     "featured-collection"
   ]
 }
