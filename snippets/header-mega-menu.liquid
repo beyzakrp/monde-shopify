@@ -18,13 +18,28 @@
     border-radius: 16px;
     overflow: hidden;
     min-height: 22rem;
+    aspect-ratio: 16 / 9;
+    background: rgba(var(--color-foreground), 0.04);
   }
 
   .mega-menu__promo-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
+    transform: scale(1);
+    transition: opacity 0.28s ease, transform 0.42s ease;
+  }
+
+  .mega-menu__promo-image.is-changing {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+
+  .mega-menu__promo-image.is-visible {
+    opacity: 1;
+    transform: scale(1);
   }
 
   .mega-menu__promo-overlay {
@@ -52,6 +67,53 @@
   }
 {%- endstyle -%}
 
+<script>
+  if (!window.__megaMenuCollectionPreviewInit) {
+    window.__megaMenuCollectionPreviewInit = true;
+
+    document.addEventListener('mouseover', function(event) {
+      var trigger = event.target.closest('[data-mega-preview-link]');
+      if (!trigger) return;
+
+      var panel = trigger.closest('.mega-menu__panel');
+      if (!panel) return;
+
+      var preview = panel.querySelector('[data-mega-preview]');
+      var image = panel.querySelector('.mega-menu__promo-image');
+      var title = panel.querySelector('[data-mega-preview-title]');
+      if (!preview || !image) return;
+
+      var src = trigger.getAttribute('data-preview-src');
+      if (!src) return;
+      if (image.getAttribute('src') === src) return;
+
+      image.classList.remove('is-visible');
+      image.classList.add('is-changing');
+
+      window.setTimeout(function() {
+        image.removeAttribute('srcset');
+        image.src = src;
+        image.alt = trigger.getAttribute('data-preview-alt') || trigger.textContent.trim();
+        preview.href = trigger.getAttribute('data-preview-url') || trigger.href;
+
+        if (title) {
+          title.textContent = trigger.getAttribute('data-preview-title') || trigger.textContent.trim();
+        }
+
+        image.classList.remove('is-changing');
+        image.classList.add('is-visible');
+      }, 140);
+    });
+
+    document.addEventListener('focusin', function(event) {
+      var trigger = event.target.closest('[data-mega-preview-link]');
+      if (trigger) {
+        trigger.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+      }
+    });
+  }
+</script>
+
 <nav class="header__inline-menu">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in section.settings.menu.links -%}
@@ -59,9 +121,14 @@
         assign promo_block = blank
         assign collection_image = blank
         assign collection_image_alt = link.title
-        if link.type == 'collection_link' and link.object != blank and link.object.featured_image != blank
-          assign collection_image = link.object.featured_image
-          assign collection_image_alt = link.object.featured_image.alt | default: link.title
+        assign first_preview_image = blank
+        assign first_preview_title = blank
+        assign first_preview_url = blank
+        if link.type == 'collection_link' and link.object != blank
+          assign collection_image = link.object.image | default: link.object.featured_image
+          if collection_image != blank
+            assign collection_image_alt = collection_image.alt | default: link.title
+          endif
         endif
         for block in section.blocks
           if block.type == 'mega_menu_promo' and block.settings.parent_menu_handle == link.handle
@@ -69,6 +136,29 @@
             break
           endif
         endfor
+        for childlink in link.links
+          if first_preview_image == blank and childlink.type == 'collection_link' and childlink.object != blank
+            assign child_collection_image = childlink.object.image | default: childlink.object.featured_image
+            if child_collection_image != blank
+              assign first_preview_image = child_collection_image
+              assign first_preview_title = childlink.title
+              assign first_preview_url = childlink.url
+            endif
+          endif
+          for grandchildlink in childlink.links
+            if first_preview_image == blank and grandchildlink.type == 'collection_link' and grandchildlink.object != blank
+              assign grandchild_collection_image = grandchildlink.object.image | default: grandchildlink.object.featured_image
+              if grandchild_collection_image != blank
+                assign first_preview_image = grandchild_collection_image
+                assign first_preview_title = grandchildlink.title
+                assign first_preview_url = grandchildlink.url
+              endif
+            endif
+          endfor
+        endfor
+        assign preview_image = promo_block.settings.promo_image | default: collection_image | default: first_preview_image
+        assign preview_title = promo_block.settings.promo_title | default: link.title | default: first_preview_title
+        assign preview_url = promo_block.settings.promo_link | default: link.url | default: first_preview_url
       -%}
       <li>
         {%- if link.links != blank -%}
@@ -92,17 +182,30 @@
                 class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
                 tabindex="-1"
               >
-                <div class="mega-menu__panel page-width{% if promo_block != blank and promo_block.settings.promo_image != blank %} mega-menu__panel--has-promo{% endif %}">
+                <div class="mega-menu__panel page-width{% if preview_image != blank %} mega-menu__panel--has-promo{% endif %}">
                   <ul
                     class="mega-menu__list{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
                     role="list"
                   >
                     {%- for childlink in link.links -%}
+                      {%- liquid
+                        assign child_preview_image = blank
+                        if childlink.type == 'collection_link' and childlink.object != blank
+                          assign child_preview_image = childlink.object.image | default: childlink.object.featured_image
+                        endif
+                      -%}
                       <li>
                         <a
                           id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
                           href="{{ childlink.url }}"
                           class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                          {% if child_preview_image != blank %}
+                            data-mega-preview-link
+                            data-preview-src="{{ child_preview_image | image_url: width: 900 }}"
+                            data-preview-alt="{{ child_preview_image.alt | default: childlink.title | escape }}"
+                            data-preview-title="{{ childlink.title | escape }}"
+                            data-preview-url="{{ childlink.url }}"
+                          {% endif %}
                           {% if childlink.current %}
                             aria-current="page"
                           {% endif %}
@@ -112,11 +215,24 @@
                         {%- if childlink.links != blank -%}
                           <ul class="list-unstyled" role="list">
                             {%- for grandchildlink in childlink.links -%}
+                              {%- liquid
+                                assign grandchild_preview_image = blank
+                                if grandchildlink.type == 'collection_link' and grandchildlink.object != blank
+                                  assign grandchild_preview_image = grandchildlink.object.image | default: grandchildlink.object.featured_image
+                                endif
+                              -%}
                               <li>
                                 <a
                                   id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
                                   href="{{ grandchildlink.url }}"
                                   class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                                  {% if grandchild_preview_image != blank %}
+                                    data-mega-preview-link
+                                    data-preview-src="{{ grandchild_preview_image | image_url: width: 900 }}"
+                                    data-preview-alt="{{ grandchild_preview_image.alt | default: grandchildlink.title | escape }}"
+                                    data-preview-title="{{ grandchildlink.title | escape }}"
+                                    data-preview-url="{{ grandchildlink.url }}"
+                                  {% endif %}
                                   {% if grandchildlink.current %}
                                     aria-current="page"
                                   {% endif %}
@@ -131,24 +247,21 @@
                     {%- endfor -%}
                   </ul>
 
-                  {%- if promo_block != blank and promo_block.settings.promo_image != blank or collection_image != blank -%}
-                    {%- assign promo_url = promo_block.settings.promo_link | default: link.url -%}
-                    {%- assign promo_image = promo_block.settings.promo_image | default: collection_image -%}
-                    {%- assign promo_title = promo_block.settings.promo_title | default: link.title -%}
-                    <a class="mega-menu__promo" href="{{ promo_url }}" {{ promo_block.shopify_attributes }}>
+                  {%- if preview_image != blank -%}
+                    <a class="mega-menu__promo" href="{{ preview_url }}" data-mega-preview {{ promo_block.shopify_attributes }}>
                       {{
-                        promo_image
+                        preview_image
                         | image_url: width: 900
                         | image_tag:
                           widths: '320, 480, 640, 900',
                           sizes: '(min-width: 990px) 30rem, 100vw',
                           class: 'mega-menu__promo-image',
                           loading: 'lazy',
-                          alt: promo_title | default: collection_image_alt
+                          alt: preview_title | default: collection_image_alt
                       }}
-                      {%- if promo_title != blank -%}
+                      {%- if preview_title != blank -%}
                         <span class="mega-menu__promo-overlay">
-                          <span class="mega-menu__promo-title">{{ promo_title | escape }}</span>
+                          <span class="mega-menu__promo-title" data-mega-preview-title>{{ preview_title | escape }}</span>
                         </span>
                       {%- endif -%}
                     </a>
