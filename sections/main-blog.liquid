@@ -1,142 +1,797 @@
-{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
 {{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign filter_tags = section.settings.filter_tags | split: ','
+  assign has_manual_filters = false
+
+  for filter_tag in filter_tags
+    assign cleaned_filter = filter_tag | strip
+    if cleaned_filter != blank
+      assign has_manual_filters = true
+      break
+    endif
+  endfor
+-%}
+
 {%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  #SkinBlog-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__inner {
+    max-width: min(var(--page-width), 124rem);
+    margin: 0 auto;
+    padding: {{ section.settings.padding_top | times: 0.7 | round }}px 1.6rem {{ section.settings.padding_bottom | times: 0.7 | round }}px;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(28rem, 0.52fr);
+    gap: clamp(2.4rem, 6vw, 8rem);
+    align-items: end;
+    margin-bottom: clamp(3rem, 5vw, 6rem);
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__eyebrow,
+  #SkinBlog-{{ section.id }} .skin-blog__section-label,
+  #SkinBlog-{{ section.id }} .skin-blog__tag {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__eyebrow {
+    margin: 0 0 1.2rem;
+    color: {{ section.settings.accent_color }};
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__title {
+    margin: 0;
+    max-width: 11ch;
+    font-family: 'Optima', 'Times New Roman', serif;
+    font-size: clamp(4.4rem, 7vw, 8.6rem);
+    font-weight: 500;
+    line-height: 0.96;
+    letter-spacing: 0;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__intro {
+    margin: 0;
+    font-size: clamp(1.5rem, 1.25vw, 1.85rem);
+    line-height: 1.75;
+    color: rgba({{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }}, 0.74);
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__section-label {
+    margin: 0;
+    color: {{ section.settings.accent_color }};
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__popular {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.6rem, 2vw, 2.4rem);
+    margin-bottom: clamp(4rem, 6vw, 7rem);
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog-card {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog-card__media {
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: {{ section.settings.card_background }};
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog-card__media img,
+  #SkinBlog-{{ section.id }} .skin-blog-card__placeholder svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.45s ease;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog-card:hover .skin-blog-card__media img {
+    transform: scale(1.045);
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog-card__content {
+    padding-top: 1.8rem;
+    text-align: center;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog-card__title {
+    margin: 0;
+    font-family: 'Optima', 'Times New Roman', serif;
+    font-size: clamp(2rem, 2vw, 2.6rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog-card__meta,
+  #SkinBlog-{{ section.id }} .skin-blog-card__read {
+    margin: 1rem 0 0;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: rgba({{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }}, 0.64);
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog-card__read {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    color: {{ section.settings.accent_color }};
+    font-weight: 600;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__controls {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.6rem;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__filters {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__filter,
+  #SkinBlog-{{ section.id }} .skin-blog__sort,
+  #SkinBlog-{{ section.id }} .skin-blog__search {
+    min-height: 4.4rem;
+    border: 1px solid rgba({{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }}, 0.16);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.62);
+    color: inherit;
+    font: inherit;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0 1.7rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__filter.is-active,
+  #SkinBlog-{{ section.id }} .skin-blog__filter:hover {
+    border-color: {{ section.settings.accent_color }};
+    background: {{ section.settings.accent_color }};
+    color: {{ section.settings.filter_active_text_color }};
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__filter-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    display: inline-flex;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__filter-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__tools {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__sort {
+    padding: 0 3.4rem 0 1.6rem;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__search-wrap {
+    position: relative;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__search {
+    width: min(27rem, 28vw);
+    padding: 0 4.2rem 0 1.6rem;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__search-icon {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    width: 1.8rem;
+    height: 1.8rem;
+    transform: translateY(-50%);
+    color: {{ section.settings.accent_color }};
+    pointer-events: none;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(2rem, 2vw, 2.8rem);
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__empty {
+    display: none;
+    margin: 3rem 0 0;
+    padding: 2rem;
+    border: 1px solid rgba({{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }}, 0.16);
+    text-align: center;
+    color: rgba({{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }}, 0.72);
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__empty.is-visible {
+    display: block;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__cta {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(24rem, 0.5fr);
+    gap: clamp(2rem, 4vw, 5rem);
+    align-items: center;
+    margin-top: clamp(4rem, 6vw, 7rem);
+    padding: clamp(2.4rem, 4vw, 4.8rem);
+    background: {{ section.settings.cta_background }};
+    color: {{ section.settings.cta_text_color }};
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__cta-title {
+    margin: 0;
+    font-family: 'Optima', 'Times New Roman', serif;
+    font-size: clamp(3rem, 4vw, 5rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__cta-text {
+    margin: 1.4rem 0 0;
+    max-width: 62rem;
+    font-size: 1.5rem;
+    line-height: 1.7;
+    color: rgba({{ section.settings.cta_text_color.red }}, {{ section.settings.cta_text_color.green }}, {{ section.settings.cta_text_color.blue }}, 0.78);
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__cta-actions {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  #SkinBlog-{{ section.id }} .skin-blog__cta-button {
+    min-height: 4.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    color: inherit;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
+    #SkinBlog-{{ section.id }} .skin-blog__inner {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  @media screen and (max-width: 989px) {
+    #SkinBlog-{{ section.id }} .skin-blog__hero,
+    #SkinBlog-{{ section.id }} .skin-blog__cta {
+      grid-template-columns: 1fr;
+    }
+
+    #SkinBlog-{{ section.id }} .skin-blog__popular,
+    #SkinBlog-{{ section.id }} .skin-blog__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #SkinBlog-{{ section.id }} .skin-blog__controls {
+      grid-template-columns: 1fr;
+    }
+
+    #SkinBlog-{{ section.id }} .skin-blog__tools,
+    #SkinBlog-{{ section.id }} .skin-blog__cta-actions {
+      justify-content: flex-start;
+    }
+
+    #SkinBlog-{{ section.id }} .skin-blog__search {
+      width: min(32rem, 100%);
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    #SkinBlog-{{ section.id }} .skin-blog__popular,
+    #SkinBlog-{{ section.id }} .skin-blog__grid {
+      grid-template-columns: 1fr;
+    }
+
+    #SkinBlog-{{ section.id }} .skin-blog__tools {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #SkinBlog-{{ section.id }} .skin-blog__search {
+      width: 100%;
+    }
+  }
 {%- endstyle -%}
 
-{%- paginate blog.articles by 6 -%}
-  <div class="main-blog page-width section-{{ section.id }}-padding">
-    <h1 class="title--primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {{ blog.title | escape }}
-    </h1>
-
-    <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
-      {%- for article in blog.articles -%}
-        <div
-          class="blog-articles__article article{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {% if settings.animations_reveal_on_scroll %}
-            data-cascade
-            style="--animation-order: {{ forloop.index }};"
-          {% endif %}
-        >
-          {%- render 'article-card',
-            article: article,
-            media_height: section.settings.image_height,
-            media_aspect_ratio: article.image.aspect_ratio,
-            show_image: section.settings.show_image,
-            show_date: section.settings.show_date,
-            show_author: section.settings.show_author,
-            show_excerpt: true
-          -%}
+<section id="SkinBlog-{{ section.id }}" data-skin-blog>
+  {%- paginate blog.articles by section.settings.posts_per_page -%}
+    <div class="skin-blog__inner">
+      <header class="skin-blog__hero">
+        <div>
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="skin-blog__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          <h1 class="skin-blog__title">
+            {%- if section.settings.heading != blank -%}
+              {{ section.settings.heading | escape }}
+            {%- else -%}
+              {{ blog.title | escape }}
+            {%- endif -%}
+          </h1>
         </div>
-      {%- endfor -%}
-    </div>
+        {%- if section.settings.intro != blank -%}
+          <p class="skin-blog__intro">{{ section.settings.intro | escape }}</p>
+        {%- endif -%}
+      </header>
 
-    {%- if paginate.pages > 1 -%}
-      {%- render 'pagination', paginate: paginate -%}
-    {%- endif -%}
-  </div>
-{%- endpaginate -%}
+      {%- if section.settings.show_popular and blog.articles_count > 0 -%}
+        <div class="skin-blog__section-head">
+          <p class="skin-blog__section-label">{{ section.settings.popular_heading | escape }}</p>
+        </div>
+        <div class="skin-blog__popular">
+          {%- for article in blog.articles limit: 3 -%}
+            {%- assign article_image_alt = article.image.alt | default: article.title -%}
+            <a class="skin-blog-card" href="{{ article.url }}">
+              <div class="skin-blog-card__media">
+                {%- if article.image != blank -%}
+                  {{ article.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(max-width: 640px) 100vw, (max-width: 989px) 50vw, 33vw', alt: article_image_alt }}
+                {%- else -%}
+                  <div class="skin-blog-card__placeholder">
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                {%- endif -%}
+              </div>
+              <div class="skin-blog-card__content">
+                <h2 class="skin-blog-card__title">{{ article.title | escape }}</h2>
+                {%- if section.settings.show_date -%}
+                  <p class="skin-blog-card__meta">{{ article.published_at | time_tag: format: 'date' }}</p>
+                {%- endif -%}
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="skin-blog__controls" aria-label="Blog controls">
+        <div class="skin-blog__filters" role="list" aria-label="Filter blog posts">
+          <button class="skin-blog__filter is-active" type="button" data-filter="all">
+            <span class="skin-blog__filter-icon" aria-hidden="true">{{ 'icon-leaf.svg' | inline_asset_content }}</span>
+            {{ section.settings.all_filter_label | escape }}
+          </button>
+
+          {%- if has_manual_filters -%}
+            {%- for filter_tag in filter_tags -%}
+              {%- assign cleaned_filter = filter_tag | strip -%}
+              {%- if cleaned_filter != blank -%}
+                <button class="skin-blog__filter" type="button" data-filter="{{ cleaned_filter | handleize }}">
+                  {{ cleaned_filter | escape }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for tag in blog.all_tags limit: 6 -%}
+              <button class="skin-blog__filter" type="button" data-filter="{{ tag | handleize }}">
+                {{ tag | escape }}
+              </button>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        <div class="skin-blog__tools">
+          <select class="skin-blog__sort" aria-label="{{ section.settings.sort_label | escape }}">
+            <option value="latest">{{ section.settings.sort_latest_label | escape }}</option>
+            <option value="oldest">{{ section.settings.sort_oldest_label | escape }}</option>
+          </select>
+          <div class="skin-blog__search-wrap">
+            <input class="skin-blog__search" type="search" autocomplete="off" placeholder="{{ section.settings.search_placeholder | escape }}" aria-label="{{ section.settings.search_placeholder | escape }}">
+            <span class="skin-blog__search-icon" aria-hidden="true">
+              {{ 'icon-search.svg' | inline_asset_content }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="skin-blog__grid" data-article-grid>
+        {%- for article in blog.articles -%}
+          {%- assign article_image_alt = article.image.alt | default: article.title -%}
+          {%- capture normalized_tags -%}
+            {%- for tag in article.tags -%}{{ tag | handleize }}{% unless forloop.last %},{% endunless %}{%- endfor -%}
+          {%- endcapture -%}
+          <a
+            class="skin-blog-card"
+            href="{{ article.url }}"
+            data-article
+            data-tags="{{ normalized_tags | strip }}"
+            data-title="{{ article.title | downcase | escape }}"
+            data-date="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}"
+          >
+            <div class="skin-blog-card__media">
+              {%- if article.image != blank -%}
+                {{ article.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 450, 600, 750, 900', sizes: '(max-width: 640px) 100vw, (max-width: 989px) 50vw, 25vw', alt: article_image_alt }}
+              {%- else -%}
+                <div class="skin-blog-card__placeholder">
+                  {{ 'product-2' | placeholder_svg_tag }}
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="skin-blog-card__content">
+              {%- if article.tags.size > 0 -%}
+                <p class="skin-blog__tag">{{ article.tags.first | escape }}</p>
+              {%- endif -%}
+              <h2 class="skin-blog-card__title">{{ article.title | escape }}</h2>
+              {%- if section.settings.show_excerpt -%}
+                <p class="skin-blog-card__meta">
+                  {%- if article.excerpt.size > 0 -%}
+                    {{ article.excerpt | strip_html | truncatewords: 16 }}
+                  {%- else -%}
+                    {{ article.content | strip_html | truncatewords: 16 }}
+                  {%- endif -%}
+                </p>
+              {%- elsif section.settings.show_date -%}
+                <p class="skin-blog-card__meta">{{ article.published_at | time_tag: format: 'date' }}</p>
+              {%- endif -%}
+              <span class="skin-blog-card__read">
+                {{ section.settings.read_more_label | escape }}
+                {{ 'icon-arrow.svg' | inline_asset_content }}
+              </span>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+
+      <p class="skin-blog__empty" data-empty-message>{{ section.settings.empty_message | escape }}</p>
+
+      {%- if paginate.pages > 1 -%}
+        {%- render 'pagination', paginate: paginate -%}
+      {%- endif -%}
+
+      {%- if section.settings.cta_heading != blank or section.settings.cta_text != blank -%}
+        <div class="skin-blog__cta">
+          <div>
+            {%- if section.settings.cta_heading != blank -%}
+              <h2 class="skin-blog__cta-title">{{ section.settings.cta_heading | escape }}</h2>
+            {%- endif -%}
+            {%- if section.settings.cta_text != blank -%}
+              <p class="skin-blog__cta-text">{{ section.settings.cta_text | escape }}</p>
+            {%- endif -%}
+          </div>
+          <div class="skin-blog__cta-actions">
+            {%- if section.settings.cta_primary_label != blank -%}
+              <a class="skin-blog__cta-button" {% if section.settings.cta_primary_link != blank %}href="{{ section.settings.cta_primary_link }}"{% else %}role="link" aria-disabled="true"{% endif %}>
+                {{ section.settings.cta_primary_label | escape }}
+              </a>
+            {%- endif -%}
+            {%- if section.settings.cta_secondary_label != blank -%}
+              <a class="skin-blog__cta-button" {% if section.settings.cta_secondary_link != blank %}href="{{ section.settings.cta_secondary_link }}"{% else %}role="link" aria-disabled="true"{% endif %}>
+                {{ section.settings.cta_secondary_label | escape }}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endpaginate -%}
+</section>
+
+<script>
+  (function() {
+    const section = document.getElementById('SkinBlog-{{ section.id }}');
+    if (!section) return;
+
+    const grid = section.querySelector('[data-article-grid]');
+    const articles = Array.from(section.querySelectorAll('[data-article]'));
+    const filters = Array.from(section.querySelectorAll('[data-filter]'));
+    const search = section.querySelector('.skin-blog__search');
+    const sort = section.querySelector('.skin-blog__sort');
+    const empty = section.querySelector('[data-empty-message]');
+    let activeFilter = 'all';
+
+    function normalize(value) {
+      return (value || '').toString().trim().toLowerCase();
+    }
+
+    function updateArticles() {
+      const query = normalize(search && search.value);
+      let visibleCount = 0;
+
+      articles.forEach((article) => {
+        const title = normalize(article.getAttribute('data-title'));
+        const tags = normalize(article.getAttribute('data-tags')).split(',').filter(Boolean);
+        const matchesFilter = activeFilter === 'all' || tags.includes(activeFilter);
+        const matchesSearch = !query || title.includes(query) || tags.some((tag) => tag.includes(query));
+        const isVisible = matchesFilter && matchesSearch;
+
+        article.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      });
+
+      if (empty) empty.classList.toggle('is-visible', visibleCount === 0);
+    }
+
+    function sortArticles() {
+      const direction = sort ? sort.value : 'latest';
+      const sorted = articles.slice().sort((a, b) => {
+        const dateA = new Date(a.getAttribute('data-date')).getTime();
+        const dateB = new Date(b.getAttribute('data-date')).getTime();
+        return direction === 'oldest' ? dateA - dateB : dateB - dateA;
+      });
+
+      sorted.forEach((article) => grid.appendChild(article));
+      updateArticles();
+    }
+
+    filters.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeFilter = button.getAttribute('data-filter') || 'all';
+        filters.forEach((item) => item.classList.toggle('is-active', item === button));
+        updateArticles();
+      });
+    });
+
+    if (search) search.addEventListener('input', updateArticles);
+    if (sort) sort.addEventListener('change', sortArticles);
+  })();
+</script>
 
 {% schema %}
 {
-  "name": "t:sections.main-blog.name",
+  "name": "Skincare Blog",
   "tag": "section",
   "class": "section",
   "settings": [
     {
-      "type": "select",
-      "id": "layout",
-      "options": [
-        {
-          "value": "grid",
-          "label": "t:sections.main-blog.settings.layout.options__1.label"
-        },
-        {
-          "value": "collage",
-          "label": "t:sections.main-blog.settings.layout.options__2.label"
-        }
-      ],
-      "default": "collage",
-      "label": "t:sections.main-blog.settings.layout.label"
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Skin journal"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Cilt Bakim Rehberi"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "Cilt tipini daha iyi tanimana, aktif icerikleri dogru eslestirmene ve sade ama etkili bir rutin kurmana yardim eden bakim yazilari."
     },
     {
       "type": "checkbox",
-      "id": "show_image",
-      "default": true,
-      "label": "t:sections.main-blog.settings.show_image.label"
+      "id": "show_popular",
+      "label": "Show popular posts",
+      "default": true
     },
     {
-      "type": "select",
-      "id": "image_height",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.main-blog.settings.image_height.options__1.label"
-        },
-        {
-          "value": "small",
-          "label": "t:sections.main-blog.settings.image_height.options__2.label"
-        },
-        {
-          "value": "medium",
-          "label": "t:sections.main-blog.settings.image_height.options__3.label"
-        },
-        {
-          "value": "large",
-          "label": "t:sections.main-blog.settings.image_height.options__4.label"
-        }
-      ],
-      "default": "medium",
-      "label": "t:sections.main-blog.settings.image_height.label"
+      "type": "text",
+      "id": "popular_heading",
+      "label": "Popular heading",
+      "default": "Populer Okumalar"
+    },
+    {
+      "type": "textarea",
+      "id": "filter_tags",
+      "label": "Filter tags",
+      "info": "Separate tags with commas. Leave blank to use the first blog tags automatically.",
+      "default": "Cilt Bakimi, Icerik Rehberi, Rutinler, Gunes Koruma"
+    },
+    {
+      "type": "text",
+      "id": "all_filter_label",
+      "label": "All filter label",
+      "default": "Tum Yazilar"
+    },
+    {
+      "type": "text",
+      "id": "sort_label",
+      "label": "Sort accessibility label",
+      "default": "Yazilari sirala"
+    },
+    {
+      "type": "text",
+      "id": "sort_latest_label",
+      "label": "Latest label",
+      "default": "En Yeni"
+    },
+    {
+      "type": "text",
+      "id": "sort_oldest_label",
+      "label": "Oldest label",
+      "default": "En Eski"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder",
+      "default": "Ara..."
+    },
+    {
+      "type": "text",
+      "id": "read_more_label",
+      "label": "Read more label",
+      "default": "Oku"
+    },
+    {
+      "type": "text",
+      "id": "empty_message",
+      "label": "Empty message",
+      "default": "Bu secime uygun yazi bulunamadi."
+    },
+    {
+      "type": "range",
+      "id": "posts_per_page",
+      "label": "Posts per page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show excerpt",
+      "default": true
     },
     {
       "type": "checkbox",
       "id": "show_date",
-      "default": true,
-      "label": "t:sections.main-blog.settings.show_date.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_author",
-      "default": false,
-      "label": "t:sections.main-blog.settings.show_author.label"
+      "label": "Show date",
+      "default": true
     },
     {
       "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
+      "content": "CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "CTA heading",
+      "default": "Rutinin icin dogru baslangici bul"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Cilt ihtiyacina gore temizleyici, serum, nemlendirici ve gunes koruma adimlarini birlikte kesfet."
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "Primary CTA label",
+      "default": "Urunleri Kesfet"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_link",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "Secondary CTA label",
+      "default": "Cilt Rutinini Kur"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_link",
+      "label": "Secondary CTA link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#fef9f8"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card image background",
+      "default": "#f3ebe8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#2e2a39"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#5d0f29"
+    },
+    {
+      "type": "color",
+      "id": "filter_active_text_color",
+      "label": "Active filter text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cta_background",
+      "label": "CTA background",
+      "default": "#f3ebe8"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "CTA text",
+      "default": "#2e2a39"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",
       "id": "padding_top",
       "min": 0,
-      "max": 100,
+      "max": 120,
       "step": 4,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
+      "label": "Top padding",
+      "default": 72
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "min": 0,
-      "max": 100,
+      "max": 120,
       "step": 4,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
+      "label": "Bottom padding",
+      "default": 72
     }
   ]
 }
