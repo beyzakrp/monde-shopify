@@ -12,7 +12,7 @@
     "main": {
       "type": "main-blog",
       "settings": {
-        "blog": "",
+        "blog": "haberler",
         "eyebrow": "Skin journal",
         "heading": "Cilt Bakim Gunlugu",
         "intro": "Cilt tipini daha iyi tanimana, aktif icerikleri dogru eslestirmene ve sade ama etkili bir rutin kurmana yardim eden bakim yazilarini kesfet.",
