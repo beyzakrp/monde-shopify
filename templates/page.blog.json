@@ -12,10 +12,10 @@
     "main": {
       "type": "main-blog",
       "settings": {
-        "blog": "news",
+        "blog": "",
         "eyebrow": "Skin journal",
         "heading": "Cilt Bakim Rehberi",
-        "intro": "Cilt tipini daha iyi tanimana, aktif icerikleri dogru eslestirmene ve sade ama etkili bir rutin kurmana yardim eden bakim yazilari.",
+        "intro": "Cilt tipini daha iyi tanımana, aktif içerikleri doğru eşleş0tirmene ve sade ama etkili bir rutin kurmana yardım eden bakim yazılarını keşfet.",
         "show_popular": true,
         "popular_heading": "Populer Okumalar",
         "filter_tags": "Cilt Bakimi, Icerik Rehberi, Rutinler, Gunes Koruma",
@@ -33,7 +33,9 @@
         "cta_heading": "Rutinin icin dogru baslangici bul",
         "cta_text": "Cilt ihtiyacina gore temizleyici, serum, nemlendirici ve gunes koruma adimlarini birlikte kesfet.",
         "cta_primary_label": "Urunleri Kesfet",
+        "cta_primary_link": "",
         "cta_secondary_label": "Cilt Rutinini Kur",
+        "cta_secondary_link": "",
         "background_color": "#fef9f8",
         "card_background": "#f3ebe8",
         "text_color": "#2e2a39",
