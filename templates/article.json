@@ -9,15 +9,44 @@
  */
 {
   "sections": {
+    "page_skincare_hero_8bEt4X": {
+      "type": "page-skincare-hero",
+      "name": "Page Skincare Hero",
+      "settings": {
+        "image": "{{ article.image }}",
+        "mobile_image": "{{ article.image }}",
+        "image_position": "center center",
+        "eyebrow": "",
+        "heading": "",
+        "heading_tag": "h1",
+        "text": "",
+        "button_label": "",
+        "button_link": "shopify://collections/heartleaf-serisi",
+        "content_position": "left",
+        "text_alignment": "left",
+        "mobile_text_alignment": "left",
+        "content_width": 520,
+        "heading_size": 58,
+        "heading_size_mobile": 34,
+        "min_height_mobile": 520,
+        "height_vh": 65,
+        "max_height": 600,
+        "enable_overlay": false,
+        "overlay_opacity": 30,
+        "overlay_direction": "90deg",
+        "background_color": "#f5eee4",
+        "text_color": "#fff8ee",
+        "body_color": "#f2dfca",
+        "accent_color": "#f2c79f",
+        "full_width": true,
+        "loading": "eager",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "main": {
       "type": "main-article",
       "blocks": {
-        "featured_image": {
-          "type": "featured_image",
-          "settings": {
-            "image_height": "medium"
-          }
-        },
         "title": {
           "type": "title",
           "settings": {
@@ -37,15 +66,51 @@
         }
       },
       "block_order": [
-        "featured_image",
         "title",
         "share",
         "content"
       ],
       "settings": {}
+    },
+    "product_hotspots_PYmk8b": {
+      "type": "product-hotspots",
+      "blocks": {
+        "product_hotspot_mFAVAk": {
+          "type": "product_hotspot",
+          "settings": {
+            "product": "{{ article.metafields.custom.product_name.value }}",
+            "x_position": 72,
+            "y_position": 100,
+            "dialog_position": "bottom",
+            "show_quick_add": true
+          }
+        }
+      },
+      "block_order": [
+        "product_hotspot_mFAVAk"
+      ],
+      "name": "Ürün hotspotları",
+      "settings": {
+        "image": "{{ article.image }}",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "section_width": "page-width",
+        "section_height": "auto",
+        "eyebrow": "Shop the look",
+        "heading": "Ürünleri görsel üzerinde keşfedin",
+        "text": "",
+        "product_title_gap": 8,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
     }
   },
   "order": [
-    "main"
+    "page_skincare_hero_8bEt4X",
+    "main",
+    "product_hotspots_PYmk8b"
   ]
 }
