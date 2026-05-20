@@ -1,0 +1,448 @@
+{%- style -%}
+  #duo-collection-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px {{ section.settings.side_padding }}px {{ section.settings.padding_bottom }}px;
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__inner {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: {{ section.settings.gap }}px;
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__card {
+    display: block;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__media {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: {{ section.settings.min_height }}px;
+    aspect-ratio: {{ section.settings.aspect_ratio }};
+    background: #efe7dc;
+    border-radius: {{ section.settings.border_radius }}px;
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__image,
+  #duo-collection-{{ section.id }} .duo-collection__placeholder svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: {{ section.settings.image_position }};
+    transform: scale(1.01);
+    transition: transform 0.5s ease, filter 0.5s ease;
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__placeholder {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(180deg, rgba(20, 15, 11, 0.03) 0%, rgba(20, 15, 11, 0.14) 46%, rgba(20, 15, 11, {{ section.settings.overlay_opacity | divided_by: 100.0 }}) 100%);
+    pointer-events: none;
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__overlay {
+    position: absolute;
+    left: clamp(1.8rem, 3vw, 4rem);
+    right: clamp(1.8rem, 3vw, 4rem);
+    bottom: clamp(2rem, 3.4vw, 4.2rem);
+    z-index: 2;
+    color: {{ section.settings.text_color }};
+    text-align: {{ section.settings.text_alignment }};
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__subtitle {
+    margin: 0 0 0.8rem;
+    font-family: 'Avenir LT Pro', Arial, sans-serif;
+    font-size: {{ section.settings.subtitle_size }}px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-shadow: 0 3px 14px rgba(0, 0, 0, 0.28);
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__title {
+    margin: 0;
+    font-family: '{{ section.settings.title_font }}', 'Times New Roman', serif;
+    font-size: clamp({{ section.settings.title_size_mobile }}px, 3vw, {{ section.settings.title_size }}px);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: 0;
+    text-wrap: balance;
+    color: {{ section.settings.text_color }};
+    text-shadow: 0 5px 22px rgba(0, 0, 0, 0.32);
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__card:hover .duo-collection__image,
+  #duo-collection-{{ section.id }} .duo-collection__card:focus-visible .duo-collection__image {
+    transform: scale(1.06);
+    filter: saturate(1.04) contrast(1.04);
+  }
+
+  #duo-collection-{{ section.id }} .duo-collection__card:focus-visible {
+    outline: 2px solid {{ section.settings.focus_color }};
+    outline-offset: 4px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #duo-collection-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.72 | round }}px {{ section.settings.side_padding_mobile }}px {{ section.settings.padding_bottom | times: 0.72 | round }}px;
+    }
+
+    #duo-collection-{{ section.id }} .duo-collection__inner {
+      grid-template-columns: 1fr;
+      gap: {{ section.settings.gap_mobile }}px;
+    }
+
+    #duo-collection-{{ section.id }} .duo-collection__media {
+      min-height: {{ section.settings.min_height_mobile }}px;
+      aspect-ratio: {{ section.settings.mobile_aspect_ratio }};
+    }
+
+    #duo-collection-{{ section.id }} .duo-collection__subtitle {
+      font-size: {{ section.settings.subtitle_size_mobile }}px;
+      letter-spacing: 0.15em;
+    }
+  }
+{%- endstyle -%}
+
+<section id="duo-collection-{{ section.id }}" class="duo-collection">
+  <div class="duo-collection__inner">
+    {%- for block in section.blocks -%}
+      <a
+        class="duo-collection__card"
+        {% if block.settings.link != blank %}
+          href="{{ block.settings.link }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+        aria-label="{{ block.settings.title | default: block.settings.subtitle | default: shop.name | escape }}"
+        {{ block.shopify_attributes }}
+      >
+        <div class="duo-collection__media">
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 1400 | image_tag:
+              class: 'duo-collection__image',
+              widths: '360, 540, 720, 960, 1200, 1400',
+              sizes: '(max-width: 749px) 100vw, 50vw',
+              loading: 'lazy',
+              alt: block.settings.image.alt | default: block.settings.title
+            }}
+          {%- else -%}
+            <span class="duo-collection__placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag }}
+            </span>
+          {%- endif -%}
+
+          <div class="duo-collection__overlay">
+            {%- if block.settings.subtitle != blank -%}
+              <p class="duo-collection__subtitle">{{ block.settings.subtitle | escape }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.title != blank -%}
+              <h3 class="duo-collection__title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+          </div>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Duo Collection",
+  "tag": "section",
+  "class": "duo-collection-section",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Arka plan",
+      "default": "#f7f1e8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Yazi rengi",
+      "default": "#fff8ee"
+    },
+    {
+      "type": "color",
+      "id": "focus_color",
+      "label": "Odak rengi",
+      "default": "#8f5f3c"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay koyulugu",
+      "min": 20,
+      "max": 78,
+      "step": 2,
+      "unit": "%",
+      "default": 48
+    },
+    {
+      "type": "text",
+      "id": "title_font",
+      "label": "Baslik fontu",
+      "default": "Optima"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Baslik boyutu",
+      "min": 24,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Mobil baslik boyutu",
+      "min": 20,
+      "max": 44,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Ust metin boyutu",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_mobile",
+      "label": "Mobil ust metin boyutu",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Metin hizalama",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" },
+        { "value": "right", "label": "Sag" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Gorsel pozisyonu",
+      "options": [
+        { "value": "center center", "label": "Orta" },
+        { "value": "top center", "label": "Ust" },
+        { "value": "bottom center", "label": "Alt" },
+        { "value": "center left", "label": "Sol" },
+        { "value": "center right", "label": "Sag" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Desktop oran",
+      "options": [
+        { "value": "1 / 1", "label": "Kare" },
+        { "value": "4 / 5", "label": "Portre" },
+        { "value": "3 / 2", "label": "Yatay" }
+      ],
+      "default": "1 / 1"
+    },
+    {
+      "type": "select",
+      "id": "mobile_aspect_ratio",
+      "label": "Mobil oran",
+      "options": [
+        { "value": "1 / 1", "label": "Kare" },
+        { "value": "4 / 5", "label": "Portre" },
+        { "value": "3 / 2", "label": "Yatay" }
+      ],
+      "default": "4 / 5"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maksimum genislik",
+      "min": 900,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1500
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum yukseklik",
+      "min": 320,
+      "max": 760,
+      "step": 20,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Mobil minimum yukseklik",
+      "min": 260,
+      "max": 620,
+      "step": 20,
+      "unit": "px",
+      "default": 420
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Kose yuvarlakligi",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Desktop bosluk",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Mobil bosluk",
+      "min": 0,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "side_padding",
+      "label": "Yan bosluk",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "side_padding_mobile",
+      "label": "Mobil yan bosluk",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Ust bosluk",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Alt bosluk",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Koleksiyon karti",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Gorsel"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Ust metin",
+          "default": "Gunluk nem"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Baslik",
+          "default": "Nem ve Bariyer"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Duo Collection",
+      "blocks": [
+        {
+          "type": "collection_card",
+          "settings": {
+            "subtitle": "Gunluk nem",
+            "title": "Nem ve Bariyer"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "subtitle": "Hedefli bakim",
+            "title": "Serum ve Isilti"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

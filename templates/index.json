@@ -134,6 +134,58 @@
         "padding_bottom": 10
       }
     },
+    "duo_collection_skincare": {
+      "type": "duo-collection",
+      "blocks": {
+        "duo_barrier": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/Heartleaf-Cream-5_23e2ba1b-c7f8-4c8b-aa86-18f4f5126e93.png",
+            "subtitle": "Gunluk nem",
+            "title": "Nem ve Bariyer",
+            "link": "/collections/krem"
+          }
+        },
+        "duo_serum": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/Heartleaf-Serum-6_4aaed91c-fe4a-4bf3-a0ef-d4e3a921f400.png",
+            "subtitle": "Hedefli bakim",
+            "title": "Serum ve Isilti",
+            "link": "/collections/serum"
+          }
+        }
+      },
+      "block_order": [
+        "duo_barrier",
+        "duo_serum"
+      ],
+      "settings": {
+        "background_color": "#f7f1e8",
+        "text_color": "#fff8ee",
+        "focus_color": "#8f5f3c",
+        "overlay_opacity": 50,
+        "title_font": "Optima",
+        "title_size": 42,
+        "title_size_mobile": 28,
+        "subtitle_size": 13,
+        "subtitle_size_mobile": 12,
+        "text_alignment": "center",
+        "image_position": "center center",
+        "aspect_ratio": "1 / 1",
+        "mobile_aspect_ratio": "4 / 5",
+        "max_width": 1500,
+        "min_height": 520,
+        "min_height_mobile": 420,
+        "border_radius": 0,
+        "gap": 16,
+        "gap_mobile": 12,
+        "side_padding": 20,
+        "side_padding_mobile": 12,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
     "shop_by_category_66X9Gw": {
       "type": "shop-by-category",
       "blocks": {
@@ -260,7 +312,7 @@
         "products_to_show": 4,
         "title": "En Çok Tercih Edilenler",
         "heading_size": "h2",
-        "description": "Rutine kolayca eklenen favori bakım ürünleri.",
+        "description": "<p>Rutine kolayca eklenen favori bakım ürünleri.</p>",
         "show_description": true,
         "description_style": "body",
         "columns_desktop": 4,
@@ -339,6 +391,7 @@
     "home_banner_mLHnFg",
     "skin_promise",
     "movable_banner_8LzQ2p",
+    "duo_collection_skincare",
     "shop_by_category_66X9Gw",
     "routine_guide",
     "featured-collection",

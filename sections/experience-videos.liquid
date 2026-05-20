@@ -1,0 +1,531 @@
+{%- style -%}
+  #experience-videos-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    overflow: hidden;
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__inner {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.6rem;
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 2.4rem;
+    margin-bottom: clamp(2.4rem, 4vw, 4.8rem);
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__eyebrow {
+    margin: 0 0 0.8rem;
+    font-family: 'Avenir LT Pro', Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: {{ section.settings.accent_color }};
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__heading {
+    margin: 0;
+    max-width: 20ch;
+    font-family: '{{ section.settings.heading_font }}', 'Times New Roman', serif;
+    font-size: clamp(3.6rem, 5vw, {{ section.settings.heading_size }}px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__text {
+    margin: 0;
+    max-width: 48rem;
+    font-size: 1.5rem;
+    line-height: 1.65;
+    color: rgba({{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }}, 0.72);
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    gap: {{ section.settings.gap }}px;
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__card {
+    min-width: 0;
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__frame {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 9 / 16;
+    border-radius: {{ section.settings.card_radius }}px;
+    background: #ede4d8;
+    box-shadow: 0 18px 42px rgba(29, 21, 16, 0.12);
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__frame video,
+  #experience-videos-{{ section.id }} .experience-videos__frame iframe,
+  #experience-videos-{{ section.id }} .experience-videos__poster,
+  #experience-videos-{{ section.id }} .experience-videos__placeholder svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__frame iframe {
+    border: 0;
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__meta {
+    padding-top: 1.4rem;
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__name {
+    margin: 0;
+    font-family: 'Avenir LT Pro', Arial, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: {{ section.settings.accent_color }};
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__quote {
+    margin: 0.7rem 0 0;
+    font-size: 1.45rem;
+    line-height: 1.55;
+    color: rgba({{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }}, 0.78);
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__product-link {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    margin-top: 1rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.2rem;
+    color: {{ section.settings.accent_color }};
+    font-family: 'Avenir LT Pro', Arial, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    line-height: 1.2;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  #experience-videos-{{ section.id }} .experience-videos__product-link:hover,
+  #experience-videos-{{ section.id }} .experience-videos__product-link:focus-visible {
+    opacity: 0.72;
+    transform: translateY(-1px);
+  }
+
+  @media screen and (max-width: 989px) {
+    #experience-videos-{{ section.id }} .experience-videos__header {
+      display: block;
+    }
+
+    #experience-videos-{{ section.id }} .experience-videos__text {
+      margin-top: 1.4rem;
+    }
+
+    #experience-videos-{{ section.id }} .experience-videos__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #experience-videos-{{ section.id }} {
+      padding: {{ section.settings.padding_top | times: 0.7 | round }}px 0 {{ section.settings.padding_bottom | times: 0.7 | round }}px;
+    }
+
+    #experience-videos-{{ section.id }} .experience-videos__inner {
+      padding: 0;
+    }
+
+    #experience-videos-{{ section.id }} .experience-videos__header {
+      padding: 0 1.6rem;
+    }
+
+    #experience-videos-{{ section.id }} .experience-videos__grid {
+      display: flex;
+      gap: {{ section.settings.gap_mobile }}px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 1.6rem 0.6rem;
+      scrollbar-width: none;
+    }
+
+    #experience-videos-{{ section.id }} .experience-videos__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    #experience-videos-{{ section.id }} .experience-videos__card {
+      flex: 0 0 min(76vw, 34rem);
+      scroll-snap-align: start;
+    }
+  }
+{%- endstyle -%}
+
+<section id="experience-videos-{{ section.id }}" class="experience-videos">
+  <div class="experience-videos__inner">
+    <div class="experience-videos__header">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="experience-videos__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="experience-videos__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.text != blank -%}
+        <p class="experience-videos__text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="experience-videos__grid">
+      {%- for block in section.blocks -%}
+        <article class="experience-videos__card" data-experience-video-card {{ block.shopify_attributes }}>
+          <div class="experience-videos__frame">
+            {%- if block.settings.video != blank -%}
+              {{
+                block.settings.video
+                | video_tag:
+                  image_size: '900x',
+                  controls: true,
+                  loop: block.settings.loop_video,
+                  muted: true,
+                  preload: 'metadata',
+                  playsinline: true,
+                  class: 'experience-videos__video'
+              }}
+            {%- elsif block.settings.video_url != blank -%}
+              {%- assign external_id = block.settings.video_url.id -%}
+              {%- if block.settings.video_url.type == 'youtube' -%}
+                <iframe
+                  src="https://www.youtube.com/embed/{{ external_id }}?playsinline=1&rel=0"
+                  title="{{ block.settings.name | default: section.settings.heading | escape }}"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  loading="lazy"
+                ></iframe>
+              {%- else -%}
+                <iframe
+                  src="https://player.vimeo.com/video/{{ external_id }}?title=0&byline=0&portrait=0"
+                  title="{{ block.settings.name | default: section.settings.heading | escape }}"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowfullscreen
+                  loading="lazy"
+                ></iframe>
+              {%- endif -%}
+            {%- elsif block.settings.poster != blank -%}
+              {{
+                block.settings.poster
+                | image_url: width: 900
+                | image_tag:
+                  class: 'experience-videos__poster',
+                  widths: '320, 480, 640, 900',
+                  sizes: '(max-width: 749px) 76vw, 25vw',
+                  loading: 'lazy',
+                  alt: block.settings.name | default: section.settings.heading
+              }}
+            {%- else -%}
+              <span class="experience-videos__placeholder">
+                {{ 'image' | placeholder_svg_tag }}
+              </span>
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.name != blank or block.settings.quote != blank or block.settings.product_link != blank -%}
+            <div class="experience-videos__meta">
+              {%- if block.settings.name != blank -%}
+                <p class="experience-videos__name">{{ block.settings.name | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.quote != blank -%}
+                <p class="experience-videos__quote">{{ block.settings.quote | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.product_link != blank -%}
+                <a class="experience-videos__product-link" href="{{ block.settings.product_link }}">
+                  {{ block.settings.product_label | default: 'Urunu incele' | escape }}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% javascript %}
+  (function() {
+    function bindExperienceVideos(root) {
+      var scope = root || document;
+      var cards = scope.querySelectorAll('[data-experience-video-card]');
+
+      cards.forEach(function(card) {
+        if (card.dataset.hoverVideoBound === 'true') return;
+
+        var video = card.querySelector('.experience-videos__video');
+        if (!video) return;
+
+        card.dataset.hoverVideoBound = 'true';
+        video.muted = true;
+        video.playsInline = true;
+
+        var playVideo = function() {
+          video.muted = true;
+          var promise = video.play();
+          if (promise && typeof promise.catch === 'function') {
+            promise.catch(function() {});
+          }
+        };
+
+        var pauseVideo = function() {
+          video.pause();
+        };
+
+        card.addEventListener('mouseenter', playVideo);
+        card.addEventListener('focusin', playVideo);
+        card.addEventListener('mouseleave', pauseVideo);
+        card.addEventListener('focusout', pauseVideo);
+      });
+    }
+
+    bindExperienceVideos(document);
+
+    document.addEventListener('shopify:section:load', function(event) {
+      bindExperienceVideos(event.target);
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Experience Videos",
+  "tag": "section",
+  "class": "experience-videos-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Gercek deneyimler"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Kullanicilar ne anlatiyor?"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Rutine ekledikleri Monde urunleriyle cilt bakim deneyimlerini kisa videolarla paylasan kullanicilar."
+    },
+    {
+      "type": "text",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "Optima"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 34,
+      "max": 82,
+      "step": 2,
+      "unit": "px",
+      "default": 58
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#fbf7f0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1f1711"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#8f5f3c"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Desktop gap",
+      "min": 8,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Mobile gap",
+      "min": 8,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "default": 1500
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "experience_video",
+      "name": "Experience video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Uploaded video"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "accept": ["youtube", "vimeo"],
+          "label": "YouTube or Vimeo video"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster image"
+        },
+        {
+          "type": "checkbox",
+          "id": "loop_video",
+          "label": "Loop uploaded video",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name or skin note",
+          "default": "Karma cilt"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Short quote",
+          "default": "Hafif dokusu sayesinde rutinime kolayca ekledim."
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "Product link"
+        },
+        {
+          "type": "text",
+          "id": "product_label",
+          "label": "Product link label",
+          "default": "Urunu incele"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Experience Videos",
+      "blocks": [
+        {
+          "type": "experience_video"
+        },
+        {
+          "type": "experience_video",
+          "settings": {
+            "name": "Kuru cilt",
+            "quote": "Nem hissi gun boyunca daha konforlu kaldi."
+          }
+        },
+        {
+          "type": "experience_video",
+          "settings": {
+            "name": "Hassas cilt",
+            "quote": "Cildimi yormadan daha dengeli hissettirdi."
+          }
+        },
+        {
+          "type": "experience_video",
+          "settings": {
+            "name": "Mat gorunum",
+            "quote": "Serum adimi cildime daha canli bir bitis verdi."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
