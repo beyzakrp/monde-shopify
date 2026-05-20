@@ -38,6 +38,8 @@
     grid-template-columns: minmax(0, 0.88fr) minmax(28rem, 0.52fr);
     gap: clamp(2.4rem, 6vw, 8rem);
     align-items: end;
+    padding: clamp(2rem, 4vw, 4.8rem) 0;
+    border-bottom: 1px solid rgba({{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }}, 0.12);
     margin-bottom: clamp(3rem, 5vw, 6rem);
   }
 
@@ -101,9 +103,10 @@
   }
 
   #SkinBlog-{{ section.id }} .skin-blog-card__media {
-    aspect-ratio: 1;
+    aspect-ratio: 4 / 5;
     overflow: hidden;
     background: {{ section.settings.card_background }};
+    border-radius: {{ section.settings.card_radius }}px;
   }
 
   #SkinBlog-{{ section.id }} .skin-blog-card__media img,
@@ -121,7 +124,7 @@
 
   #SkinBlog-{{ section.id }} .skin-blog-card__content {
     padding-top: 1.8rem;
-    text-align: center;
+    text-align: left;
   }
 
   #SkinBlog-{{ section.id }} .skin-blog-card__title {
@@ -144,10 +147,11 @@
   #SkinBlog-{{ section.id }} .skin-blog-card__read {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: 0.7rem;
     color: {{ section.settings.accent_color }};
-    font-weight: 600;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   #SkinBlog-{{ section.id }} .skin-blog__controls {
@@ -156,6 +160,10 @@
     gap: 1.6rem;
     align-items: center;
     margin-bottom: 3rem;
+    padding: 1.4rem;
+    border: 1px solid rgba({{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }}, 0.12);
+    border-radius: {{ section.settings.card_radius }}px;
+    background: rgba(255, 255, 255, 0.42);
   }
 
   #SkinBlog-{{ section.id }} .skin-blog__filters {
@@ -263,6 +271,7 @@
     padding: clamp(2.4rem, 4vw, 4.8rem);
     background: {{ section.settings.cta_background }};
     color: {{ section.settings.cta_text_color }};
+    border-radius: {{ section.settings.card_radius }}px;
   }
 
   #SkinBlog-{{ section.id }} .skin-blog__cta-title {
@@ -753,25 +762,25 @@
       "type": "color",
       "id": "background_color",
       "label": "Background",
-      "default": "#fef9f8"
+      "default": "#f7f1e8"
     },
     {
       "type": "color",
       "id": "card_background",
       "label": "Card image background",
-      "default": "#f3ebe8"
+      "default": "#efe5d7"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text",
-      "default": "#2e2a39"
+      "default": "#1f1711"
     },
     {
       "type": "color",
       "id": "accent_color",
       "label": "Accent",
-      "default": "#5d0f29"
+      "default": "#8f5f3c"
     },
     {
       "type": "color",
@@ -783,13 +792,23 @@
       "type": "color",
       "id": "cta_background",
       "label": "CTA background",
-      "default": "#f3ebe8"
+      "default": "#efe5d7"
     },
     {
       "type": "color",
       "id": "cta_text_color",
       "label": "CTA text",
-      "default": "#2e2a39"
+      "default": "#1f1711"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 4
     },
     {
       "type": "header",
