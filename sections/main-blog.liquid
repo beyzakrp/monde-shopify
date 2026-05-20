@@ -3,6 +3,12 @@
 {{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
+  assign selected_blog = section.settings.blog
+
+  if selected_blog == blank and blog != blank
+    assign selected_blog = blog
+  endif
+
   assign filter_tags = section.settings.filter_tags | split: ','
   assign has_manual_filters = false
 
@@ -350,7 +356,6 @@
 {%- endstyle -%}
 
 <section id="SkinBlog-{{ section.id }}" data-skin-blog>
-  {%- paginate blog.articles by section.settings.posts_per_page -%}
     <div class="skin-blog__inner">
       <header class="skin-blog__hero">
         <div>
@@ -360,8 +365,10 @@
           <h1 class="skin-blog__title">
             {%- if section.settings.heading != blank -%}
               {{ section.settings.heading | escape }}
+            {%- elsif selected_blog != blank -%}
+              {{ selected_blog.title | escape }}
             {%- else -%}
-              {{ blog.title | escape }}
+              {{ page.title | escape }}
             {%- endif -%}
           </h1>
         </div>
@@ -370,12 +377,12 @@
         {%- endif -%}
       </header>
 
-      {%- if section.settings.show_popular and blog.articles_count > 0 -%}
+      {%- if section.settings.show_popular and selected_blog != blank and selected_blog.articles_count > 0 -%}
         <div class="skin-blog__section-head">
           <p class="skin-blog__section-label">{{ section.settings.popular_heading | escape }}</p>
         </div>
         <div class="skin-blog__popular">
-          {%- for article in blog.articles limit: 3 -%}
+          {%- for article in selected_blog.articles limit: 3 -%}
             {%- assign article_image_alt = article.image.alt | default: article.title -%}
             <a class="skin-blog-card" href="{{ article.url }}">
               <div class="skin-blog-card__media">
@@ -415,7 +422,7 @@
               {%- endif -%}
             {%- endfor -%}
           {%- else -%}
-            {%- for tag in blog.all_tags limit: 6 -%}
+            {%- for tag in selected_blog.all_tags limit: 6 -%}
               <button class="skin-blog__filter" type="button" data-filter="{{ tag | handleize }}">
                 {{ tag | escape }}
               </button>
@@ -438,7 +445,8 @@
       </div>
 
       <div class="skin-blog__grid" data-article-grid>
-        {%- for article in blog.articles -%}
+        {%- if selected_blog != blank and selected_blog.articles_count > 0 -%}
+        {%- for article in selected_blog.articles limit: section.settings.posts_per_page -%}
           {%- assign article_image_alt = article.image.alt | default: article.title -%}
           {%- capture normalized_tags -%}
             {%- for tag in article.tags -%}{{ tag | handleize }}{% unless forloop.last %},{% endunless %}{%- endfor -%}
@@ -483,13 +491,16 @@
             </div>
           </a>
         {%- endfor -%}
+        {%- endif -%}
       </div>
 
-      <p class="skin-blog__empty" data-empty-message>{{ section.settings.empty_message | escape }}</p>
-
-      {%- if paginate.pages > 1 -%}
-        {%- render 'pagination', paginate: paginate -%}
-      {%- endif -%}
+      <p class="skin-blog__empty{% if selected_blog == blank or selected_blog.articles_count == 0 %} is-visible{% endif %}" data-empty-message>
+        {%- if selected_blog == blank -%}
+          {{ section.settings.no_blog_message | escape }}
+        {%- else -%}
+          {{ section.settings.empty_message | escape }}
+        {%- endif -%}
+      </p>
 
       {%- if section.settings.cta_heading != blank or section.settings.cta_text != blank -%}
         <div class="skin-blog__cta">
@@ -516,7 +527,6 @@
         </div>
       {%- endif -%}
     </div>
-  {%- endpaginate -%}
 </section>
 
 <script>
@@ -585,6 +595,12 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog",
+      "info": "Page template kullanirken yazilarin gelecegi blog'u secin. Blog template'te bos birakilabilir."
+    },
     {
       "type": "text",
       "id": "eyebrow",
@@ -663,6 +679,12 @@
       "id": "empty_message",
       "label": "Empty message",
       "default": "Bu secime uygun yazi bulunamadi."
+    },
+    {
+      "type": "text",
+      "id": "no_blog_message",
+      "label": "No blog selected message",
+      "default": "Blog yazilarini gostermek icin bu section ayarlarindan bir blog secin."
     },
     {
       "type": "range",

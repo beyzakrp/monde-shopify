@@ -12,6 +12,7 @@
     "main": {
       "type": "main-blog",
       "settings": {
+        "blog": "news",
         "eyebrow": "Skin journal",
         "heading": "Cilt Bakim Rehberi",
         "intro": "Cilt tipini daha iyi tanimana, aktif icerikleri dogru eslestirmene ve sade ama etkili bir rutin kurmana yardim eden bakim yazilari.",
@@ -25,6 +26,7 @@
         "search_placeholder": "Ara...",
         "read_more_label": "Oku",
         "empty_message": "Bu secime uygun yazi bulunamadi.",
+        "no_blog_message": "Blog yazilarini gostermek icin bu section ayarlarindan bir blog secin.",
         "posts_per_page": 12,
         "show_excerpt": true,
         "show_date": true,
