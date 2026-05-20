@@ -369,8 +369,8 @@
         "show_description": true,
         "description_style": "body",
         "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
+        "enable_desktop_slider": true,
+        "full_width": true,
         "show_view_all": true,
         "view_all_style": "solid",
         "color_scheme": "scheme-1",
@@ -379,11 +379,11 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": true,
-        "quick_add": "standard",
+        "quick_add": "none",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
-        "padding_top": 56,
-        "padding_bottom": 44
+        "padding_top": 28,
+        "padding_bottom": 0
       }
     },
     "trust_points": {
@@ -392,6 +392,7 @@
         "trust_ingredients": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/547558.png",
             "title": "İçerik odaklı seçim",
             "text": "<p>Ürünleri cilt ihtiyacı, aktif içerik ve rutin adımına göre daha kolay karşılaştır.</p>",
             "link_label": "",
@@ -401,6 +402,7 @@
         "trust_barrier": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/2131196-200.png",
             "title": "Bariyer dostu yaklaşım",
             "text": "<p>Günlük bakımda cildi yormayan, konfor hissini öne çıkaran formül anlatımı.</p>",
             "link_label": "",
@@ -410,6 +412,7 @@
         "trust_routine": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/11061064.png",
             "title": "Rutin rehberi",
             "text": "<p>Temizleyici, tonik, serum ve krem adımlarını tek akışta düşünmeye yardımcı olur.</p>",
             "link_label": "",
@@ -432,10 +435,83 @@
         "columns_desktop": 3,
         "column_alignment": "left",
         "background_style": "none",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
         "padding_top": 28,
+        "padding_bottom": 16
+      }
+    },
+    "experience_videos_47MgiX": {
+      "type": "experience-videos",
+      "blocks": {
+        "experience_video_EXLdXd": {
+          "type": "experience_video",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1777965924432.mp4",
+            "loop_video": false,
+            "name": "Hassas cilt",
+            "quote": "Hafif dokusu ve kolay kullanımı sayesinde cildinizi rahatlatırken içerdiği ceramide ile aynı zamanda besler.",
+            "product_link": "shopify://products/heartleaf-tonik-ped",
+            "product_label": "Heartleaf Tonik Ped"
+          }
+        },
+        "experience_video_QeyLUP": {
+          "type": "experience_video",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1777972931839.mp4",
+            "loop_video": false,
+            "name": "Kuru cilt",
+            "quote": "Kremsi dokusu ve içerdiği kolajen ve retinol sayesinde kırışıklık karşıtı yüz kremi cildini canlı ve dolgun hissettirir.",
+            "product_link": "shopify://products/glamfox-retinol-collagen-yuz-kremi",
+            "product_label": "Retinol Collagen Yüz Kremi"
+          }
+        },
+        "experience_video_tNXryX": {
+          "type": "experience_video",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1777966073694.mp4",
+            "loop_video": false,
+            "name": "Lekeli cilt",
+            "quote": "Cildini derinlemesine temizlerken aynı zamanda kızarıklık azaltır ve koyu lekeleri gidermeye yardımcı olur.",
+            "product_link": "shopify://collections/rice-niacinamide-serisi",
+            "product_label": "Rice Niacinamide Serisi"
+          }
+        },
+        "experience_video_kth4kt": {
+          "type": "experience_video",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1777965975988.mp4",
+            "loop_video": false,
+            "name": "Mat gorunum",
+            "quote": "Serum adımı cildinizi besler ve içerdiği kolajen ve retinol sayesinde dolgunlaştırır.",
+            "product_link": "shopify://products/retinol-collagen-serum",
+            "product_label": "Retinol Collagen Serum"
+          }
+        }
+      },
+      "block_order": [
+        "experience_video_EXLdXd",
+        "experience_video_QeyLUP",
+        "experience_video_tNXryX",
+        "experience_video_kth4kt"
+      ],
+      "name": "Experience Videos",
+      "settings": {
+        "eyebrow": "Gerçek deneyimler",
+        "heading": "Cildine Bakanlar Kulübü ne anlatıyor?",
+        "text": "Rutinlerine ekledikleri Monde ürünleriyle cilt bakım deneyimlerini kısa videolarla paylaşan kullanıcılarımız, dünyanın her yerinde.",
+        "heading_font": "Optima",
+        "heading_size": 58,
+        "background_color": "#fbf7f0",
+        "text_color": "#1f1711",
+        "accent_color": "#8f5f3c",
+        "columns_desktop": 4,
+        "gap": 18,
+        "gap_mobile": 14,
+        "card_radius": 4,
+        "max_width": 1500,
+        "padding_top": 72,
         "padding_bottom": 72
       }
     }
@@ -449,6 +525,7 @@
     "duo_collection_PhUTA4",
     "routine_guide",
     "featured-collection",
-    "trust_points"
+    "trust_points",
+    "experience_videos_47MgiX"
   ]
 }
