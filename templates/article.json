@@ -79,8 +79,8 @@
           "type": "product_hotspot",
           "settings": {
             "product": "{{ article.metafields.custom.product_name.value }}",
-            "x_position": 72,
-            "y_position": 100,
+            "x_position": 62,
+            "y_position": 34,
             "dialog_position": "bottom",
             "show_quick_add": true
           }
