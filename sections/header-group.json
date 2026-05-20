@@ -17,21 +17,21 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Ilk sipariste %15 avantaj | KOD: SKIN15",
+            "text": "Kore Güzelliği cildinizle buluşuyor",
             "link": ""
           }
         },
         "announcement-bar-1": {
           "type": "announcement",
           "settings": {
-            "text": "15.00 oncesi siparislerde ayni gun kargo",
+            "text": "13.00 öncesi siparişler aynı gün kargo",
             "link": ""
           }
         },
         "announcement-bar-2": {
           "type": "announcement",
           "settings": {
-            "text": "50 ml ve uzeri urunlerde premium hediye kutu",
+            "text": "Monde cosmetique güvencesiyle",
             "link": ""
           }
         }

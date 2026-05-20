@@ -309,7 +309,7 @@
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
-        "collection": "all",
+        "collection": "krem",
         "products_to_show": 4,
         "title": "En Çok Tercih Edilenler",
         "heading_size": "h2",
@@ -478,7 +478,7 @@
         "columns_desktop": 3,
         "show_view_all": true,
         "show_image": true,
-        "show_date": true,
+        "show_date": false,
         "show_author": false,
         "show_excerpt": true,
         "read_more_label": "Oku",
