@@ -55,45 +55,6 @@
         "mobile_gradient": true
       }
     },
-    "skin_promise": {
-      "type": "rich-text",
-      "blocks": {
-        "caption": {
-          "type": "caption",
-          "settings": {
-            "caption": "Monde bakım yaklaşımı",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "small"
-          }
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Cildi yormayan, rutine kolayca yerleşen Kore ilhamlı bakım.",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Temizleyiciden seruma, tonikten nemlendiriciye kadar her adım; cilt bariyerini destekleyen, günlük kullanıma uygun ve anlaşılır formül mantığıyla kurgulanır.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "caption",
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 56,
-        "padding_bottom": 36
-      }
-    },
     "movable_banner_8LzQ2p": {
       "type": "movable-banner",
       "blocks": {
@@ -245,6 +206,98 @@
         "padding_bottom": 0
       }
     },
+    "skin_promise": {
+      "type": "rich-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "Monde bakım yaklaşımı",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "small"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Cildi yormayan, rutine kolayca yerleşen Kore ilhamlı bakım.",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Temizleyiciden seruma, tonikten nemlendiriciye kadar her adım; cilt bariyerini destekleyen, günlük kullanıma uygun ve anlaşılır formül mantığıyla kurgulanır.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "caption",
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 56,
+        "padding_bottom": 36
+      }
+    },
+    "duo_collection_PhUTA4": {
+      "type": "duo-collection",
+      "blocks": {
+        "collection_card_XiNW9w": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/image_988.png",
+            "subtitle": "Günlük nem",
+            "title": "Nem ve Bariyer",
+            "link": "shopify://collections/krem"
+          }
+        },
+        "collection_card_rV79em": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/image_812.png",
+            "subtitle": "Hedefli bakım",
+            "title": "Onarım ve Isilti",
+            "link": "shopify://products/black-snail-mucin-nemlendirici-yuz-temizleme-kopugu"
+          }
+        }
+      },
+      "block_order": [
+        "collection_card_XiNW9w",
+        "collection_card_rV79em"
+      ],
+      "name": "Duo Collection",
+      "settings": {
+        "background_color": "#f7f1e8",
+        "text_color": "#fff8ee",
+        "focus_color": "#8f5f3c",
+        "overlay_opacity": 48,
+        "title_font": "Optima",
+        "title_size": 42,
+        "title_size_mobile": 28,
+        "subtitle_size": 13,
+        "subtitle_size_mobile": 12,
+        "text_alignment": "center",
+        "image_position": "center center",
+        "aspect_ratio": "1 / 1",
+        "mobile_aspect_ratio": "4 / 5",
+        "max_width": 1800,
+        "min_height": 400,
+        "min_height_mobile": 420,
+        "border_radius": 0,
+        "gap": 12,
+        "gap_mobile": 6,
+        "side_padding": 0,
+        "side_padding_mobile": 0,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "routine_guide": {
       "type": "skin-routine-guide",
       "blocks": {
@@ -389,10 +442,11 @@
   },
   "order": [
     "home_banner_mLHnFg",
-    "skin_promise",
     "movable_banner_8LzQ2p",
     "duo_collection_skincare",
     "shop_by_category_66X9Gw",
+    "skin_promise",
+    "duo_collection_PhUTA4",
     "routine_guide",
     "featured-collection",
     "trust_points"
