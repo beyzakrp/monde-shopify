@@ -103,7 +103,7 @@
           "settings": {
             "category_name": "Krem",
             "image": "shopify://shop_images/Heartleaf-Cream-5_23e2ba1b-c7f8-4c8b-aa86-18f4f5126e93.png",
-            "collection_link": "/collections/krem"
+            "collection_link": "shopify://collections/krem"
           }
         },
         "category_Kt8wPJ": {
@@ -119,7 +119,7 @@
           "settings": {
             "category_name": "Temizleyici",
             "image": "shopify://shop_images/image_607.png",
-            "collection_link": "/collections/temizleyici"
+            "collection_link": "shopify://collections/temizleyiciler"
           }
         },
         "category_bGLCkd": {
@@ -127,7 +127,7 @@
           "settings": {
             "category_name": "Tonik",
             "image": "shopify://shop_images/Heartleaf-Tonik-5.png",
-            "collection_link": "/collections/tonik"
+            "collection_link": "shopify://collections/tonik"
           }
         }
       },
@@ -397,6 +397,7 @@
           "type": "experience_video",
           "settings": {
             "video": "shopify://files/videos/ssstik.io_1777965924432.mp4",
+            "video_url": "",
             "loop_video": false,
             "name": "Hassas cilt",
             "quote": "Hafif dokusu ve kolay kullanımı sayesinde cildinizi rahatlatırken içerdiği ceramide ile aynı zamanda besler.",
@@ -408,6 +409,7 @@
           "type": "experience_video",
           "settings": {
             "video": "shopify://files/videos/ssstik.io_1777972931839.mp4",
+            "video_url": "",
             "loop_video": false,
             "name": "Kuru cilt",
             "quote": "Kremsi dokusu ve içerdiği kolajen ve retinol sayesinde kırışıklık karşıtı yüz kremi cildini canlı ve dolgun hissettirir.",
@@ -419,6 +421,7 @@
           "type": "experience_video",
           "settings": {
             "video": "shopify://files/videos/ssstik.io_1777966073694.mp4",
+            "video_url": "",
             "loop_video": false,
             "name": "Lekeli cilt",
             "quote": "Cildini derinlemesine temizlerken aynı zamanda kızarıklık azaltır ve koyu lekeleri gidermeye yardımcı olur.",
@@ -430,6 +433,7 @@
           "type": "experience_video",
           "settings": {
             "video": "shopify://files/videos/ssstik.io_1777965975988.mp4",
+            "video_url": "",
             "loop_video": false,
             "name": "Mat gorunum",
             "quote": "Serum adımı cildinizi besler ve içerdiği kolajen ve retinol sayesinde dolgunlaştırır.",
