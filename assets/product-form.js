@@ -17,19 +17,6 @@ if (!customElements.get('product-form')) {
         this.hideErrors = this.dataset.hideErrors === 'true';
       }
 
-      connectedCallback() {
-        this.quantityInput = document.getElementById(`Quantity-${this.dataset.sectionId}`);
-        if (this.quantityInput) {
-          this.quantityInput.addEventListener('change', this.onQuantityChange.bind(this));
-          this.quantityInput.addEventListener('input', this.onQuantityChange.bind(this));
-          this.updateSubmitTotal(false);
-        }
-      }
-
-      onQuantityChange() {
-        this.updateSubmitTotal(true);
-      }
-
       onSubmitHandler(evt) {
         evt.preventDefault();
         if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
@@ -143,52 +130,8 @@ if (!customElements.get('product-form')) {
           if (text) this.submitButtonText.textContent = text;
         } else {
           this.submitButton.removeAttribute('disabled');
-          if (text) this.submitButtonText.innerHTML = text;
-          this.updateSubmitTotal(false);
+          this.submitButtonText.textContent = window.variantStrings.addToCart;
         }
-      }
-
-      updateSubmitButtonFromSource(sourceButton) {
-        if (!sourceButton) return;
-
-        this.submitButton.dataset.unitPrice = sourceButton.dataset.unitPrice;
-        this.submitButton.dataset.currency = sourceButton.dataset.currency;
-
-        const sourceText = sourceButton.querySelector('span');
-        if (sourceText) this.submitButtonText.innerHTML = sourceText.innerHTML;
-
-        this.updateSubmitTotal(false);
-      }
-
-      updateSubmitTotal(animate = true) {
-        const totalElement = this.querySelector('.product-form__submit-total');
-        if (!totalElement) return;
-
-        const unitPrice = parseInt(this.submitButton.dataset.unitPrice, 10);
-        const quantity = parseInt(this.quantityInput?.value, 10) || 1;
-        if (Number.isNaN(unitPrice)) return;
-
-        const update = () => {
-          totalElement.textContent = this.formatMoney(unitPrice * quantity);
-          totalElement.classList.remove('is-updating');
-        };
-
-        if (!animate) {
-          update();
-          return;
-        }
-
-        totalElement.classList.add('is-updating');
-        window.setTimeout(update, 180);
-      }
-
-      formatMoney(cents) {
-        const currency = this.submitButton.dataset.currency || 'TRY';
-        const amount = cents / 100;
-        return `${amount.toLocaleString('en-US', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })} ${currency}`;
       }
 
       get variantIdInput() {

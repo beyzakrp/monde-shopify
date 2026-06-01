@@ -319,13 +319,7 @@
                     </div>
                   </details>
                 </div>
-              {%- when 'quantity_selector' -%}
-                {%- assign next_block = section.blocks[forloop.index] -%}
-                {%- assign render_purchase_row = false -%}
-                {%- if next_block.type == 'buy_buttons' -%}
-                  {%- assign render_purchase_row = true -%}
-                {%- endif -%}
-                <div class="product-purchase-row">
+                           {%- when 'quantity_selector' -%}
                 <div
                   id="Quantity-Form-{{ section.id }}"
                   class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
@@ -345,6 +339,21 @@
                     {%- endif -%}
                   </span>
                   <!-- comment -->
+                  <label
+                    class="quantity__label form__label"
+                    for="Quantity-{{ section.id }}"
+                    aria-labelledby="quantity-label-{{ section.id }}"
+                  >
+                    <span aria-hidden="true">{{ 'products.product.quantity.label' | t }}</span>
+                    <span class="quantity__rules-cart{% if cart_qty == 0 %} hidden{% endif %}" aria-hidden="true">
+                      {%- render 'loading-spinner' -%}
+                      <span
+                        >(
+                        {{- 'products.product.quantity.in_cart_html' | t: quantity: cart_qty -}}
+                        )</span
+                      >
+                    </span>
+                  </label>
 
                   <div class="price-per-item__container">
                     <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
@@ -537,19 +546,10 @@
                         {%- endif -%}
                       {%- endif -%}
                     </volume-pricing>
-                  {%- endif -%}
-                </div>
-                {%- if render_purchase_row -%}
-                  {%- render 'buy-buttons',
-                    block: next_block,
-                    product: product,
-                    product_form_id: product_form_id,
-                    section_id: section.id,
-                    show_pickup_availability: true
-                  -%}
+                                 
                 {%- endif -%}
                 </div>
-              {%- when 'popup' -%}
+                {%- when 'popup' -%}
                 <modal-opener
                   class="product-popup-modal__opener quick-add-hidden"
                   data-modal="#PopupModal-{{ block.id }}"
@@ -572,16 +572,8 @@
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
-              {%- when 'buy_buttons' -%}
-                {%- assign render_buy_buttons = true -%}
-                {%- if forloop.index0 > 0 -%}
-                  {%- assign previous_block_index = forloop.index0 | minus: 1 -%}
-                  {%- assign previous_block = section.blocks[previous_block_index] -%}
-                  {%- if previous_block.type == 'quantity_selector' -%}
-                    {%- assign render_buy_buttons = false -%}
-                  {%- endif -%}
-                {%- endif -%}
-                {%- if render_buy_buttons -%}
+               {%- when 'buy_buttons' -%}
+                
                   {%- render 'buy-buttons',
                     block: block,
                     product: product,
@@ -589,7 +581,7 @@
                     section_id: section.id,
                     show_pickup_availability: true
                   -%}
-                {%- endif -%}
+
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">

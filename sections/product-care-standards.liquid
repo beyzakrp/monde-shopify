@@ -1,0 +1,138 @@
+{{ 'section-product-care-standards.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="care-standards section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient">
+  <div class="care-standards__inner page-width">
+    <div class="care-standards__copy">
+      <h2 class="care-standards__heading">{{ section.settings.heading }}</h2>
+      <div class="care-standards__text rte">
+        {{ section.settings.description }}
+      </div>
+    </div>
+
+    <div class="care-standards__list" role="list">
+      {%- for block in section.blocks -%}
+        <article class="care-standards__item" role="listitem" {{ block.shopify_attributes }}>
+          <div class="care-standards__icon-wrap">
+            {%- if block.settings.icon != blank -%}
+              <img
+                class="care-standards__icon"
+                src="{{ block.settings.icon | image_url: width: 144 }}"
+                alt=""
+                width="72"
+                height="72"
+                loading="lazy"
+              >
+            {%- endif -%}
+          </div>
+          <div class="care-standards__item-copy">
+            <h3 class="care-standards__item-title">{{ block.settings.title }}</h3>
+            <p class="care-standards__item-text">{{ block.settings.text }}</p>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product care standards",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "GLAMFOX Bakım Standartları"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Doğadan ilham alan içerikler, hassas cilt dostu formüller ve bilinçli bakım anlayışı ile günlük cilt bakım rutininizi desteklemek için geliştirildi.</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 44
+    }
+  ],
+  "blocks": [
+    {
+      "type": "standard",
+      "name": "Standard",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Doğal İçerikler"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Doğadan ilham alan özenle seçilmiş içeriklerle formüle edilmiştir."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product care standards",
+      "blocks": [
+        {
+          "type": "standard"
+        },
+        {
+          "type": "standard"
+        },
+        {
+          "type": "standard"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

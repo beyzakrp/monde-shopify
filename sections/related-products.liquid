@@ -1,4 +1,3 @@
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'section-related-products.css' | asset_url | stylesheet_tag }}
 
@@ -22,35 +21,92 @@
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
   <product-recommendations
-    class="related-products page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    class="related-products related-products--routine section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
     data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}"
     data-section-id="{{ section.id }}"
     data-product-id="{{ product.id }}"
   >
     {% if recommendations.performed and recommendations.products_count > 0 %}
-      <h2 class="related-products__heading inline-richtext {{ section.settings.heading_size }}">
-        {{ section.settings.heading }}
-      </h2>
-      <ul
-        class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
-        role="list"
-      >
-        {% assign skip_card_product_styles = false %}
+      <div class="related-products__inner">
+        <h2 class="related-products__heading inline-richtext {{ section.settings.heading_size }}">
+          {{ section.settings.heading }}
+        </h2>
+      </div>
+
+      <div class="related-products__viewport">
+        <ul class="related-products__track" role="list" data-related-products-track>
         {% for recommendation in recommendations.products %}
-          <li class="grid__item">
-            {% render 'card-product',
-              card_product: recommendation,
-              media_aspect_ratio: section.settings.image_ratio,
-              image_shape: section.settings.image_shape,
-              show_secondary_image: section.settings.show_secondary_image,
-              show_vendor: section.settings.show_vendor,
-              show_rating: section.settings.show_rating,
-              skip_styles: skip_card_product_styles
-            %}
+          {%- liquid
+            assign routine_step = recommendation.metafields.custom.routine_step.value | default: recommendation.type
+            assign active_focus = recommendation.metafields.custom.active_focus.value | default: recommendation.metafields.custom.active_ingredients.value
+            assign skin_type = recommendation.metafields.custom.skin_type.value
+            assign texture = recommendation.metafields.custom.texture.value
+            assign product_badge = routine_step | default: active_focus | default: 'Bakım rutini'
+            assign hover_media = recommendation.media[1]
+          -%}
+
+          <li class="related-products__item">
+            <article class="routine-card">
+              <a class="routine-card__media{% if hover_media != blank %} routine-card__media--has-hover{% endif %}" href="{{ recommendation.url }}" aria-label="{{ recommendation.title | escape }}">
+                {%- if product_badge != blank -%}
+                  <span class="routine-card__badge">
+                    <span class="routine-card__badge-text">{{ product_badge | escape }}</span>
+                  </span>
+                {%- endif -%}
+
+                {%- if recommendation.featured_media != blank -%}
+                  {{
+                    recommendation.featured_media.preview_image
+                    | image_url: width: 1200
+                    | image_tag:
+                      widths: '320, 480, 640, 900, 1200',
+                      sizes: '(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 80vw',
+                      class: 'routine-card__image routine-card__image--primary',
+                      loading: 'lazy',
+                      alt: recommendation.featured_media.alt | default: recommendation.title
+                  }}
+                  {%- if hover_media != blank -%}
+                    {{
+                      hover_media.preview_image
+                      | image_url: width: 1200
+                      | image_tag:
+                        widths: '320, 480, 640, 900, 1200',
+                        sizes: '(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 80vw',
+                        class: 'routine-card__image routine-card__image--hover',
+                        loading: 'lazy',
+                        alt: hover_media.alt | default: recommendation.title
+                    }}
+                  {%- endif -%}
+                {%- else -%}
+                  {{ 'product-apparel-2' | placeholder_svg_tag: 'placeholder-svg routine-card__image' }}
+                {%- endif -%}
+              </a>
+
+              <div class="routine-card__info">
+                <h3 class="routine-card__title">
+                  <a href="{{ recommendation.url }}">{{ recommendation.title | escape }}</a>
+                </h3>
+
+                <div class="routine-card__price">
+                  {% render 'price', product: recommendation, show_compare_at_price: false %}
+                </div>
+
+               
+              </div>
+            </article>
           </li>
-          {%- assign skip_card_product_styles = true -%}
         {% endfor %}
-      </ul>
+        </ul>
+
+        <button
+          type="button"
+          class="related-products__next"
+          aria-label="Sonraki ürünleri göster"
+          onclick="this.closest('.related-products').querySelector('[data-related-products-track]').scrollBy({ left: this.closest('.related-products').querySelector('.related-products__item').offsetWidth, behavior: 'smooth' })"
+        >
+          <span aria-hidden="true">›</span>
+        </button>
+      </div>
     {% endif %}
   </product-recommendations>
   {% if section.settings.image_shape == 'arch' %}
