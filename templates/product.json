@@ -67,7 +67,6 @@
             "show_gift_card_recipient": true
           }
         },
-        
         "description": {
           "type": "description",
           "settings": {}
@@ -160,7 +159,6 @@
         "inventory",
         "quantity_selector",
         "buy_buttons",
-        "payment_trust",
         "description",
         "skin_type_details",
         "how_to_use",
