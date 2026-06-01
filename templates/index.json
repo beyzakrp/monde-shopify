@@ -154,6 +154,48 @@
         "padding_bottom": 0
       }
     },
+    "product_care_standards_MkqmGk": {
+      "type": "product-care-standards",
+      "blocks": {
+        "standard_YnNmVB": {
+          "type": "standard",
+          "settings": {
+            "icon": "shopify://shop_images/naturalIngredients.png",
+            "title": "Doğal İçerikler",
+            "text": "Doğadan ilham alan özenle seçilmiş içeriklerle formüle edilmiştir."
+          }
+        },
+        "standard_yHfDxe": {
+          "type": "standard",
+          "settings": {
+            "icon": "shopify://shop_images/notTestedOnAnimals.png",
+            "title": "Hayvanlar Üzerinde Test Edilmez",
+            "text": "Ürünlerimiz hayvanlar üzerinde test edilmeden, bilinçli güzellik anlayışı doğrultusunda geliştirilir."
+          }
+        },
+        "standard_fUMxFT": {
+          "type": "standard",
+          "settings": {
+            "icon": "shopify://shop_images/SulfateFree.png",
+            "title": "Sülfat İçermez",
+            "text": "Cildin doğal nem dengesini korumaya yardımcı olan, nazik ve sülfatsız formüller içerir."
+          }
+        }
+      },
+      "block_order": [
+        "standard_YnNmVB",
+        "standard_yHfDxe",
+        "standard_fUMxFT"
+      ],
+      "name": "Product care standards",
+      "settings": {
+        "heading": "GLAMFOX Bakım Standartları",
+        "description": "<p>Doğadan ilham alan içerikler, hassas cilt dostu formüller ve bilinçli bakım anlayışı ile günlük cilt bakım rutininizi desteklemek için geliştirildi.</p>",
+        "color_scheme": "",
+        "padding_top": 44,
+        "padding_bottom": 44
+      }
+    },
     "skin_promise": {
       "type": "rich-text",
       "blocks": {
@@ -505,6 +547,7 @@
     "home_banner_mLHnFg",
     "movable_banner_8LzQ2p",
     "shop_by_category_66X9Gw",
+    "product_care_standards_MkqmGk",
     "skin_promise",
     "duo_collection_PhUTA4",
     "routine_guide",
