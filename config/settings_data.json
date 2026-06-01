@@ -46,7 +46,7 @@
     "card_style": "card",
     "card_image_padding": 0,
     "card_text_alignment": "center",
-    "card_color_scheme": "scheme-1",
+    "card_color_scheme": "scheme-5a42642e-54d5-401f-bb58-591ddfd4ddf6",
     "card_border_thickness": 0,
     "card_border_opacity": 10,
     "card_corner_radius": 12,
@@ -127,7 +127,7 @@
     "show_vendor": false,
     "show_cart_note": true,
     "cart_drawer_collection": "krem",
-    "cart_color_scheme": "scheme-1",
+    "cart_color_scheme": "scheme-5a42642e-54d5-401f-bb58-591ddfd4ddf6",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
