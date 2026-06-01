@@ -12,13 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
         "title": {
           "type": "title",
           "settings": {}
@@ -51,8 +44,8 @@
         "inventory": {
           "type": "inventory",
           "settings": {
-            "text_style": "subtitle",
-            "inventory_threshold": 10,
+            "text_style": "uppercase",
+            "inventory_threshold": 5,
             "show_inventory_quantity": false
           }
         },
@@ -149,7 +142,6 @@
         }
       },
       "block_order": [
-        "vendor",
         "title",
         "price",
         "price_divider",
