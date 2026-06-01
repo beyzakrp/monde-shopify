@@ -22,10 +22,19 @@
   letter-spacing: 0;
 }
 
+.featured-collection-routine .collection__description {
+  max-width: 68rem;
+  margin: -1.2rem auto 2.6rem;
+  text-align: center;
+}
+
+.featured-collection-routine .collection__view-all {
+  margin-top: 3rem;
+}
+
 .related-products__viewport {
   position: relative;
   width: 100%;
-  padding: 0 4.2rem;
 }
 
 .related-products__track {
