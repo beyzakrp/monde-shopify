@@ -52,7 +52,7 @@
         "overlay_rotate_speed": 20,
         "overlay_text": "",
         "overlay_inner_scale": 60,
-        "mobile_gradient": true
+        "mobile_gradient": false
       }
     },
     "movable_banner_8LzQ2p": {
@@ -288,6 +288,34 @@
         "padding_bottom": 44
       }
     },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "krem",
+        "products_to_show": 4,
+        "title": "En Çok Tercih Edilenler",
+        "heading_size": "h2",
+        "description": "<p>Rutine kolayca eklenen favori bakım ürünleri.</p>",
+        "show_description": true,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": true,
+        "full_width": true,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-5a42642e-54d5-401f-bb58-591ddfd4ddf6",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 28,
+        "padding_bottom": 0
+      }
+    },
     "routine_guide": {
       "type": "skin-routine-guide",
       "blocks": {
@@ -346,34 +374,6 @@
         "accent_color": "#8f5f3c",
         "padding_top": 72,
         "padding_bottom": 72
-      }
-    },
-    "featured-collection": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "krem",
-        "products_to_show": 4,
-        "title": "En Çok Tercih Edilenler",
-        "heading_size": "h2",
-        "description": "<p>Rutine kolayca eklenen favori bakım ürünleri.</p>",
-        "show_description": true,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": true,
-        "full_width": true,
-        "show_view_all": false,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-5a42642e-54d5-401f-bb58-591ddfd4ddf6",
-        "image_ratio": "portrait",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": true,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 28,
-        "padding_bottom": 0
       }
     },
     "trust_points": {
