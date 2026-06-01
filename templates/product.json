@@ -27,6 +27,10 @@
           "type": "price",
           "settings": {}
         },
+        "price_divider": {
+          "type": "divider",
+          "settings": {}
+        },
         "rating": {
           "type": "rating",
           "settings": {}
@@ -34,7 +38,7 @@
         "skin_meta": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% liquid\n  assign skin_type = product.metafields.custom.skin_type.value | default: 'Tüm cilt tipleri'\n  assign routine_step = product.metafields.custom.routine_step.value | default: product.type\n  assign active_ingredients = product.metafields.custom.active_ingredients.value | default: 'Kore ilhamlı bakım'\n  assign texture = product.metafields.custom.texture.value | default: 'Günlük kullanıma uygun'\n%}\n<div class=\"product-skin-meta\" aria-label=\"Ürün bakım özeti\">\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Cilt tipi</span><span class=\"product-skin-meta__value\">{{ skin_type }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Rutin adımı</span><span class=\"product-skin-meta__value\">{{ routine_step }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Aktif odak</span><span class=\"product-skin-meta__value\">{{ active_ingredients }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Doku</span><span class=\"product-skin-meta__value\">{{ texture }}</span></div>\n</div>"
+            "custom_liquid": "{% liquid\n  assign skin_type = product.metafields.custom.skin_type.value | default: 'Tüm cilt tipleri'\n  assign routine_step = product.metafields.custom.routine_step.value | default: product.type\n  assign active_focus = product.metafields.custom.active_focus.value | default: product.metafields.custom.active_ingredients.value | default: 'Kore ilhamlı bakım'\n  assign texture = product.metafields.custom.texture.value | default: 'Günlük kullanıma uygun'\n%}\n<div class=\"product-skin-meta\" aria-label=\"Ürün bakım özeti\">\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Cilt tipi</span><span class=\"product-skin-meta__value\">{{ skin_type }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Rutin adımı</span><span class=\"product-skin-meta__value\">{{ routine_step }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Aktif odak</span><span class=\"product-skin-meta__value\">{{ active_focus }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Doku</span><span class=\"product-skin-meta__value\">{{ texture }}</span></div>\n</div>"
           }
         },
         "variant_picker": {
@@ -63,15 +67,20 @@
             "show_gift_card_recipient": true
           }
         },
-        "payment_trust": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{% render 'paytr-payment-note', mode: 'product' %}"
-          }
-        },
+        
         "description": {
           "type": "description",
           "settings": {}
+        },
+        "skin_type_details": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Cilt tipi",
+            "icon": "silhouette",
+            "content": "<p>Ürünün hangi cilt tipleri için uygun olduğunu ve kullanım önerilerini bu alanda inceleyebilirsiniz.</p>",
+            "metafield_key": "skin_type_details",
+            "page": ""
+          }
         },
         "how_to_use": {
           "type": "collapsible_tab",
@@ -79,6 +88,7 @@
             "heading": "Nasıl kullanılır?",
             "icon": "stopwatch",
             "content": "<p>Temizlenmiş cilde rutindeki sırasına göre uygulayın. Gündüz kullanımında rutini güneş koruyucu ile tamamlayın.</p>",
+            "metafield_key": "how_to_use",
             "page": ""
           }
         },
@@ -88,6 +98,27 @@
             "heading": "Aktif içerik odağı",
             "icon": "leaf",
             "content": "<p>Ürünün öne çıkan içeriklerini ve cilt ihtiyacına göre rolünü ürün açıklamasında inceleyebilirsiniz.</p>",
+            "metafield_key": "active_ingredient_focus",
+            "page": ""
+          }
+        },
+        "featured_ingredients": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Öne çıkan içerikler",
+            "icon": "plant",
+            "content": "<p>Ürünün öne çıkan içeriklerini bu alanda inceleyebilirsiniz.</p>",
+            "metafield_key": "featured_ingredients",
+            "page": ""
+          }
+        },
+        "full_ingredients": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Tam içerik",
+            "icon": "clipboard",
+            "content": "<p>Ürünün tam içerik listesini ürün ambalajı ve güncel ürün bilgileriyle birlikte kontrol edebilirsiniz.</p>",
+            "metafield_key": "full_ingredients",
             "page": ""
           }
         },
@@ -97,6 +128,7 @@
             "heading": "Rutin içinde yeri",
             "icon": "check_mark",
             "content": "<p>Temizleyici, tonik, serum ve krem adımlarını cildinizin ihtiyacına göre birlikte kullanarak daha dengeli bir bakım rutini oluşturabilirsiniz.</p>",
+            "metafield_key": "routine_place",
             "page": ""
           }
         },
@@ -106,6 +138,7 @@
             "heading": "Ödeme, teslimat ve iade",
             "icon": "truck",
             "content": "<p>Ödemeler PayTR güvenli ödeme altyapısı üzerinden alınır. Kart işlemlerinde 3D Secure doğrulama ve uygun kartlarda taksit seçenekleri ödeme adımında gösterilir. Teslimat ve iade detayları mağaza politikalarında güncel olarak yer alır.</p>",
+            "metafield_key": "payment_delivery_return",
             "page": ""
           }
         },
@@ -120,6 +153,7 @@
         "vendor",
         "title",
         "price",
+        "price_divider",
         "rating",
         "skin_meta",
         "variant_picker",
@@ -128,8 +162,11 @@
         "buy_buttons",
         "payment_trust",
         "description",
+        "skin_type_details",
         "how_to_use",
         "ingredients",
+        "featured_ingredients",
+        "full_ingredients",
         "routine",
         "shipping",
         "share"

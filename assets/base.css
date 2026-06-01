@@ -99,6 +99,14 @@ button.shopify-payment-button__button--unbranded {
   padding-inline: 0.2rem;
 }
 
+.ProductOption__Divider {
+  height: 10px;
+  background: #c5c5c5;
+  width: 100%;
+  border: none;
+  /* margin: 4px 0; */
+}
+
 .price,
 .card-information .price {
   letter-spacing: 0.08em;
