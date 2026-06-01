@@ -1,6 +1,6 @@
 .care-standards {
   background: #fef9f8;
-  color: #2F1B06;
+  color: #2e2a39;
 }
 
 .care-standards__inner {
@@ -17,17 +17,15 @@
 
 .care-standards__heading {
   margin: 0;
-  color: #2F1B06;
+  color: #2e2a39;
+  font-family: Poppins, sans-serif;
   font-size: 30px;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 0;
 }
 
 .care-standards__text {
   max-width: 68rem;
   margin-top: 10px;
-  color: #2F1B06;
+  color: #2e2a39;
   font-size: 14px;
   font-style: normal;
   font-weight: 350;
@@ -87,7 +85,7 @@
 
 .care-standards__item-title {
   margin: 0;
-  color: #2F1B06;
+  color: #2e2a39;
   font-size: 2.3rem;
   font-weight: 500;
   line-height: normal;
@@ -96,7 +94,7 @@
 
 .care-standards__item-text {
   margin: 0;
-  color: #2F1B06;
+  color: #2e2a39;
   font-size: 14px;
   font-style: normal;
   font-weight: 350;
