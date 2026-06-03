@@ -93,10 +93,58 @@
         "padding_top": 8,
         "padding_bottom": 8
       }
+    },
+    "1780513674b9f4f0c2": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_2ead37c_ChtrAx": {
+          "type": "ai_gen_block_2ead37c",
+          "settings": {
+            "heading": "Kore'den Gelen Yeni Ürünlerimiz Hemen Keşfedin",
+            "discount_text": "Kargo Bedava!",
+            "description": "İndirimlerden haberdar olmak için hemen alışverişe başla.",
+            "button_text": "Alışverişe Başla",
+            "button_link": "shopify://collections/rice-niacinamide-serisi",
+            "show_image": true,
+            "image": "shopify://shop_images/Group_794.png",
+            "delay_seconds": 3,
+            "show_once": true,
+            "show_dont_show_again": true,
+            "popup_width": 500,
+            "content_padding": 40,
+            "text_alignment": "center",
+            "spacing": 16,
+            "background_color": "#ffffff",
+            "heading_color": "#2e2a39",
+            "text_color": "#2e2a39",
+            "discount_color": "#e92127",
+            "button_color": "#000000",
+            "button_hover_color": "#2e2a39",
+            "button_text_color": "#ffffff",
+            "close_button_color": "#2e2a39",
+            "overlay_opacity": 0.5,
+            "heading_size": 32,
+            "discount_size": 28,
+            "text_size": 16,
+            "button_text_size": 16,
+            "border_radius": 22,
+            "button_radius": 10,
+            "shadow_opacity": 0.3,
+            "shadow_vertical": 12,
+            "shadow_blur": 40
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_2ead37c_ChtrAx"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "announcement-bar",
-    "header"
+    "header",
+    "1780513674b9f4f0c2"
   ]
 }
