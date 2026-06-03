@@ -99,6 +99,7 @@
       "blocks": {
         "ai_gen_block_2ead37c_ChtrAx": {
           "type": "ai_gen_block_2ead37c",
+          "disabled": true,
           "settings": {
             "heading": "Kore'den Gelen Yeni Ürünlerimiz Hemen Keşfedin",
             "discount_text": "Kargo Bedava!",
