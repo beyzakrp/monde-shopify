@@ -1,6 +1,633 @@
+{% doc %}
+  @prompt
+    Promo popups
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-promo-popup-{{ ai_gen_id }} {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .ai-promo-popup-{{ ai_gen_id }}.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .ai-promo-popup-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, {{ block.settings.overlay_opacity }});
+    cursor: pointer;
+  }
+
+  .ai-promo-popup-container-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 90%;
+    max-width: {{ block.settings.popup_width }}px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    box-shadow: 0 {{ block.settings.shadow_vertical }}px {{ block.settings.shadow_blur }}px rgba(0, 0, 0, {{ block.settings.shadow_opacity }});
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-promo-popup-{{ ai_gen_id }}.active .ai-promo-popup-container-{{ ai_gen_id }} {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .ai-promo-popup-content-{{ ai_gen_id }} {
+    padding: {{ block.settings.content_padding }}px;
+    text-align: {{ block.settings.text_alignment }};
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-promo-popup-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-promo-popup-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 200px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-promo-popup-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 200px;
+  }
+
+  .ai-promo-popup-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 {{ block.settings.spacing }}px;
+    font-weight: 600;
+  }
+
+  .ai-promo-popup-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    margin: 0 0 {{ block.settings.spacing }}px;
+    line-height: 1.5;
+  }
+
+  .ai-promo-popup-discount-{{ ai_gen_id }} {
+    font-size: {{ block.settings.discount_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.discount_color }};
+    margin: 0 0 {{ block.settings.spacing }}px;
+  }
+
+  .ai-promo-popup-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 14px 32px;
+    background-color: {{ block.settings.button_color }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_radius }}px;
+    font-size: {{ block.settings.button_text_size }}px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .ai-promo-popup-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_color }};
+  }
+
+  .ai-promo-popup-close-{{ ai_gen_id }} {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: {{ block.settings.close_button_color }};
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+  }
+
+  .ai-promo-popup-close-{{ ai_gen_id }}:hover {
+    opacity: 1;
+  }
+
+  .ai-promo-popup-close-{{ ai_gen_id }} svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ai-promo-popup-checkbox-wrapper-{{ ai_gen_id }} {
+    margin-top: {{ block.settings.spacing }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .ai-promo-popup-checkbox-{{ ai_gen_id }} {
+    cursor: pointer;
+  }
+
+  .ai-promo-popup-checkbox-label-{{ ai_gen_id }} {
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-promo-popup-container-{{ ai_gen_id }} {
+      max-width: 95%;
+    }
+
+    .ai-promo-popup-content-{{ ai_gen_id }} {
+      padding: {{ block.settings.content_padding | times: 0.7 }}px;
+    }
+
+    .ai-promo-popup-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.8 }}px;
+    }
+
+    .ai-promo-popup-discount-{{ ai_gen_id }} {
+      font-size: {{ block.settings.discount_size | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<promo-popup-{{ ai_gen_id }}
+  class="ai-promo-popup-{{ ai_gen_id }}"
+  data-delay="{{ block.settings.delay_seconds }}"
+  data-show-once="{{ block.settings.show_once }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-promo-popup-overlay-{{ ai_gen_id }}"></div>
+  
+  <div class="ai-promo-popup-container-{{ ai_gen_id }}">
+    <button
+      class="ai-promo-popup-close-{{ ai_gen_id }}"
+      aria-label="Close popup"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    {% if block.settings.show_image %}
+      {% if block.settings.image %}
+        <img
+          src="{{ block.settings.image | image_url: width: 1000 }}"
+          alt="{{ block.settings.image.alt | escape }}"
+          class="ai-promo-popup-image-{{ ai_gen_id }}"
+          loading="lazy"
+          width="{{ block.settings.image.width }}"
+          height="{{ block.settings.image.height }}"
+        >
+      {% else %}
+        <div class="ai-promo-popup-image-placeholder-{{ ai_gen_id }}">
+          {{ 'lifestyle-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    {% endif %}
+
+    <div class="ai-promo-popup-content-{{ ai_gen_id }}">
+      {% if block.settings.heading != blank %}
+        <h2 class="ai-promo-popup-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      {% endif %}
+
+      {% if block.settings.discount_text != blank %}
+        <div class="ai-promo-popup-discount-{{ ai_gen_id }}">{{ block.settings.discount_text }}</div>
+      {% endif %}
+
+      {% if block.settings.description != blank %}
+        <div class="ai-promo-popup-text-{{ ai_gen_id }}">{{ block.settings.description }}</div>
+      {% endif %}
+
+      {% if block.settings.button_text != blank %}
+        <a
+          href="{{ block.settings.button_link }}"
+          class="ai-promo-popup-button-{{ ai_gen_id }}"
+        >
+          {{ block.settings.button_text }}
+        </a>
+      {% endif %}
+
+      {% if block.settings.show_dont_show_again %}
+        <div class="ai-promo-popup-checkbox-wrapper-{{ ai_gen_id }}">
+          <input
+            type="checkbox"
+            id="ai-promo-popup-dont-show-{{ ai_gen_id }}"
+            class="ai-promo-popup-checkbox-{{ ai_gen_id }}"
+          >
+          <label
+            for="ai-promo-popup-dont-show-{{ ai_gen_id }}"
+            class="ai-promo-popup-checkbox-label-{{ ai_gen_id }}"
+          >
+            Don't show this again
+          </label>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</promo-popup-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class PromoPopup{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.delay = parseInt(this.dataset.delay) * 1000;
+        this.showOnce = this.dataset.showOnce === 'true';
+        this.cookieName = 'ai_promo_popup_{{ ai_gen_id }}_hidden';
+        this.closeButton = this.querySelector('.ai-promo-popup-close-{{ ai_gen_id }}');
+        this.overlay = this.querySelector('.ai-promo-popup-overlay-{{ ai_gen_id }}');
+        this.checkbox = this.querySelector('.ai-promo-popup-checkbox-{{ ai_gen_id }}');
+      }
+
+      connectedCallback() {
+        if (this.shouldShowPopup()) {
+          setTimeout(() => {
+            this.showPopup();
+          }, this.delay);
+        }
+
+        this.setupEventListeners();
+      }
+
+      shouldShowPopup() {
+        if (!this.showOnce) return true;
+        return !this.getCookie(this.cookieName);
+      }
+
+      showPopup() {
+        this.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      hidePopup() {
+        this.classList.remove('active');
+        document.body.style.overflow = '';
+
+        if (this.checkbox && this.checkbox.checked) {
+          this.setCookie(this.cookieName, 'true', 30);
+        }
+      }
+
+      setupEventListeners() {
+        this.closeButton.addEventListener('click', () => {
+          this.hidePopup();
+        });
+
+        this.overlay.addEventListener('click', () => {
+          this.hidePopup();
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.classList.contains('active')) {
+            this.hidePopup();
+          }
+        });
+      }
+
+      getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+      }
+
+      setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = `expires=${date.toUTCString()}`;
+        document.cookie = `${name}=${value};${expires};path=/`;
+      }
+    }
+
+    customElements.define('promo-popup-{{ ai_gen_id }}', PromoPopup{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Promo popup",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Special Offer!"
+    },
+    {
+      "type": "text",
+      "id": "discount_text",
+      "label": "Discount text",
+      "default": "Get 20% OFF"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Subscribe to our newsletter and get 20% off your first order"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Behavior"
+    },
+    {
+      "type": "range",
+      "id": "delay_seconds",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "s",
+      "label": "Delay before showing",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_once",
+      "label": "Show only once per visitor",
+      "default": true,
+      "info": "Uses cookies to remember if visitor has seen the popup"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dont_show_again",
+      "label": "Show 'Don't show again' option",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "popup_width",
+      "min": 300,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "label": "Popup width",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "min": 20,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Content padding",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "unit": "px",
+      "label": "Spacing between elements",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#2e2a39"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#2e2a39"
+    },
+    {
+      "type": "color",
+      "id": "discount_color",
+      "label": "Discount text",
+      "default": "#e92127"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover background",
+      "default": "#2e2a39"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "close_button_color",
+      "label": "Close button",
+      "default": "#2e2a39"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Overlay opacity",
+      "default": 0.5
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "discount_size",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Discount text size",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Button text size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Popup border radius",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Shadow opacity",
+      "default": 0.3
+    },
+    {
+      "type": "range",
+      "id": "shadow_vertical",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Shadow vertical offset",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "shadow_blur",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Shadow blur",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo popup"
+    }
+  ]
+}
 {% endschema %}
