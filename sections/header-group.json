@@ -108,7 +108,7 @@
             "show_image": true,
             "image": "shopify://shop_images/Group_794.png",
             "delay_seconds": 3,
-            "show_once": true,
+            "show_once": false,
             "show_dont_show_again": true,
             "popup_width": 500,
             "content_padding": 40,
