@@ -14,7 +14,7 @@ if (!customElements.get('product-info')) {
       constructor() {
         super();
 
-        this.quantityInput = this.querySelector('.quantity__input');
+        this.quantityInput = this.querySelector('.product-form__quantity .quantity__input');
       }
 
       connectedCallback() {
@@ -351,7 +351,7 @@ if (!customElements.get('product-info')) {
       }
 
       updateQuantityRules(sectionId, html) {
-        if (!this.quantityInput) return;
+        if (!this.quantityInput || !this.quantityForm) return;
         this.setQuantityBoundries();
 
         const quantityFormUpdated = html.getElementById(`Quantity-Form-${sectionId}`);

@@ -25,6 +25,54 @@
     {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
 
+  {%- liquid
+    assign customer_type = customer.metafields.custom.musteri_tipi.value | default: customer.metafields.custom.musteri_tipi | downcase | strip
+    assign is_corporate_customer = false
+    assign product_is_wholesale = false
+    assign can_view_product = true
+
+    if customer
+      if customer_type contains 'kurumsal'
+        assign is_corporate_customer = true
+      endif
+      for customer_tag in customer.tags
+        assign customer_tag_normalized = customer_tag | downcase | strip
+        if customer_tag_normalized contains 'kurumsal'
+          assign is_corporate_customer = true
+        endif
+      endfor
+    endif
+
+    for product_collection in product.collections
+      if product_collection.handle == 'toptan-satis'
+        assign product_is_wholesale = true
+      endif
+    endfor
+
+    if product_is_wholesale and is_corporate_customer == false
+      assign can_view_product = false
+    endif
+
+    assign wholesale_bundle_default_quantity = 3
+    assign wholesale_bundle_initial_price = 0
+    assign wholesale_bundle_initial_quantity = 0
+
+    if template.suffix == 'wholesale'
+      for product_block in section.blocks
+        if product_block.type == 'wholesale_bundle'
+          for bundle_product in product_block.settings.products
+            assign bundle_variant = bundle_product.selected_or_first_available_variant
+            if bundle_variant != blank
+              assign bundle_line_total = bundle_variant.price | times: wholesale_bundle_default_quantity
+              assign wholesale_bundle_initial_price = wholesale_bundle_initial_price | plus: bundle_line_total
+              assign wholesale_bundle_initial_quantity = wholesale_bundle_initial_quantity | plus: wholesale_bundle_default_quantity
+            endif
+          endfor
+        endif
+      endfor
+    endif
+  -%}
+
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -98,9 +146,172 @@
       color: rgba(var(--color-foreground), 0.86);
     }
 
+    .section-{{ section.id }}-padding .wholesale-access {
+      padding-top: clamp(4rem, 8vw, 8rem);
+      padding-bottom: clamp(4rem, 8vw, 8rem);
+    }
+
+    .section-{{ section.id }}-padding .wholesale-access__panel {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: clamp(3rem, 5vw, 5rem);
+      border: 1px solid rgba(var(--color-foreground), 0.12);
+      background: rgb(var(--color-background));
+      text-align: center;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-access__eyebrow {
+      margin: 0 0 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(var(--color-foreground), 0.58);
+    }
+
+    .section-{{ section.id }}-padding .wholesale-access__title {
+      margin: 0;
+      font-size: clamp(2.4rem, 3vw, 3.6rem);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-access__text {
+      max-width: 52rem;
+      margin: 1.4rem auto 0;
+      color: rgba(var(--color-foreground), 0.72);
+      line-height: 1.7;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-access__actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 2.4rem;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle {
+      border: 1px solid rgba(var(--color-foreground), 0.14);
+      padding: 1.4rem 1.6rem;
+      background: rgba(var(--color-background), 0.72);
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__heading {
+      margin: 0 0 1rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(var(--color-foreground), 0.58);
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__list {
+      display: grid;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__item {
+      display: grid;
+      grid-template-columns: 5.6rem minmax(0, 1fr) auto auto;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1rem 0;
+      border-top: 1px solid rgba(var(--color-foreground), 0.1);
+      font-size: 1.4rem;
+      line-height: 1.35;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__item:first-child {
+      border-top: 0;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__media {
+      display: block;
+      width: 5.6rem;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: rgba(var(--color-foreground), 0.04);
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__details {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__name {
+      color: rgb(var(--color-foreground));
+      text-decoration: none;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__unit-price {
+      font-size: 1.2rem;
+      color: rgba(var(--color-foreground), 0.58);
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__quantity-control.quantity {
+      width: 12rem;
+      min-height: 4rem;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__quantity-control .quantity__input {
+      font-size: 1.3rem;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__line-total {
+      min-width: 10ch;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-align: right;
+      color: rgba(var(--color-foreground), 0.72);
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      margin-top: 0.6rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(var(--color-foreground), 0.18);
+      font-weight: 700;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__total-label {
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__total-count {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: rgba(var(--color-foreground), 0.58);
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle__total-value {
+      letter-spacing: 0.06em;
+    }
+
     @media screen and (max-width: 480px) {
       .section-{{ section.id }}-padding .product-skin-meta {
         grid-template-columns: 1fr;
+      }
+
+      .section-{{ section.id }}-padding .wholesale-bundle__item {
+        align-items: flex-start;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .section-{{ section.id }}-padding .wholesale-bundle__line-total {
+        text-align: left;
       }
     }
 
@@ -145,8 +356,28 @@
     >
   {%- endif -%}
 
-  {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
-  <div class="product-main-wrap">
+  {%- if can_view_product == false -%}
+    <div class="wholesale-access page-width">
+      <div class="wholesale-access__panel">
+        <p class="wholesale-access__eyebrow">Kurumsal alışveriş</p>
+        <h2 class="wholesale-access__title">Bu ürün kurumsal müşterilere özeldir.</h2>
+        {%- if customer -%}
+          <p class="wholesale-access__text">
+            Hesabınız şu anda kurumsal müşteri olarak işaretli değil. Toptan satış ürünlerini görüntülemek için müşteri temsilcinizle iletişime geçebilirsiniz.
+          </p>
+        {%- else -%}
+          <p class="wholesale-access__text">
+            Toptan satış ürünlerini ve özel fiyatları görüntülemek için kurumsal hesabınızla giriş yapın.
+          </p>
+          <div class="wholesale-access__actions">
+            <a href="{{ routes.account_login_url }}" class="button button--primary">Giriş yap</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- else -%}
+    {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
+    <div class="product-main-wrap">
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
@@ -180,12 +411,27 @@
                 </div>
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                  {%- render 'price',
-                    product: product,
-                    use_variant: true,
-                    show_badges: true,
-                    price_class: 'price--large'
-                  -%}
+                  {%- if template.suffix == 'wholesale' and wholesale_bundle_initial_price > 0 -%}
+                    <div class="price price--large">
+                      <div class="price__container">
+                        <div class="price__regular">
+                          <span class="visually-hidden visually-hidden--inline">
+                            {{ 'products.product.price.regular_price' | t }}
+                          </span>
+                          <span class="price-item price-item--regular" data-wholesale-bundle-price>
+                            {{ wholesale_bundle_initial_price | money_with_currency }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  {%- else -%}
+                    {%- render 'price',
+                      product: product,
+                      use_variant: true,
+                      show_badges: true,
+                      price_class: 'price--large'
+                    -%}
+                  {%- endif -%}
                 </div>
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
@@ -286,6 +532,182 @@
                 </p>
               {%- when 'custom_liquid' -%}
                 {{ block.settings.custom_liquid }}
+              {%- when 'wholesale_bundle' -%}
+                {%- assign wholesale_bundle_products = block.settings.products -%}
+                {%- if wholesale_bundle_products != blank -%}
+                  <div
+                    class="wholesale-bundle"
+                    data-wholesale-bundle
+                    data-currency="{{ cart.currency.iso_code }}"
+                    data-locale="{{ request.locale.iso_code }}"
+                    data-bundle-title="{{ product.title | escape }}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- if block.settings.heading != blank -%}
+                      <h2 class="wholesale-bundle__heading">{{ block.settings.heading | escape }}</h2>
+                    {%- endif -%}
+                    <ul class="wholesale-bundle__list">
+                      {%- for bundle_product in wholesale_bundle_products -%}
+                        {%- assign bundle_variant = bundle_product.selected_or_first_available_variant -%}
+                        {%- if bundle_variant != blank -%}
+                          {%- assign bundle_line_total = bundle_variant.price
+                            | times: wholesale_bundle_default_quantity
+                          -%}
+                          <li
+                            class="wholesale-bundle__item"
+                            data-wholesale-bundle-item
+                            data-variant-id="{{ bundle_variant.id }}"
+                            data-price="{{ bundle_variant.price }}"
+                          >
+                            <a class="wholesale-bundle__media" href="{{ bundle_product.url }}" aria-hidden="true" tabindex="-1">
+                              {%- if bundle_product.featured_image != blank -%}
+                                <img
+                                  class="wholesale-bundle__image"
+                                  src="{{ bundle_product.featured_image | image_url: width: 160 }}"
+                                  alt=""
+                                  width="80"
+                                  height="80"
+                                  loading="lazy"
+                                >
+                              {%- endif -%}
+                            </a>
+                            <div class="wholesale-bundle__details">
+                              <a class="wholesale-bundle__name" href="{{ bundle_product.url }}">
+                                {{ bundle_product.title | escape }}
+                              </a>
+                              <span class="wholesale-bundle__unit-price">
+                                {{ bundle_variant.price | money_with_currency }}
+                              </span>
+                            </div>
+                            <quantity-input class="quantity wholesale-bundle__quantity-control">
+                              <button class="quantity__button" name="minus" type="button">
+                                <span class="visually-hidden">
+                                  {{ bundle_product.title | escape }} azalt
+                                </span>
+                                <span class="svg-wrapper">
+                                  {{- 'icon-minus.svg' | inline_asset_content -}}
+                                </span>
+                              </button>
+                              <input
+                                class="quantity__input wholesale-bundle__quantity-input"
+                                type="number"
+                                min="{{ wholesale_bundle_default_quantity }}"
+                                data-min="{{ wholesale_bundle_default_quantity }}"
+                                step="{{ wholesale_bundle_default_quantity }}"
+                                value="{{ wholesale_bundle_default_quantity }}"
+                                aria-label="{{ bundle_product.title | escape }} {{ block.settings.quantity_label | default: 'adet' | escape }}"
+                              >
+                              <button class="quantity__button" name="plus" type="button">
+                                <span class="visually-hidden">
+                                  {{ bundle_product.title | escape }} artır
+                                </span>
+                                <span class="svg-wrapper">
+                                  {{- 'icon-plus.svg' | inline_asset_content -}}
+                                </span>
+                              </button>
+                            </quantity-input>
+                            <span class="wholesale-bundle__line-total" data-wholesale-bundle-line-total>
+                              {{ bundle_line_total | money_with_currency }}
+                            </span>
+                          </li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                    <div class="wholesale-bundle__total">
+                      <span class="wholesale-bundle__total-label">
+                        <span>Toplam</span>
+                        <span class="wholesale-bundle__total-count" data-wholesale-bundle-total-count>
+                          Toplam {{ wholesale_bundle_initial_quantity }} ürün
+                        </span>
+                      </span>
+                      <span class="wholesale-bundle__total-value" data-wholesale-bundle-total>
+                        {{ wholesale_bundle_initial_price | money_with_currency }}
+                      </span>
+                    </div>
+                  </div>
+                  <script>
+                    (() => {
+                      const initWholesaleBundle = () => {
+                        const section = document.getElementById('MainProduct-{{ section.id }}');
+                        if (!section) return;
+                        const bundle = section.querySelector('[data-wholesale-bundle]');
+                        if (!bundle) return;
+                        const items = bundle.querySelectorAll('[data-wholesale-bundle-item]');
+                        const total = bundle.querySelector('[data-wholesale-bundle-total]');
+                        const totalCount = bundle.querySelector('[data-wholesale-bundle-total-count]');
+                        const price = section.querySelector('[data-wholesale-bundle-price]');
+                        const submitText = section.querySelector('#ProductSubmitButton-{{ section.id }} span');
+                        const addToCartText = submitText?.textContent.trim() || 'Sepete ekle';
+                        const currency = bundle.dataset.currency || 'TRY';
+                        const locale = bundle.dataset.locale || 'tr-TR';
+                        if (!items.length) return;
+
+                        const formatMoney = (cents) => {
+                          const amount = Number(cents || 0) / 100;
+                          return `${amount.toLocaleString(locale, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })} ${currency}`;
+                        };
+
+                        const normalizeQuantity = (input) => {
+                          if (!input) return {{ wholesale_bundle_default_quantity }};
+                          const min = parseInt(input.min || input.dataset.min, 10) || {{ wholesale_bundle_default_quantity }};
+                          const step = parseInt(input.step, 10) || {{ wholesale_bundle_default_quantity }};
+                          let value = parseInt(input.value, 10) || min;
+
+                          if (value < min) value = min;
+                          const remainder = (value - min) % step;
+                          if (remainder !== 0) value += step - remainder;
+
+                          input.value = value;
+                          return value;
+                        };
+
+                        const updateBundleTotal = () => {
+                          let totalCents = 0;
+                          let totalQuantity = 0;
+
+                          items.forEach((item) => {
+                            const input = item.querySelector('[data-min]');
+                            const lineTotal = item.querySelector('[data-wholesale-bundle-line-total]');
+                            const quantity = normalizeQuantity(input);
+                            const priceCents = parseInt(item.dataset.price, 10) || 0;
+                            const lineTotalCents = priceCents * quantity;
+                            totalCents += lineTotalCents;
+                            totalQuantity += quantity;
+
+                            if (lineTotal) {
+                              lineTotal.textContent = formatMoney(lineTotalCents);
+                            }
+                          });
+
+                          const formattedTotal = formatMoney(totalCents);
+                          if (total) total.textContent = formattedTotal;
+                          if (totalCount) totalCount.textContent = `Toplam ${totalQuantity} ürün`;
+                          if (price) price.textContent = formattedTotal;
+                          if (submitText) submitText.textContent = `${addToCartText} • ${formattedTotal}`;
+                        };
+
+                        items.forEach((item) => {
+                          const input = item.querySelector('[data-min]');
+                          input?.addEventListener('change', updateBundleTotal);
+                          input?.addEventListener('input', updateBundleTotal);
+                        });
+                        if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+                          subscribe(PUB_SUB_EVENTS.quantityUpdate, updateBundleTotal);
+                        }
+                        updateBundleTotal();
+                      };
+
+                      if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', initWholesaleBundle, { once: true });
+                      } else {
+                        initWholesaleBundle();
+                      }
+                    })();
+                  </script>
+                {%- endif -%}
               {%- when 'collapsible_tab' -%}
                 {%- liquid
                   assign accordion_content = block.settings.content
@@ -320,6 +742,7 @@
                   </details>
                 </div>
                            {%- when 'quantity_selector' -%}
+                {%- unless template.suffix == 'wholesale' -%}
                 <div
                   id="Quantity-Form-{{ section.id }}"
                   class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
@@ -329,6 +752,17 @@
                   {% # theme-check-disable %}
                   {%- assign cart_qty = cart
                     | item_count_for_variant: product.selected_or_first_available_variant.id
+                  -%}
+                  {%- liquid
+                    assign quantity_min = product.selected_or_first_available_variant.quantity_rule.min
+                    assign quantity_increment = product.selected_or_first_available_variant.quantity_rule.increment
+                    assign quantity_value = quantity_min
+
+                    if template.suffix == 'wholesale'
+                      assign quantity_min = 3
+                      assign quantity_increment = 3
+                      assign quantity_value = 3
+                    endif
                   -%}
                   {% # theme-check-enable %}
                   <span class="visually-hidden" id="quantity-label-{{ section.id }}">
@@ -371,14 +805,14 @@
                         name="quantity"
                         id="Quantity-{{ section.id }}"
                         data-cart-quantity="{{ cart_qty }}"
-                        data-min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
-                        min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                        data-min="{{ quantity_min }}"
+                        min="{{ quantity_min }}"
                         {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
                           data-max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
                           max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
                         {% endif %}
-                        step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
-                        value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                        step="{{ quantity_increment }}"
+                        value="{{ quantity_value }}"
                         form="{{ product_form_id }}"
                       >
                       <button class="quantity__button" name="plus" type="button">
@@ -392,9 +826,9 @@
                     </quantity-input>
                     {%- liquid
                       assign volume_pricing_array = product.selected_or_first_available_variant.quantity_price_breaks | sort: 'quantity' | reverse
-                      assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.min
+                      assign current_qty_for_volume_pricing = cart_qty | plus: quantity_min
                       if cart_qty > 0
-                        assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.increment
+                        assign current_qty_for_volume_pricing = cart_qty | plus: quantity_increment
                       endif
                     -%}
                     {%- if product.quantity_price_breaks_configured? -%}
@@ -479,19 +913,19 @@
                     {%- endif -%}
                   </div>
                   <div class="quantity__rules caption" id="Quantity-Rules-{{ section.id }}">
-                    {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
+                    {%- if quantity_increment > 1 -%}
                       <span class="divider">
                         {{-
                           'products.product.quantity.multiples_of'
-                          | t: quantity: product.selected_or_first_available_variant.quantity_rule.increment
+                          | t: quantity: quantity_increment
                         -}}
                       </span>
                     {%- endif -%}
-                    {%- if product.selected_or_first_available_variant.quantity_rule.min > 1 -%}
+                    {%- if quantity_min > 1 -%}
                       <span class="divider">
                         {{-
                           'products.product.quantity.minimum_of'
-                          | t: quantity: product.selected_or_first_available_variant.quantity_rule.min
+                          | t: quantity: quantity_min
                         -}}
                       </span>
                     {%- endif -%}
@@ -510,7 +944,7 @@
                         <span class="caption-large">{{ 'products.product.volume_pricing.title' | t }}</span>
                         <ul class="list-unstyled">
                           <li>
-                            <span>{{ product.selected_or_first_available_variant.quantity_rule.min }}+</span>
+                            <span>{{ quantity_min }}+</span>
                             {%- assign price = product.selected_or_first_available_variant.price
                               | money_with_currency
                             -%}
@@ -549,6 +983,7 @@
                                  
                 {%- endif -%}
                 </div>
+                {%- endunless -%}
                 {%- when 'popup' -%}
                 <modal-opener
                   class="product-popup-modal__opener quick-add-hidden"
@@ -832,7 +1267,8 @@
     <script type="application/ld+json">
       {{ product | structured_data }}
     </script>
-  </div>
+    </div>
+  {%- endif -%}
 </product-info>
 
 {% schema %}
@@ -963,6 +1399,31 @@
       "type": "quantity_selector",
       "name": "t:sections.main-product.blocks.quantity_selector.name",
       "limit": 1
+    },
+    {
+      "type": "wholesale_bundle",
+      "name": "Toptan koli içeriği",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Başlık",
+          "default": "Koli içeriği"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Koli ürünleri",
+          "limit": 20
+        },
+        {
+          "type": "text",
+          "id": "quantity_label",
+          "label": "Adet etiketi",
+          "default": "adet"
+        }
+      ]
     },
     {
       "type": "variant_picker",

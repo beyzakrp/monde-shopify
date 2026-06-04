@@ -29,18 +29,37 @@ if (!customElements.get('product-form')) {
 
         const config = fetchConfig('javascript');
         config.headers['X-Requested-With'] = 'XMLHttpRequest';
-        delete config.headers['Content-Type'];
+        const wholesaleBundleItems = this.getWholesaleBundleItems();
+        let productVariantId = null;
 
-        const formData = new FormData(this.form);
-        if (this.cart) {
-          formData.append(
-            'sections',
-            this.cart.getSectionsToRender().map((section) => section.id)
-          );
-          formData.append('sections_url', window.location.pathname);
-          this.cart.setActiveElement(document.activeElement);
+        if (wholesaleBundleItems) {
+          const body = { items: wholesaleBundleItems };
+          productVariantId = wholesaleBundleItems.map((item) => item.id).join(',');
+
+          if (this.cart) {
+            body.sections = this.cart.getSectionsToRender().map((section) => section.id);
+            body.sections_url = window.location.pathname;
+            this.cart.setActiveElement(document.activeElement);
+          }
+
+          config.body = JSON.stringify(body);
+        } else {
+          delete config.headers['Content-Type'];
+
+          const formData = new FormData(this.form);
+          productVariantId = formData.get('id');
+
+          if (this.cart) {
+            formData.append(
+              'sections',
+              this.cart.getSectionsToRender().map((section) => section.id)
+            );
+            formData.append('sections_url', window.location.pathname);
+            this.cart.setActiveElement(document.activeElement);
+          }
+
+          config.body = formData;
         }
-        config.body = formData;
 
         fetch(`${routes.cart_add_url}`, config)
           .then((response) => response.json())
@@ -48,7 +67,7 @@ if (!customElements.get('product-form')) {
             if (response.status) {
               publish(PUB_SUB_EVENTS.cartError, {
                 source: 'product-form',
-                productVariantId: formData.get('id'),
+                productVariantId,
                 errors: response.errors || response.description,
                 message: response.message,
               });
@@ -70,7 +89,7 @@ if (!customElements.get('product-form')) {
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
                 source: 'product-form',
-                productVariantId: formData.get('id'),
+                productVariantId,
                 cartData: response,
               }).then(() => {
                 CartPerformance.measureFromMarker('add:wait-for-subscribers', startMarker);
@@ -136,6 +155,39 @@ if (!customElements.get('product-form')) {
 
       get variantIdInput() {
         return this.form.querySelector('[name=id]');
+      }
+
+      getWholesaleBundleItems() {
+        const bundle = this.closest('product-info')?.querySelector('[data-wholesale-bundle]');
+        if (!bundle) return null;
+
+        const bundleTitle = bundle.dataset.bundleTitle || 'Toptan koli';
+        const items = Array.from(bundle.querySelectorAll('[data-wholesale-bundle-item]'))
+          .map((item) => {
+            const input = item.querySelector('.wholesale-bundle__quantity-input');
+            const id = parseInt(item.dataset.variantId, 10);
+            const min = parseInt(input?.min || input?.dataset.min, 10) || 3;
+            const step = parseInt(input?.step, 10) || 3;
+            let quantity = parseInt(input?.value, 10) || min;
+
+            if (!id) return null;
+            if (quantity < min) quantity = min;
+
+            const remainder = (quantity - min) % step;
+            if (remainder !== 0) quantity += step - remainder;
+            if (input) input.value = quantity;
+
+            return {
+              id,
+              quantity,
+              properties: {
+                _bundle_parent: bundleTitle,
+              },
+            };
+          })
+          .filter(Boolean);
+
+        return items.length ? items : null;
       }
     }
   );

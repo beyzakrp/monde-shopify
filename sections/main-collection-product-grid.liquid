@@ -22,6 +22,33 @@
   <script src="{{ 'quick-order-list.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
+{%- liquid
+  assign customer_type = customer.metafields.custom.musteri_tipi.value | default: customer.metafields.custom.musteri_tipi | downcase | strip
+  assign is_corporate_customer = false
+  assign is_wholesale_collection = false
+  assign can_view_collection = true
+
+  if customer
+    if customer_type contains 'kurumsal'
+      assign is_corporate_customer = true
+    endif
+    for customer_tag in customer.tags
+      assign customer_tag_normalized = customer_tag | downcase | strip
+      if customer_tag_normalized contains 'kurumsal'
+        assign is_corporate_customer = true
+      endif
+    endfor
+  endif
+
+  if collection.handle == 'toptan-satis'
+    assign is_wholesale_collection = true
+  endif
+
+  if is_wholesale_collection and is_corporate_customer == false
+    assign can_view_collection = false
+  endif
+-%}
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -65,10 +92,73 @@
       flex-basis: 20%;
     }
   }
+
+  .section-{{ section.id }}-padding .wholesale-access {
+    padding-top: clamp(4rem, 8vw, 8rem);
+    padding-bottom: clamp(4rem, 8vw, 8rem);
+  }
+
+  .section-{{ section.id }}-padding .wholesale-access__panel {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: clamp(3rem, 5vw, 5rem);
+    border: 1px solid rgba(var(--color-foreground), 0.12);
+    background: rgb(var(--color-background));
+    text-align: center;
+  }
+
+  .section-{{ section.id }}-padding .wholesale-access__eyebrow {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(var(--color-foreground), 0.58);
+  }
+
+  .section-{{ section.id }}-padding .wholesale-access__title {
+    margin: 0;
+    font-size: clamp(2.4rem, 3vw, 3.6rem);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .section-{{ section.id }}-padding .wholesale-access__text {
+    max-width: 52rem;
+    margin: 1.4rem auto 0;
+    color: rgba(var(--color-foreground), 0.72);
+    line-height: 1.7;
+  }
+
+  .section-{{ section.id }}-padding .wholesale-access__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.4rem;
+  }
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
-  {%- paginate collection.products by section.settings.products_per_page -%}
+  {%- if can_view_collection == false -%}
+    <div class="wholesale-access page-width">
+      <div class="wholesale-access__panel">
+        <p class="wholesale-access__eyebrow">Kurumsal alışveriş</p>
+        <h2 class="wholesale-access__title">Bu koleksiyon kurumsal müşterilere özeldir.</h2>
+        {%- if customer -%}
+          <p class="wholesale-access__text">
+            Hesabınız şu anda kurumsal müşteri olarak işaretli değil. Toptan satış fiyatlarını görüntülemek için müşteri temsilcinizle iletişime geçebilirsiniz.
+          </p>
+        {%- else -%}
+          <p class="wholesale-access__text">
+            Toptan satış ürünlerini ve özel fiyatları görüntülemek için kurumsal hesabınızla giriş yapın.
+          </p>
+          <div class="wholesale-access__actions">
+            <a href="{{ routes.account_login_url }}" class="button button--primary">Giriş yap</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- else -%}
+    {%- paginate collection.products by section.settings.products_per_page -%}
     {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
     {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
       <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
@@ -220,7 +310,8 @@
         {%- endif -%}
       </div>
     </div>
-  {%- endpaginate -%}
+    {%- endpaginate -%}
+  {%- endif -%}
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}

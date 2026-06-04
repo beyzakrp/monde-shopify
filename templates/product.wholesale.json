@@ -34,6 +34,14 @@
             "custom_liquid": "{% liquid\n  assign skin_type = product.metafields.custom.skin_type.value | default: 'Tüm cilt tipleri'\n  assign routine_step = product.metafields.custom.routine_step.value | default: product.type\n  assign active_focus = product.metafields.custom.active_focus.value | default: product.metafields.custom.active_ingredients.value | default: 'Kore ilhamlı bakım'\n  assign texture = product.metafields.custom.texture.value | default: 'Günlük kullanıma uygun'\n%}\n<div class=\"product-skin-meta\" aria-label=\"Ürün bakım özeti\">\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Cilt tipi</span><span class=\"product-skin-meta__value\">{{ skin_type }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Rutin adımı</span><span class=\"product-skin-meta__value\">{{ routine_step }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Aktif odak</span><span class=\"product-skin-meta__value\">{{ active_focus }}</span></div>\n  <div class=\"product-skin-meta__item\"><span class=\"product-skin-meta__label\">Doku</span><span class=\"product-skin-meta__value\">{{ texture }}</span></div>\n</div>"
           }
         },
+        "wholesale_bundle": {
+          "type": "wholesale_bundle",
+          "settings": {
+            "heading": "Koli içeriği",
+            "products": [],
+            "quantity_label": "adet"
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -147,6 +155,7 @@
         "price_divider",
         "rating",
         "skin_meta",
+        "wholesale_bundle",
         "variant_picker",
         "inventory",
         "quantity_selector",

@@ -4,6 +4,21 @@
   Usage:
   {% render 'header-mega-menu' %}
 {% endcomment %}
+{%- liquid
+  assign customer_type = customer.metafields.custom.musteri_tipi.value | default: customer.metafields.custom.musteri_tipi | downcase | strip
+  assign is_corporate_customer = false
+  if customer
+    if customer_type contains 'kurumsal'
+      assign is_corporate_customer = true
+    endif
+    for customer_tag in customer.tags
+      assign customer_tag_normalized = customer_tag | downcase | strip
+      if customer_tag_normalized contains 'kurumsal'
+        assign is_corporate_customer = true
+      endif
+    endfor
+  endif
+-%}
 
 {%- style -%}
   .mega-menu__panel {
@@ -118,6 +133,14 @@
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in section.settings.menu.links -%}
       {%- liquid
+        assign link_is_wholesale = false
+        assign render_link = true
+        if link.handle == 'toptan-satis' or link.url contains '/collections/toptan-satis'
+          assign link_is_wholesale = true
+        endif
+        if link_is_wholesale and is_corporate_customer == false
+          assign render_link = false
+        endif
         assign promo_block = blank
         assign collection_image = blank
         assign collection_image_alt = link.title
@@ -137,30 +160,43 @@
           endif
         endfor
         for childlink in link.links
-          if first_preview_image == blank and childlink.type == 'collection_link' and childlink.object != blank
-            assign child_collection_image = childlink.object.image | default: childlink.object.featured_image
-            if child_collection_image != blank
-              assign first_preview_image = child_collection_image
-              assign first_preview_title = childlink.title
-              assign first_preview_url = childlink.url
-            endif
+          assign childlink_is_wholesale = false
+          if childlink.handle == 'toptan-satis' or childlink.url contains '/collections/toptan-satis'
+            assign childlink_is_wholesale = true
           endif
-          for grandchildlink in childlink.links
-            if first_preview_image == blank and grandchildlink.type == 'collection_link' and grandchildlink.object != blank
-              assign grandchild_collection_image = grandchildlink.object.image | default: grandchildlink.object.featured_image
-              if grandchild_collection_image != blank
-                assign first_preview_image = grandchild_collection_image
-                assign first_preview_title = grandchildlink.title
-                assign first_preview_url = grandchildlink.url
+          unless childlink_is_wholesale and is_corporate_customer == false
+            if first_preview_image == blank and childlink.type == 'collection_link' and childlink.object != blank
+              assign child_collection_image = childlink.object.image | default: childlink.object.featured_image
+              if child_collection_image != blank
+                assign first_preview_image = child_collection_image
+                assign first_preview_title = childlink.title
+                assign first_preview_url = childlink.url
               endif
             endif
-          endfor
+            for grandchildlink in childlink.links
+              assign grandchildlink_is_wholesale = false
+              if grandchildlink.handle == 'toptan-satis' or grandchildlink.url contains '/collections/toptan-satis'
+                assign grandchildlink_is_wholesale = true
+              endif
+              unless grandchildlink_is_wholesale and is_corporate_customer == false
+                if first_preview_image == blank and grandchildlink.type == 'collection_link' and grandchildlink.object != blank
+                  assign grandchild_collection_image = grandchildlink.object.image | default: grandchildlink.object.featured_image
+                  if grandchild_collection_image != blank
+                    assign first_preview_image = grandchild_collection_image
+                    assign first_preview_title = grandchildlink.title
+                    assign first_preview_url = grandchildlink.url
+                  endif
+                endif
+              endunless
+            endfor
+          endunless
         endfor
         assign preview_image = promo_block.settings.promo_image | default: collection_image | default: first_preview_image
         assign preview_title = promo_block.settings.promo_title | default: link.title | default: first_preview_title
         assign preview_url = promo_block.settings.promo_link | default: link.url | default: first_preview_url
       -%}
-      <li>
+      {%- if render_link -%}
+        <li>
         {%- if link.links != blank -%}
           <header-menu>
             <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
@@ -189,12 +225,21 @@
                   >
                     {%- for childlink in link.links -%}
                       {%- liquid
+                        assign childlink_is_wholesale = false
+                        assign render_childlink = true
                         assign child_preview_image = blank
+                        if childlink.handle == 'toptan-satis' or childlink.url contains '/collections/toptan-satis'
+                          assign childlink_is_wholesale = true
+                        endif
+                        if childlink_is_wholesale and is_corporate_customer == false
+                          assign render_childlink = false
+                        endif
                         if childlink.type == 'collection_link' and childlink.object != blank
                           assign child_preview_image = childlink.object.image | default: childlink.object.featured_image
                         endif
                       -%}
-                      <li>
+                      {%- if render_childlink -%}
+                        <li>
                         <a
                           id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
                           href="{{ childlink.url }}"
@@ -216,12 +261,21 @@
                           <ul class="list-unstyled" role="list">
                             {%- for grandchildlink in childlink.links -%}
                               {%- liquid
+                                assign grandchildlink_is_wholesale = false
+                                assign render_grandchildlink = true
                                 assign grandchild_preview_image = blank
+                                if grandchildlink.handle == 'toptan-satis' or grandchildlink.url contains '/collections/toptan-satis'
+                                  assign grandchildlink_is_wholesale = true
+                                endif
+                                if grandchildlink_is_wholesale and is_corporate_customer == false
+                                  assign render_grandchildlink = false
+                                endif
                                 if grandchildlink.type == 'collection_link' and grandchildlink.object != blank
                                   assign grandchild_preview_image = grandchildlink.object.image | default: grandchildlink.object.featured_image
                                 endif
                               -%}
-                              <li>
+                              {%- if render_grandchildlink -%}
+                                <li>
                                 <a
                                   id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
                                   href="{{ grandchildlink.url }}"
@@ -239,11 +293,13 @@
                                 >
                                   {{ grandchildlink.title | escape }}
                                 </a>
-                              </li>
+                                </li>
+                              {%- endif -%}
                             {%- endfor -%}
                           </ul>
                         {%- endif -%}
-                      </li>
+                        </li>
+                      {%- endif -%}
                     {%- endfor -%}
                   </ul>
 
@@ -288,7 +344,8 @@
             </span>
           </a>
         {%- endif -%}
-      </li>
+        </li>
+      {%- endif -%}
     {%- endfor -%}
   </ul>
 </nav>
