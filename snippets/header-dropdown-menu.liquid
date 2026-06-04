@@ -7,6 +7,9 @@
 {%- liquid
   assign customer_type = customer.metafields.custom.musteri_tipi.value | default: customer.metafields.custom.musteri_tipi | downcase | strip
   assign is_corporate_customer = false
+  if request.design_mode
+    assign is_corporate_customer = true
+  endif
   if customer
     if customer_type contains 'kurumsal'
       assign is_corporate_customer = true

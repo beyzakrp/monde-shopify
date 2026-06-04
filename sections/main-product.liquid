@@ -31,6 +31,10 @@
     assign product_is_wholesale = false
     assign can_view_product = true
 
+    if request.design_mode
+      assign is_corporate_customer = true
+    endif
+
     if customer
       if customer_type contains 'kurumsal'
         assign is_corporate_customer = true
