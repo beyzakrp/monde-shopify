@@ -152,6 +152,86 @@
   .section-header .header-wrapper.header-wrapper--scrolled .header__icon {
     color: {{ section.settings.sticky_icons }};
   }
+
+  .section-header .header-korea-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    min-height: 3.2rem;
+    padding: 0.5rem 1.6rem;
+    border-top: 1px solid rgba(var(--color-foreground), 0.08);
+    background: linear-gradient(90deg, rgba(var(--color-background), 0.92), rgba(var(--color-background), 0.98));
+    color: rgba(var(--color-foreground), 0.76);
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .section-header .header-korea-bar__symbol {
+    flex: 0 0 auto;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(var(--color-foreground), 0.1), 0 0.3rem 1rem rgba(0, 0, 0, 0.08);
+  }
+
+  .section-header .header-korea-bar__text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .section-header .header-korea-bar__script {
+    font-family: 'Optima', 'Times New Roman', serif;
+    font-size: 1.55rem;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: rgb(var(--color-foreground));
+  }
+
+  .section-header .header-korea-bar__copy {
+    font-family: 'Avenir LT Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .section-header .header-korea-bar__dot {
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.42;
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-header .header-korea-bar {
+      min-height: 3rem;
+      padding-inline: 1rem;
+    }
+
+    .section-header .header-korea-bar__text {
+      gap: 0.55rem;
+    }
+
+    .section-header .header-korea-bar__script {
+      font-size: 1.35rem;
+    }
+
+    .section-header .header-korea-bar__copy {
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    .section-header .header-korea-bar__dot {
+      display: none;
+    }
+  }
 {%- endstyle -%}
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
@@ -336,6 +416,27 @@
       </a>
     </div>
   </header>
+  <div class="header-korea-bar" role="note" aria-label="Kore cilt bakım ürünleri vurgusu">
+    <svg
+      class="header-korea-bar__symbol"
+      viewBox="0 0 28 28"
+      role="img"
+      aria-label="Kore taegeuk sembolü"
+      focusable="false"
+    >
+      <circle cx="14" cy="14" r="13" fill="#fff"/>
+      <g transform="translate(14 14) rotate(-32)">
+        <path d="M0 -8.4a8.4 8.4 0 0 1 0 16.8a4.2 4.2 0 0 0 0 -8.4a4.2 4.2 0 0 1 0 -8.4Z" fill="#cd2e3a"/>
+        <path d="M0 8.4a8.4 8.4 0 0 1 0 -16.8a4.2 4.2 0 0 0 0 8.4a4.2 4.2 0 0 1 0 8.4Z" fill="#0047a0"/>
+      </g>
+      <circle cx="14" cy="14" r="13" fill="none" stroke="rgba(30, 24, 20, 0.14)" stroke-width="1"/>
+    </svg>
+    <span class="header-korea-bar__text">
+      <span class="header-korea-bar__script">K-Beauty</span>
+      <span class="header-korea-bar__dot" aria-hidden="true"></span>
+      <span class="header-korea-bar__copy">Kore cilt bakım ritüellerinden ilham alan GLAMFOX Ürünleri</span>
+    </span>
+  </div>
 </div>
 
 {%- if settings.cart_type == "notification" -%}

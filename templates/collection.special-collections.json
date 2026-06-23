@@ -13,7 +13,7 @@
       "type": "main-collection-banner",
       "settings": {
         "hero_eyebrow": "",
-        "hero_title": ".",
+        "hero_title": "",
         "hero_description": "",
         "show_collection_description": true,
         "show_collection_image": true,
@@ -21,49 +21,75 @@
         "color_scheme": "scheme-1"
       }
     },
-    "shop_by_category_home": {
-      "type": "shop-by-category",
-      "name": "Shop by Category",
+    "special_collections_grid": {
+      "type": "special-collections-grid",
+      "blocks": {
+        "collection_1": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "badge": "",
+            "title": "",
+            "image": "",
+            "description": ""
+          }
+        },
+        "collection_2": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "badge": "",
+            "title": "",
+            "image": "",
+            "description": ""
+          }
+        },
+        "collection_3": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "badge": "",
+            "title": "",
+            "image": "",
+            "description": ""
+          }
+        },
+        "collection_4": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "badge": "",
+            "title": "",
+            "image": "",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_1",
+        "collection_2",
+        "collection_3",
+        "collection_4"
+      ],
       "settings": {
-        "heading": "{{ collection.title }}",
-        "heading_size": 42,
-        "heading_color": "#000000",
+        "show_header": true,
+        "eyebrow": "GLAMFOX seçkileri",
+        "heading": "",
+        "description": "<p>Cilt bakım rutininize göre hazırlanmış koleksiyonları keşfedin.</p>",
         "heading_alignment": "center",
-        "heading_font": "Avenir LT Pro",
-        "label_size": 14,
-        "gap_mobile": 8,
-        "gap_tablet": 16,
-        "gap_desktop": 16,
-        "margin_top": 16,
-        "margin_bottom": 4,
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "main-collection-product-grid": {
-      "type": "main-collection-product-grid",
-      "settings": {
-        "products_per_page": 20,
+        "image_ratio": "4 / 5",
         "columns_desktop": 4,
         "columns_mobile": "2",
+        "show_description": true,
+        "show_product_count": true,
         "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": true,
-        "quick_add": "standard",
-        "enable_filtering": true,
-        "filter_type": "horizontal",
-        "enable_sorting": true,
-        "padding_top": 4,
-        "padding_bottom": 68
+        "padding_top": 36,
+        "padding_bottom": 64
       }
     }
   },
   "order": [
     "main-collection-banner",
-    "shop_by_category_home",
-    "main-collection-product-grid"
+    "special_collections_grid"
   ]
 }

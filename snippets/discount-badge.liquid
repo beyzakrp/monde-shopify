@@ -1,0 +1,42 @@
+{%- comment -%}
+  Renders a percentage discount badge from compare at price.
+
+  Accepts:
+  - product: {Object} Product Liquid object
+  - use_variant: {Boolean} Uses selected or first variant pricing
+  - class: {String} Additional classes
+  - id: {String} Optional id
+{%- endcomment -%}
+
+{%- liquid
+  assign discount_target = product
+  if use_variant
+    assign discount_target = product.selected_or_first_available_variant
+  endif
+
+  assign discount_price = discount_target.price
+  assign discount_compare_at_price = discount_target.compare_at_price
+
+  if use_variant != true
+    assign discount_price = discount_price | default: product.price
+    assign discount_compare_at_price = discount_compare_at_price | default: product.compare_at_price_max
+  endif
+
+  assign discount_percent = 0
+  if discount_compare_at_price > discount_price and discount_compare_at_price > 0
+    assign discount_amount = discount_compare_at_price | minus: discount_price
+    assign discount_percent = discount_amount | times: 100 | divided_by: discount_compare_at_price | round
+  endif
+-%}
+
+{%- if discount_percent > 0 -%}
+  <span
+    {% if id != blank %}
+      id="{{ id }}"
+    {% endif %}
+    class="badge discount-badge{% if class != blank %} {{ class }}{% endif %}"
+    aria-label="{{ discount_percent }}% indirim"
+  >
+    -{{ discount_percent }}% İNDİRİM
+  </span>
+{%- endif -%}
