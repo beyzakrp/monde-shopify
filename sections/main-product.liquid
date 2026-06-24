@@ -57,15 +57,22 @@
       assign can_view_product = false
     endif
 
-    assign wholesale_bundle_default_quantity = 3
+    assign wholesale_bundle_default_quantity = 2
     assign wholesale_bundle_initial_price = 0
     assign wholesale_bundle_initial_quantity = 0
+    assign wholesale_payment_value = product.selected_or_first_available_variant.options | first
 
     if template.suffix == 'wholesale'
       for product_block in section.blocks
         if product_block.type == 'wholesale_bundle'
           for bundle_product in product_block.settings.products
             assign bundle_variant = bundle_product.selected_or_first_available_variant
+            for candidate_variant in bundle_product.variants
+              if candidate_variant.available and candidate_variant.options contains wholesale_payment_value
+                assign bundle_variant = candidate_variant
+                break
+              endif
+            endfor
             if bundle_variant != blank
               assign bundle_line_total = bundle_variant.price | times: wholesale_bundle_default_quantity
               assign wholesale_bundle_initial_price = wholesale_bundle_initial_price | plus: bundle_line_total
@@ -553,6 +560,12 @@
                     <ul class="wholesale-bundle__list">
                       {%- for bundle_product in wholesale_bundle_products -%}
                         {%- assign bundle_variant = bundle_product.selected_or_first_available_variant -%}
+                        {%- for candidate_variant in bundle_product.variants -%}
+                          {%- if candidate_variant.available and candidate_variant.options contains wholesale_payment_value -%}
+                            {%- assign bundle_variant = candidate_variant -%}
+                            {%- break -%}
+                          {%- endif -%}
+                        {%- endfor -%}
                         {%- if bundle_variant != blank -%}
                           {%- assign bundle_line_total = bundle_variant.price
                             | times: wholesale_bundle_default_quantity
@@ -579,7 +592,27 @@
                               <a class="wholesale-bundle__name" href="{{ bundle_product.url }}">
                                 {{ bundle_product.title | escape }}
                               </a>
-                              <span class="wholesale-bundle__unit-price">
+                              {%- unless bundle_product.has_only_default_variant -%}
+                                <select
+                                  data-wholesale-bundle-variant-select
+                                  hidden
+                                  aria-hidden="true"
+                                  tabindex="-1"
+                                >
+                                  {%- for variant in bundle_product.variants -%}
+                                    <option
+                                      value="{{ variant.id }}"
+                                      data-price="{{ variant.price }}"
+                                      data-variant-title="{{ variant.title | escape }}"
+                                      {% if variant.id == bundle_variant.id %}selected{% endif %}
+                                      {% unless variant.available %}disabled{% endunless %}
+                                    >
+                                      {{ variant.title | escape }}
+                                    </option>
+                                  {%- endfor -%}
+                                </select>
+                              {%- endunless -%}
+                              <span class="wholesale-bundle__unit-price" data-wholesale-bundle-unit-price>
                                 {{ bundle_variant.price | money_with_currency }}
                               </span>
                             </div>
@@ -639,7 +672,6 @@
                         const items = bundle.querySelectorAll('[data-wholesale-bundle-item]');
                         const total = bundle.querySelector('[data-wholesale-bundle-total]');
                         const totalCount = bundle.querySelector('[data-wholesale-bundle-total-count]');
-                        const price = section.querySelector('[data-wholesale-bundle-price]');
                         const submitText = section.querySelector('#ProductSubmitButton-{{ section.id }} span');
                         const addToCartText = submitText?.textContent.trim() || 'Sepete ekle';
                         const currency = bundle.dataset.currency || 'TRY';
@@ -668,6 +700,24 @@
                           return value;
                         };
 
+                        const normalizeText = (value) =>
+                          String(value || '')
+                            .toLocaleLowerCase('tr-TR')
+                            .normalize('NFD')
+                            .replace(/[\u0300-\u036f]/g, '');
+
+                        const getPaymentTerm = (variant) => {
+                          const values = [...(variant?.options || []), variant?.title];
+
+                          for (const value of values) {
+                            const normalizedValue = normalizeText(value);
+                            if (normalizedValue.includes('pesin')) return 'pesin';
+                            if (normalizedValue.includes('vadeli')) return 'vadeli';
+                          }
+
+                          return '';
+                        };
+
                         const updateBundleTotal = () => {
                           let totalCents = 0;
                           let totalQuantity = 0;
@@ -687,10 +737,38 @@
                           });
 
                           const formattedTotal = formatMoney(totalCents);
+                          const currentPrice = section.querySelector('[data-wholesale-bundle-price]');
                           if (total) total.textContent = formattedTotal;
                           if (totalCount) totalCount.textContent = `Toplam ${totalQuantity} ürün`;
-                          if (price) price.textContent = formattedTotal;
+                          if (currentPrice) currentPrice.textContent = formattedTotal;
                           if (submitText) submitText.textContent = `${addToCartText} • ${formattedTotal}`;
+                        };
+
+                        const syncBundlePaymentVariant = (productVariant) => {
+                          const paymentTerm = getPaymentTerm(productVariant);
+                          if (!paymentTerm) {
+                            updateBundleTotal();
+                            return;
+                          }
+
+                          items.forEach((item) => {
+                            const variantSelect = item.querySelector('[data-wholesale-bundle-variant-select]');
+                            if (!variantSelect) return;
+
+                            const matchingOption = Array.from(variantSelect.options).find(
+                              (option) => !option.disabled && normalizeText(option.dataset.variantTitle).includes(paymentTerm)
+                            );
+                            if (!matchingOption) return;
+
+                            variantSelect.value = matchingOption.value;
+                            item.dataset.variantId = matchingOption.value;
+                            item.dataset.price = matchingOption.dataset.price || '0';
+
+                            const unitPrice = item.querySelector('[data-wholesale-bundle-unit-price]');
+                            if (unitPrice) unitPrice.textContent = formatMoney(item.dataset.price);
+                          });
+
+                          updateBundleTotal();
                         };
 
                         items.forEach((item) => {
@@ -700,8 +778,23 @@
                         });
                         if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
                           subscribe(PUB_SUB_EVENTS.quantityUpdate, updateBundleTotal);
+                          subscribe(PUB_SUB_EVENTS.variantChange, ({ data }) => {
+                            if (data?.sectionId !== '{{ section.id }}') return;
+                            syncBundlePaymentVariant(data.variant);
+                          });
                         }
-                        updateBundleTotal();
+
+                        const selectedVariantJson = section.querySelector(
+                          'variant-selects [data-selected-variant]'
+                        )?.textContent;
+                        let selectedProductVariant = null;
+                        try {
+                          selectedProductVariant = selectedVariantJson ? JSON.parse(selectedVariantJson) : null;
+                        } catch (error) {
+                          console.error('Toptan ödeme varyantı okunamadı.', error);
+                        }
+
+                        syncBundlePaymentVariant(selectedProductVariant);
                       };
 
                       if (document.readyState === 'loading') {

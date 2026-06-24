@@ -166,8 +166,8 @@ if (!customElements.get('product-form')) {
           .map((item) => {
             const input = item.querySelector('.wholesale-bundle__quantity-input');
             const id = parseInt(item.dataset.variantId, 10);
-            const min = parseInt(input?.min || input?.dataset.min, 10) || 3;
-            const step = parseInt(input?.step, 10) || 3;
+            const min = parseInt(input?.min || input?.dataset.min, 10) || 2;
+            const step = parseInt(input?.step, 10) || 2;
             let quantity = parseInt(input?.value, 10) || min;
 
             if (!id) return null;
