@@ -275,6 +275,62 @@ class CartItems extends HTMLElement {
 
 customElements.define('cart-items', CartItems);
 
+if (!customElements.get('cart-clear-button')) {
+  customElements.define(
+    'cart-clear-button',
+    class CartClearButton extends HTMLElement {
+      constructor() {
+        super();
+        this.handleClick = this.clearCart.bind(this);
+      }
+
+      connectedCallback() {
+        this.button = this.querySelector('button');
+        this.button?.addEventListener('click', this.handleClick);
+      }
+
+      disconnectedCallback() {
+        this.button?.removeEventListener('click', this.handleClick);
+      }
+
+      clearCart() {
+        const confirmationMessage = this.button?.dataset.confirmMessage;
+        if (confirmationMessage && !window.confirm(confirmationMessage)) return;
+
+        this.button?.setAttribute('disabled', 'disabled');
+        this.setAttribute('aria-busy', 'true');
+
+        const cartDrawer = document.querySelector('cart-drawer');
+        const sections = cartDrawer?.getSectionsToRender().map((section) => section.id) || [];
+        const body = JSON.stringify({
+          sections,
+          sections_url: window.location.pathname,
+        });
+
+        fetch(routes.cart_clear_url, { ...fetchConfig(), body })
+          .then((response) => {
+            if (!response.ok) throw new Error(`Sepet temizlenemedi: ${response.status}`);
+            return response.json();
+          })
+          .then((state) => {
+            cartDrawer?.classList.add('is-empty');
+            cartDrawer?.renderContents(state);
+            publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-items', cartData: state });
+          })
+          .catch((error) => {
+            console.error(error);
+            const errors = document.getElementById('CartDrawer-CartErrors');
+            if (errors) errors.textContent = window.cartStrings.error;
+            this.button?.removeAttribute('disabled');
+          })
+          .finally(() => {
+            this.removeAttribute('aria-busy');
+          });
+      }
+    }
+  );
+}
+
 if (!customElements.get('cart-note')) {
   customElements.define(
     'cart-note',

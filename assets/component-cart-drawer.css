@@ -334,6 +334,15 @@ cart-drawer-items {
   max-width: none;
 }
 
+.cart-drawer__clear {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.cart-drawer__clear .button {
+  width: 100%;
+}
+
 .drawer__footer .cart__dynamic-checkout-buttons {
   max-width: 100%;
 }

@@ -561,6 +561,18 @@
 
         <!-- CTAs -->
 
+        <cart-clear-button class="cart-drawer__clear">
+          <button
+            type="button"
+            class="button button--secondary"
+            data-confirm-message="{{ 'sections.quick_order_list.remove_all_items_confirmation' | t: quantity: cart.item_count | escape }}"
+            {% if cart == empty %}
+              disabled
+            {% endif %}
+          >
+            Sepeti boşalt
+          </button>
+        </cart-clear-button>
 
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <button
