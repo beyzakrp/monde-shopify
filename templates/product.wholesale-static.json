@@ -1,0 +1,183 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "price_divider": {
+          "type": "divider",
+          "settings": {}
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "inventory": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "uppercase",
+            "inventory_threshold": 5,
+            "show_inventory_quantity": false
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "wholesale_bundle_WPGptp": {
+          "type": "wholesale_bundle",
+          "settings": {
+            "heading": "Koli içeriği",
+            "products": [
+              "glamfox-black-snail-mucin-i̇pek-kagit-yuz-maskesi-kopya",
+              "glamfox-black-snail-mucin-nemlendirici-canlandirici-cilt-tonigi-kopya",
+              "glamfox-black-snail-mucin-nemlendirici-cilt-bakim-serumu-kopya",
+              "glamfox-black-snail-mucin-nemlendirici-yuz-temizleme-kopugu-kopya",
+              "glamfox-black-snail-mucin-yogun-nemlendirici-yuz-kremi-kopya",
+              "glamfox-heartleaf-cilt-tonigi-kopya",
+              "glamfox-heartleaf-serum-kopya",
+              "glamfox-heartleaf-tonik-ped-kopya",
+              "glamfox-heartleaf-yatistirici-krem-kopya",
+              "glamfox-retinol-collagen-yuz-kremi-kopya",
+              "glamfox-retinol-collagen-yuz-temizleme-kopugu-kopya",
+              "glamfox-retinol-collagen-goz-kremi-kopya",
+              "glamfox-retinol-collagen-serum-kopya",
+              "glamfox-retinol-collagen-uyku-maskesi-kopya",
+              "glamfox-rice-niacinamide-serisi-serum",
+              "glamfox-rice-niacinamide-tonik-kopya",
+              "glamfox-rice-niacinamide-yuz-kremi-kopya",
+              "glamfox-rice-niacinamide-yuz-maskesi-kopya",
+              "glamfox-rice-niacinamide-yuz-temizleme-kopugu-kopya"
+            ],
+            "quantity_label": "adet"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "price_divider",
+        "rating",
+        "description",
+        "variant_picker",
+        "inventory",
+        "quantity_selector",
+        "wholesale_bundle_WPGptp",
+        "buy_buttons"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-5a42642e-54d5-401f-bb58-591ddfd4ddf6",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "columns",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "hover",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 24,
+        "padding_bottom": 0
+      }
+    },
+    "care-standards": {
+      "type": "product-care-standards",
+      "blocks": {
+        "natural-ingredients": {
+          "type": "standard",
+          "settings": {
+            "icon": "shopify://shop_images/naturalIngredients.png",
+            "title": "Doğal İçerikler",
+            "text": "Doğadan ilham alan özenle seçilmiş içeriklerle formüle edilmiştir. Cildin daha dengeli, sağlıklı ve canlı görünmesini destekler."
+          }
+        },
+        "not-tested-on-animals": {
+          "type": "standard",
+          "settings": {
+            "icon": "shopify://shop_images/notTestedOnAnimals.png",
+            "title": "Hayvanlar Üzerinde Test Edilmez",
+            "text": "Ürünlerimiz hayvanlar üzerinde test edilmeden, bilinçli güzellik anlayışı doğrultusunda geliştirilir."
+          }
+        },
+        "sulfate-free": {
+          "type": "standard",
+          "settings": {
+            "icon": "shopify://shop_images/SulfateFree.png",
+            "title": "Sülfat İçermez",
+            "text": "Cildin doğal nem dengesini korumaya yardımcı olan, nazik ve sülfatsız formüller içerir."
+          }
+        }
+      },
+      "block_order": [
+        "natural-ingredients",
+        "not-tested-on-animals",
+        "sulfate-free"
+      ],
+      "settings": {
+        "heading": "GLAMFOX Bakım Standartları",
+        "description": "<p>Doğadan ilham alan içerikler, hassas cilt dostu formüller ve bilinçli bakım anlayışı ile günlük cilt bakım rutininizi desteklemek için geliştirildi.</p>",
+        "color_scheme": "scheme-5a42642e-54d5-401f-bb58-591ddfd4ddf6",
+        "padding_top": 44,
+        "padding_bottom": 44
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Rutini tamamlayan ürünler",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-5a42642e-54d5-401f-bb58-591ddfd4ddf6",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "care-standards",
+    "related-products"
+  ]
+}
