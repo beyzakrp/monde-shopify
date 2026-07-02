@@ -160,6 +160,7 @@ if (!customElements.get('product-form')) {
       getWholesaleBundleItems() {
         const bundle = this.closest('product-info')?.querySelector('[data-wholesale-bundle]');
         if (!bundle) return null;
+        if (bundle.dataset.staticBundle === 'true') return null;
 
         const bundleTitle = bundle.dataset.bundleTitle || 'Toptan koli';
         const items = Array.from(bundle.querySelectorAll('[data-wholesale-bundle-item]'))

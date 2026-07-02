@@ -61,8 +61,18 @@
     assign wholesale_bundle_initial_price = 0
     assign wholesale_bundle_initial_quantity = 0
     assign wholesale_payment_value = product.selected_or_first_available_variant.options | first
+    assign is_wholesale_bundle_template = false
+    assign is_wholesale_static_template = false
 
-    if template.suffix == 'wholesale'
+    if template.suffix == 'wholesale' or template.suffix == 'wholesale-static'
+      assign is_wholesale_bundle_template = true
+    endif
+
+    if template.suffix == 'wholesale-static'
+      assign is_wholesale_static_template = true
+    endif
+
+    if is_wholesale_bundle_template
       for product_block in section.blocks
         if product_block.type == 'wholesale_bundle'
           for bundle_product in product_block.settings.products
@@ -74,9 +84,13 @@
               endif
             endfor
             if bundle_variant != blank
-              assign bundle_line_total = bundle_variant.price | times: wholesale_bundle_default_quantity
+              assign wholesale_bundle_line_quantity = wholesale_bundle_default_quantity
+              if is_wholesale_static_template
+                assign wholesale_bundle_line_quantity = 1
+              endif
+              assign bundle_line_total = bundle_variant.price | times: wholesale_bundle_line_quantity
               assign wholesale_bundle_initial_price = wholesale_bundle_initial_price | plus: bundle_line_total
-              assign wholesale_bundle_initial_quantity = wholesale_bundle_initial_quantity | plus: wholesale_bundle_default_quantity
+              assign wholesale_bundle_initial_quantity = wholesale_bundle_initial_quantity | plus: wholesale_bundle_line_quantity
             endif
           endfor
         endif
@@ -233,6 +247,17 @@
       line-height: 1.35;
     }
 
+    .section-{{ section.id }}-padding .wholesale-bundle--static .wholesale-bundle__item {
+      grid-template-columns: 5.6rem minmax(0, 1fr) auto;
+    }
+
+    .section-{{ section.id }}-padding .wholesale-bundle--static .wholesale-bundle__list {
+      max-height: clamp(18rem, 28vh, 26rem);
+      overflow-y: auto;
+      padding-right: 0.6rem;
+      scrollbar-gutter: stable;
+    }
+
     .section-{{ section.id }}-padding .wholesale-bundle__item:first-child {
       border-top: 0;
     }
@@ -319,6 +344,14 @@
         align-items: flex-start;
         grid-template-columns: 1fr;
         gap: 0.8rem;
+      }
+
+      .section-{{ section.id }}-padding .wholesale-bundle--static .wholesale-bundle__item {
+        grid-template-columns: 5.2rem minmax(0, 1fr);
+      }
+
+      .section-{{ section.id }}-padding .wholesale-bundle--static .wholesale-bundle__unit-price {
+        grid-column: 2;
       }
 
       .section-{{ section.id }}-padding .wholesale-bundle__line-total {
@@ -547,8 +580,10 @@
                 {%- assign wholesale_bundle_products = block.settings.products -%}
                 {%- if wholesale_bundle_products != blank -%}
                   <div
-                    class="wholesale-bundle"
+                    class="wholesale-bundle{% if is_wholesale_static_template %} wholesale-bundle--static{% endif %}"
                     data-wholesale-bundle
+                    data-static-bundle="{{ is_wholesale_static_template }}"
+                    data-static-bundle-price="{{ product.selected_or_first_available_variant.price }}"
                     data-currency="{{ cart.currency.iso_code }}"
                     data-locale="{{ request.locale.iso_code }}"
                     data-bundle-title="{{ product.title | escape }}"
@@ -567,8 +602,14 @@
                           {%- endif -%}
                         {%- endfor -%}
                         {%- if bundle_variant != blank -%}
+                          {%- liquid
+                            assign wholesale_bundle_line_quantity = wholesale_bundle_default_quantity
+                            if is_wholesale_static_template
+                              assign wholesale_bundle_line_quantity = 1
+                            endif
+                          -%}
                           {%- assign bundle_line_total = bundle_variant.price
-                            | times: wholesale_bundle_default_quantity
+                            | times: wholesale_bundle_line_quantity
                           -%}
                           <li
                             class="wholesale-bundle__item"
@@ -616,7 +657,18 @@
                                 {{ bundle_variant.price | money_with_currency }}
                               </span>
                             </div>
-                            <quantity-input class="quantity wholesale-bundle__quantity-control">
+                            {%- if is_wholesale_static_template -%}
+                              <input
+                                class="wholesale-bundle__quantity-input"
+                                type="hidden"
+                                min="1"
+                                data-min="1"
+                                step="1"
+                                value="1"
+                                aria-label="{{ bundle_product.title | escape }} {{ block.settings.quantity_label | default: 'adet' | escape }}"
+                              >
+                            {%- else -%}
+                              <quantity-input class="quantity wholesale-bundle__quantity-control">
                               <button class="quantity__button" name="minus" type="button">
                                 <span class="visually-hidden">
                                   {{ bundle_product.title | escape }} azalt
@@ -642,14 +694,18 @@
                                   {{- 'icon-plus.svg' | inline_asset_content -}}
                                 </span>
                               </button>
-                            </quantity-input>
-                            <span class="wholesale-bundle__line-total" data-wholesale-bundle-line-total>
-                              {{ bundle_line_total | money_with_currency }}
-                            </span>
+                              </quantity-input>
+                            {%- endif -%}
+                            {%- unless is_wholesale_static_template -%}
+                              <span class="wholesale-bundle__line-total" data-wholesale-bundle-line-total>
+                                {{ bundle_line_total | money_with_currency }}
+                              </span>
+                            {%- endunless -%}
                           </li>
                         {%- endif -%}
                       {%- endfor -%}
                     </ul>
+                    {%- unless is_wholesale_static_template -%}
                     <div class="wholesale-bundle__total">
                       <span class="wholesale-bundle__total-label">
                         <span>Toplam</span>
@@ -661,6 +717,7 @@
                         {{ wholesale_bundle_initial_price | money_with_currency }}
                       </span>
                     </div>
+                    {%- endunless -%}
                   </div>
                   <script>
                     (() => {
@@ -669,6 +726,7 @@
                         if (!section) return;
                         const bundle = section.querySelector('[data-wholesale-bundle]');
                         if (!bundle) return;
+                        const isStaticBundle = bundle.dataset.staticBundle === 'true';
                         const items = bundle.querySelectorAll('[data-wholesale-bundle-item]');
                         const total = bundle.querySelector('[data-wholesale-bundle-total]');
                         const totalCount = bundle.querySelector('[data-wholesale-bundle-total-count]');
@@ -684,6 +742,12 @@
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                           })} ${currency}`;
+                        };
+
+                        const updateStaticSubmitPrice = (variant) => {
+                          if (!isStaticBundle || !submitText) return;
+                          const priceCents = Number(variant?.price ?? bundle.dataset.staticBundlePrice ?? 0);
+                          submitText.textContent = `${addToCartText} • ${formatMoney(priceCents)}`;
                         };
 
                         const normalizeQuantity = (input) => {
@@ -740,6 +804,7 @@
                           const currentPrice = section.querySelector('[data-wholesale-bundle-price]');
                           if (total) total.textContent = formattedTotal;
                           if (totalCount) totalCount.textContent = `Toplam ${totalQuantity} ürün`;
+                          if (isStaticBundle) return;
                           if (currentPrice) currentPrice.textContent = formattedTotal;
                           if (submitText) submitText.textContent = `${addToCartText} • ${formattedTotal}`;
                         };
@@ -781,6 +846,7 @@
                           subscribe(PUB_SUB_EVENTS.variantChange, ({ data }) => {
                             if (data?.sectionId !== '{{ section.id }}') return;
                             syncBundlePaymentVariant(data.variant);
+                            updateStaticSubmitPrice(data.variant);
                           });
                         }
 
@@ -795,6 +861,7 @@
                         }
 
                         syncBundlePaymentVariant(selectedProductVariant);
+                        updateStaticSubmitPrice(selectedProductVariant);
                       };
 
                       if (document.readyState === 'loading') {
@@ -839,7 +906,7 @@
                   </details>
                 </div>
                            {%- when 'quantity_selector' -%}
-                {%- unless template.suffix == 'wholesale' -%}
+                {%- unless is_wholesale_bundle_template -%}
                 <div
                   id="Quantity-Form-{{ section.id }}"
                   class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
