@@ -113,11 +113,7 @@
       {%- endif -%}
     </div>
     {%- if show_badges -%}
-      {%- render 'discount-badge',
-        product: product,
-        use_variant: use_variant,
-        class: 'price__badge-sale color-' | append: settings.sale_badge_color_scheme
-      -%}
+      {%- render 'discount-badge', product: product, use_variant: use_variant, class: 'price__badge-sale color-', append: settings.sale_badge_color_scheme -%}
 
       <span class="badge price__badge-sold-out color-{{ settings.sold_out_badge_color_scheme }}">
         {{ 'products.product.sold_out' | t }}
@@ -125,3 +121,19 @@
     {%- endif -%}
   </div>
 {% endunless %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'discount-badge',
+            product: product,
+            use_variant: use_variant,
+            class: 'price__badge-sale color-' | append: settings.sale_badge_color_scheme
+          -%}
+  to: "{%- render 'discount-badge', product: product, use_variant: use_variant, class:
+    'price__badge-sale color-', append: settings.sale_badge_color_scheme -%}"
+  position: 5121..5273
+{% endcomment %}

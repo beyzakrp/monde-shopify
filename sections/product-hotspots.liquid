@@ -118,7 +118,7 @@
 
                       {%- if block.settings.show_quick_add -%}
                         <div class="hotspot-dialog__quick-add">
-                          {%- render 'buy-buttons', product: product, block: block, product_form_id: 'QuickAdd-' | append: section.id | append: '-' | append: block.id, section_id: section.id, show_pickup_availability: false -%}
+                          {%- render 'buy-buttons', product: product, block: block, product_form_id: 'QuickAdd-', append: block.id, section_id: section.id, show_pickup_availability: false -%}
                         </div>
                       {%- endif -%}
                     </div>
@@ -545,4 +545,17 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'buy-buttons', product: product, block: block, product_form_id:
+    'QuickAdd-' | append: section.id | append: '-' | append: block.id, section_id:
+    section.id, show_pickup_availability: false -%}"
+  to: "{%- render 'buy-buttons', product: product, block: block, product_form_id:
+    'QuickAdd-', append: block.id, section_id: section.id, show_pickup_availability:
+    false -%}"
+  position: 5334..5499
+{%- endcomment -%}
